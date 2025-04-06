@@ -63,13 +63,13 @@ const Footer = () => {
                   Creating opportunities for innovation through collaborative coding events.
                 </Typography>
                 <Box sx={{ display: 'flex', mt: 'auto' }}>
-                  <IconButton aria-label="GitHub" component={MuiLink} href="https://github.com" target="_blank" rel="noopener">
+                  <IconButton aria-label="GitHub" component={MuiLink} href="https://github.com/mrlynn/mongonext" target="_blank" rel="noopener">
                     <GitHubIcon />
                   </IconButton>
-                  <IconButton aria-label="LinkedIn" component={MuiLink} href="https://linkedin.com" target="_blank" rel="noopener">
+                  <IconButton aria-label="LinkedIn" component={MuiLink} href="https://linkedin.com/in/mlynn" target="_blank" rel="noopener">
                     <LinkedInIcon />
                   </IconButton>
-                  <IconButton aria-label="Twitter" component={MuiLink} href="https://twitter.com" target="_blank" rel="noopener">
+                  <IconButton aria-label="Twitter" component={MuiLink} href="https://twitter.com/mlynn" target="_blank" rel="noopener">
                     <TwitterIcon />
                   </IconButton>
                 </Box>
@@ -120,13 +120,13 @@ const Footer = () => {
             </Typography>
             
             <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-              <IconButton aria-label="GitHub" component={MuiLink} href="https://github.com" target="_blank" rel="noopener">
+              <IconButton aria-label="GitHub" component={MuiLink} href="https://github.com/mrlynn/mongonext" target="_blank" rel="noopener">
                 <GitHubIcon />
               </IconButton>
-              <IconButton aria-label="LinkedIn" component={MuiLink} href="https://linkedin.com" target="_blank" rel="noopener">
+              <IconButton aria-label="LinkedIn" component={MuiLink} href="https://linkedin.com/in/mlynn" target="_blank" rel="noopener">
                 <LinkedInIcon />
               </IconButton>
-              <IconButton aria-label="Twitter" component={MuiLink} href="https://twitter.com" target="_blank" rel="noopener">
+              <IconButton aria-label="Twitter" component={MuiLink} href="https://twitter.com/mlynn" target="_blank" rel="noopener">
                 <TwitterIcon />
               </IconButton>
             </Box>
