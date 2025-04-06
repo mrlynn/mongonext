@@ -9,9 +9,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/yourusername/mongonext/stargazers"><img src="https://img.shields.io/github/stars/yourusername/mongonext" alt="Stars"></a>
-  <a href="https://github.com/yourusername/mongonext/blob/main/LICENSE"><img src="https://img.shields.io/github/license/yourusername/mongonext" alt="License"></a>
-  <a href="https://github.com/yourusername/mongonext/releases"><img src="https://img.shields.io/github/v/release/yourusername/mongonext" alt="Release"></a>
+  <a href="https://github.com/mrlynn/mongonext/stargazers"><img src="https://img.shields.io/github/stars/mrlynn/mongonext" alt="Stars"></a>
+  <a href="https://github.com/mrlynn/mongonext/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mrlynn/mongonext" alt="License"></a>
+  <a href="https://github.com/mrlynn/mongonext/releases"><img src="https://img.shields.io/github/v/release/mrlynn/mongonext" alt="Release"></a>
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
 </p>
 
@@ -64,7 +64,7 @@ MongoNext combines the power of Next.js, MongoDB, React, and Material UI to prov
 
 ```bash
 # Create a new project
-npx create-next-app my-app -e https://github.com/yourusername/mongonext
+npx create-next-app my-app -e https://github.com/mrlynn/mongonext
 
 # Navigate to your new project
 cd my-app

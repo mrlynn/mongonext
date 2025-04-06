@@ -29,6 +29,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useThemeContext } from '../../contexts/ThemeContext';
 import Logo from '@/components/ui/Logo';
 import LogoWithText from '@/components/ui/LogoWithText';
+import { signOut, useSession } from 'next-auth/react';
 
 const Navbar = ({ toggleSidebar }) => {
   const theme = useTheme();
@@ -38,9 +39,10 @@ const Navbar = ({ toggleSidebar }) => {
   const router = useRouter();
   const pathname = usePathname();
   
-  // For demo purposes - replace with real auth context
-  const isAuthenticated = true;
-  const user = { name: 'Jane Doe', email: 'jane@example.com', avatar: null };
+  // Use NextAuth session instead of hardcoded values
+  const { data: session, status } = useSession();
+  const isAuthenticated = status === 'authenticated';
+  const user = session?.user || { name: 'Guest', email: '', avatar: null };
   const isDarkMode = theme.palette.mode === 'dark';
   
   // Profile menu
@@ -57,9 +59,8 @@ const Navbar = ({ toggleSidebar }) => {
   
   const handleLogout = () => {
     handleMenuClose();
-    // Implement your logout logic
-    // logout();
-    router.push('/sign-in');
+    // Use NextAuth signOut function with callback URL
+    signOut({ callbackUrl: '/auth/signin' });
   };
 
   return (
@@ -188,9 +189,9 @@ const Navbar = ({ toggleSidebar }) => {
           <Box>
             <Button 
               color="primary" 
-              variant={pathname === '/sign-in' ? 'outlined' : 'text'} 
+              variant={pathname === '/auth/signin' ? 'outlined' : 'text'} 
               component={Link} 
-              href="/sign-in"
+              href="/auth/signin"
               sx={{ mx: 1 }}
             >
               Sign In
@@ -199,7 +200,7 @@ const Navbar = ({ toggleSidebar }) => {
               color="primary" 
               variant="contained" 
               component={Link} 
-              href="/sign-up"
+              href="/auth/signup"
               sx={{ ml: 1 }}
             >
               Sign Up

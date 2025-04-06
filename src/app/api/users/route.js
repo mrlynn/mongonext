@@ -5,6 +5,10 @@
 
 import { NextResponse } from 'next/server';
 import { createUser, getUserById } from '@/lib/services/user.service';
+import { getServerSession } from 'next-auth/next';
+import authOptions from '@/lib/auth/config';
+import connectDB from '@/lib/db/connect';
+import User from '@/models/user.model';
 
 /**
  * API response format
@@ -16,7 +20,7 @@ import { createUser, getUserById } from '@/lib/services/user.service';
 
 /**
  * Handle GET requests to the /api/users endpoint
- * Retrieves a single user by ID
+ * Retrieves a single user by ID or a list of users with pagination
  * 
  * @async
  * @function GET
@@ -26,31 +30,108 @@ import { createUser, getUserById } from '@/lib/services/user.service';
  * @example
  * // Get user by ID
  * GET /api/users?id=615f5c8a8c8c8c8c8c8c8c8c
+ * 
+ * @example
+ * // Get all users with pagination
+ * GET /api/users?page=1&limit=10&sort=name&order=asc&search=john&role=admin
  */
 export async function GET(request) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get('id');
-  
-  if (id) {
-    const result = await getUserById(id);
+  try {
+    // Check authentication and admin role
+    const session = await getServerSession(authOptions);
     
-    if (!result.success) {
+    if (!session || !session.user) {
       return NextResponse.json(
-        { success: false, error: result.error },
-        { status: 404 }
+        { success: false, error: 'Not authenticated' },
+        { status: 401 }
       );
     }
     
-    return NextResponse.json({ success: true, data: result.data });
+    // Check if user is admin
+    if (session.user.role !== 'admin') {
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized: Admin access required' },
+        { status: 403 }
+      );
+    }
+    
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    
+    // If ID is provided, return a single user
+    if (id) {
+      const result = await getUserById(id);
+      
+      if (!result.success) {
+        return NextResponse.json(
+          { success: false, error: result.error },
+          { status: 404 }
+        );
+      }
+      
+      return NextResponse.json({ success: true, data: result.data });
+    }
+    
+    // Otherwise, return a paginated list of users
+    await connectDB();
+    
+    // Parse pagination parameters
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '10');
+    const skip = (page - 1) * limit;
+    
+    // Parse sorting parameters
+    const sortField = searchParams.get('sort') || 'createdAt';
+    const sortOrder = searchParams.get('order') === 'asc' ? 1 : -1;
+    
+    // Parse filter parameters
+    const search = searchParams.get('search') || '';
+    const role = searchParams.get('role') || '';
+    
+    // Build query
+    const query = {};
+    
+    // Add search filter if provided
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } }
+      ];
+    }
+    
+    // Add role filter if provided
+    if (role) {
+      query.role = role;
+    }
+    
+    // Execute query with pagination and sorting
+    const users = await User.find(query)
+      .sort({ [sortField]: sortOrder })
+      .skip(skip)
+      .limit(limit);
+    
+    // Get total count for pagination
+    const total = await User.countDocuments(query);
+    
+    return NextResponse.json({
+      success: true,
+      data: {
+        users,
+        pagination: {
+          total,
+          page,
+          limit,
+          pages: Math.ceil(total / limit)
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Users fetch error:', error);
+    return NextResponse.json(
+      { success: false, error: error.message || 'Failed to fetch users' },
+      { status: 500 }
+    );
   }
-  
-  // This would be where you'd implement paginated users list
-  // with proper authentication checks
-  
-  return NextResponse.json(
-    { success: false, error: 'Method not implemented' },
-    { status: 501 }
-  );
 }
 
 /**
