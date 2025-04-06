@@ -1,7 +1,7 @@
 # MongoNext
 
 <p align="center">
-  <img src="public/mongonext.png" alt="MongoNext Logo" width="120" />
+  <img src="public/logo.svg" alt="MongoNext Logo" width="120" />
 </p>
 
 <p align="center">
