@@ -1,0 +1,18 @@
+import React from 'react';
+import { Box, Typography, Container } from '@mui/material';
+
+export const metadata = {
+  title: '{{titleCase name}} | Your Application',
+};
+
+export default function {{pascalCase (basename name)}}Page() {
+  return (
+    <Container maxWidth="lg">
+      <Box sx={{ py: 4 }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          {{titleCase (basename name)}}
+        </Typography>
+      </Box>
+    </Container>
+  );
+}
