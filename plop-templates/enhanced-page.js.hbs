@@ -2,7 +2,7 @@
 
 /**
  * @file {{proper featureNamePlural}} listing page
- * @module app/dashboard/{{featureNamePlural}}/page
+ * @module app/admin/{{featureNamePlural}}/page
  */
 
 import React, { useState, useEffect } from 'react';
@@ -83,11 +83,11 @@ export default function {{pascalCase featureNamePlural}}Page() {
   };
 
   const handleCreateClick = () => {
-    router.push('/dashboard/{{featureNamePlural}}/create');
+    router.push('/admin/{{featureNamePlural}}/create');
   };
 
   const handle{{pascalCase featureName}}Click = (id) => {
-    router.push(`/dashboard/{{featureNamePlural}}/${id}`);
+    router.push(`/admin/{{featureNamePlural}}/${id}`);
   };
 
   if ({{featureNamePlural}}.length === 0 && !loading && !error) {
@@ -227,12 +227,12 @@ export default function {{pascalCase featureNamePlural}}Page() {
 
               <Box sx={{ bgcolor: 'background.default', p: 2, borderRadius: 1, mt: 1 }}>
                 <code>
-{`<{{pascalCase featureName}}List
-  {{featureNamePlural}}={${featureNamePlural}}
-  onItemClick={handle{{pascalCase featureName}}Click}
-  pagination={pagination}
-  onPageChange={(newPage) => fetch{{featureNamePlural}}(newPage, searchTerm)}
-/>`}
+&#123;`<{{pascalCase featureName}}List
+    {{featureNamePlural}}=&#123;${{featureNamePlural}}&#125;
+    onItemClick=&#123;handle{{pascalCase featureName}}Click&#125;
+    pagination=&#123;pagination&#125;
+    onPageChange=&#123;(newPage) => fetch{{featureNamePlural}}(newPage, searchTerm)&#125;
+  />`&#125;
                 </code>
               </Box>
             </Paper>
