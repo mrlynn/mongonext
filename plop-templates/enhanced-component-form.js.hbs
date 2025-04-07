@@ -133,9 +133,9 @@ export default function {{PascalFeatureName}}Form({
   };
   
   return (
-    <Paper sx={{ p: 3 }}>
+    <Paper sx="{ p: 3 }">
       {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+        <Alert severity="error" sx="{ mb: 3 }">
           {error}
         </Alert>
       )}
@@ -174,8 +174,8 @@ export default function {{PascalFeatureName}}Form({
           {/* Add other form fields here based on your model */}
           
           <Grid item xs={12}>
-            <Divider sx={{ my: 2 }} />
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+            <Divider sx="{ my: 2 }" />
+            <Box sx="{ display: 'flex', justifyContent: 'flex-end', gap: 2 }">
               <Button
                 variant="outlined"
                 onClick={handleCancel}
@@ -187,10 +187,10 @@ export default function {{PascalFeatureName}}Form({
                 type="submit"
                 variant="contained"
                 disabled={isLoading}
-                sx={{ position: 'relative' }}
+                sx="{ position: 'relative' }"
               >
                 {isLoading ? (
-                  <CircularProgress size={24} sx={{ position: 'absolute' }} />
+                  <CircularProgress size={24} sx="{ position: 'absolute' }" />
                 ) : isEditMode ? 'Update' : 'Create'}
               </Button>
             </Box>

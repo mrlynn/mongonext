@@ -64,8 +64,8 @@ export default function Create{{PascalFeatureName}}Page() {
   
   return (
     <Container maxWidth="lg">
-      <Box sx={{ py: 4 }}>
-        <Breadcrumbs sx={{ mb: 2 }}>
+      <Box sx="{ py: 4 }">
+        <Breadcrumbs sx="{ mb: 2 }">
           <MuiLink 
             component={Link} 
             href="/dashboard"
@@ -90,7 +90,7 @@ export default function Create{{PascalFeatureName}}Page() {
         </Typography>
         
         {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>
+          <Alert severity="error" sx="{ mb: 3 }">
             {error}
           </Alert>
         )}
