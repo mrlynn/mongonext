@@ -70,7 +70,7 @@ const navigationItems = [
     text: 'Settings',
     icon: <SettingsIcon />,
     path: '/admin/settings', // Updated path
-  },
+  }
 ];
 
 const Sidebar = ({ open, onClose }) => {
