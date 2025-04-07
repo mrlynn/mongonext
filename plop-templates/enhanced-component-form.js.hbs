@@ -42,8 +42,8 @@ export default function {{PascalFeatureName}}Form({
   
   // Form state
   const [formData, setFormData] = useState({
-    name: {{featureName}}?.name || '',
-    description: {{featureName}}?.description || '',
+    name: { {{featureName}}?.name } || '',
+    description: { {{featureName}}?.description } || '',
     // Add other fields here based on your model
   });
   
