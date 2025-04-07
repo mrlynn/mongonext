@@ -111,7 +111,7 @@ export default function {{pascalCase featureNamePlural}}Page() {
   if ({{featureNamePlural}}.length === 0 && !loading && !error) {
     return (
       <Container maxWidth="lg">
-        <Box sx={"{ py: 4 }"}>
+        <Box sx="{ py: 4 }">
           <Box sx="{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }">
             <Typography variant="h4" component="h1">
               {{proper featureNamePlural}}
@@ -132,24 +132,24 @@ export default function {{pascalCase featureNamePlural}}Page() {
                 placeholder="Search {{featureNamePlural}}..."
                 value=\{searchTerm}
                 onChange=\{handleSearchChange}
-                InputProps=\{{
+                InputProps="{{
                   startAdornment: (
-                    <InputAdornment position="start">
+                    <InputAdornment position='start'>
                       <SearchIcon />
                     </InputAdornment>
                   ),
                   endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position='end'>
                       <Button 
-                        variant="contained" 
-                        size="small"
-                        type="submit"
+                        variant='contained' 
+                        size='small'
+                        type='submit'
                       >
                         Search
                       </Button>
                     </InputAdornment>
                   )
-                }}
+                }}"
               />
             </form>
           </Paper>
@@ -199,31 +199,31 @@ export default function {{pascalCase featureNamePlural}}Page() {
               placeholder="Search {{featureNamePlural}}..."
               value=\{searchTerm}
               onChange=\{handleSearchChange}
-              InputProps=\{{
+              InputProps="{{
                 startAdornment: (
-                  <InputAdornment position="start">
+                  <InputAdornment position='start'>
                     <SearchIcon />
                   </InputAdornment>
                 ),
                 endAdornment: (
-                  <InputAdornment position="end">
+                  <InputAdornment position='end'>
                     <Button 
-                      variant="contained" 
-                      size="small"
-                      type="submit"
+                      variant='contained' 
+                      size='small'
+                      type='submit'
                     >
                       Search
                     </Button>
                   </InputAdornment>
                 )
-              }}
+              }}"
             />
           </form>
         </Paper>
         
         {/* Show loading state */}
         \{loading && (
-          <Box sx=\{{ display: 'flex', justifyContent: 'center', py: 8 }}>
+          <Box sx="{ display: 'flex', justifyContent: 'center', py: 8 }">
             <CircularProgress />
           </Box>
         )}
@@ -248,9 +248,9 @@ export default function {{pascalCase featureNamePlural}}Page() {
                 Example usage:
               </Typography>
               
-              <Box sx={"{ bgcolor: 'background.default', p: 2, borderRadius: 1, mt: 1 }"}>
+              <Box sx="{ bgcolor: 'background.default', p: 2, borderRadius: 1, mt: 1 }">
                 <code>
-                  \{`<{{pascalCase featureName}}List\n  {{featureNamePlural}}=\{${featureNamePlural}}\n  onItemClick=\{handle{{pascalCase featureName}}Click}\n  pagination=\{pagination}\n  onPageChange=\{(newPage) => fetch{{featureNamePlural}}(newPage, searchTerm)}\n/>`}
+                  \{`<{{pascalCase featureName}}List\n  {{featureNamePlural}}={${featureNamePlural}}\n  onItemClick={handle{{pascalCase featureName}}Click}\n  pagination={pagination}\n  onPageChange={(newPage) => fetch{{featureNamePlural}}(newPage, searchTerm)}\n/>`}
                 </code>
               </Box>
             </Paper>

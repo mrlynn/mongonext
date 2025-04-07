@@ -172,7 +172,7 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
   if (loading) {
     return (
       <Container maxWidth="lg">
-        <Box sx="{ py: 4, display: 'flex', justifyContent: 'center' }">
+        <Box sx={{ py: 4, display: 'flex', justifyContent: 'center' }}>
           <CircularProgress />
         </Box>
       </Container>
@@ -183,8 +183,8 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
   if (error && !{{featureName}}) {
     return (
       <Container maxWidth="lg">
-        <Box sx="{ py: 4 }">
-          <Alert severity="error" sx="{ mb: 3 }">
+        <Box sx={{ py: 4 }}>
+          <Alert severity="error" sx={{ mb: 3 }}>
             {error}
           </Alert>
           <Button 
@@ -201,8 +201,8 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
   
   return (
     <Container maxWidth="lg">
-      <Box sx="{ py: 4 }">
-        <Breadcrumbs sx="{ mb: 2 }">
+      <Box sx={{ py: 4 }}>
+        <Breadcrumbs sx={{ mb: 2 }}>
           <MuiLink 
             component={Link} 
             href="/dashboard"
@@ -219,42 +219,42 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
           >
             {{proper featureNamePlural}}
           </MuiLink>
-          <Typography color="text.primary">\{{{featureName}}?.name || id}</Typography>
+          <Typography color="text.primary">{{{featureName}}?.name || id}</Typography>
         </Breadcrumbs>
         
         <Typography variant="h4" component="h1" gutterBottom>
-          \{isEditing ? 'Edit' : ''} {{proper featureName}}: \{{{featureName}}?.name}
+          {isEditing ? 'Edit' : ''} {{proper featureName}}: {{{featureName}}?.name}
         </Typography>
         
-        \{error && (
-          <Alert severity="error" sx="{ mb: 3 }">
-            \{error}
+        {error && (
+          <Alert severity="error" sx={{ mb: 3 }}>
+            {error}
           </Alert>
         )}
         
-        \{isEditing ? (
+        {isEditing ? (
           <{{PascalFeatureName}}Form 
-            {{featureName}}=\{{{featureName}}} 
-            onSubmit=\{handleSubmit} 
-            onCancel=\{handleCancelEdit}
+            {{featureName}}={{{featureName}}} 
+            onSubmit={handleSubmit} 
+            onCancel={handleCancelEdit}
           />
         ) : (
           <{{PascalFeatureName}}Detail 
-            {{featureName}}=\{{{featureName}}} 
-            onEdit=\{handleEdit} 
-            onDelete=\{handleDelete}
+            {{featureName}}={{{featureName}}} 
+            onEdit={handleEdit} 
+            onDelete={handleDelete}
           />
         )}
       </Box>
       
       {/* Delete Confirmation Modal */}
       <Modal
-        open=\{isDeleteModalOpen}
-        onClose=\{handleCancelDelete}
+        open={isDeleteModalOpen}
+        onClose={handleCancelDelete}
         aria-labelledby="delete-modal-title"
       >
         <Paper
-          sx="{ 
+          sx={{ 
             position: 'absolute',
             top: '50%',
             left: '50%',
@@ -262,28 +262,28 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
             width: 400,
             p: 4,
             outline: 'none'
-          }"
+          }}
         >
           <Typography id="delete-modal-title" variant="h6" component="h2" gutterBottom>
             Confirm Delete
           </Typography>
           <Typography paragraph>
-            Are you sure you want to delete "\{ {{featureName}}?.name }"? This action cannot be undone.
+            Are you sure you want to delete "{ {{featureName}}?.name }"? This action cannot be undone.
           </Typography>
-          <Box sx="{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3 }">
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3 }}>
             <Button
-              onClick=\{handleCancelDelete}
-              disabled=\{isDeleting}
+              onClick={handleCancelDelete}
+              disabled={isDeleting}
             >
               Cancel
             </Button>
             <Button
-              onClick=\{handleConfirmDelete}
+              onClick={handleConfirmDelete}
               variant="contained"
               color="error"
-              disabled=\{isDeleting}
+              disabled={isDeleting}
             >
-              \{isDeleting ? <CircularProgress size={24} /> : 'Delete'}
+              {isDeleting ? <CircularProgress size={24} /> : 'Delete'}
             </Button>
           </Box>
         </Paper>
