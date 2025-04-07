@@ -6,23 +6,26 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Button, 
-  Typography, 
-  Container, 
-  Paper, 
+import {
+  Box,
+  Button,
+  Typography,
+  Container,
+  Paper,
   TextField,
   InputAdornment,
   CircularProgress,
   Alert,
-  IconButton,
 } from '@mui/material';
 import { Add as AddIcon, Search as SearchIcon } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import {{pascalCase featureName}}List from '@/components/admin/{{featureNamePlural}}/{{pascalCase featureName}}List';
 
-{{{{raw}}}}
+/**
+ * Renders the {{proper featureNamePlural}} admin listing page.
+ * @returns {JSX.Element}
+ */
 export default function {{pascalCase featureNamePlural}}Page() {
   const router = useRouter();
   const [{{featureNamePlural}}, set{{featureNamePlural}}] = useState([]);
@@ -33,21 +36,19 @@ export default function {{pascalCase featureNamePlural}}Page() {
     page: 1,
     limit: 10,
     total: 0,
-    pages: 0
+    pages: 0,
   });
 
   const fetch{{featureNamePlural}} = async (page = 1, search = '') => {
     try {
       setLoading(true);
       setError('');
-
       const queryParams = new URLSearchParams({
         page,
         limit: pagination.limit,
         sort: 'createdAt',
-        order: 'desc'
+        order: 'desc',
       });
-
       if (search) {
         queryParams.append('search', search);
       }
@@ -71,7 +72,8 @@ export default function {{pascalCase featureNamePlural}}Page() {
 
   useEffect(() => {
     fetch{{featureNamePlural}}(pagination.page, searchTerm);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pagination.page, searchTerm]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -90,73 +92,6 @@ export default function {{pascalCase featureNamePlural}}Page() {
     router.push(`/admin/{{featureNamePlural}}/${id}`);
   };
 
-  if ({{featureNamePlural}}.length === 0 && !loading && !error) {
-    return (
-      <Container maxWidth="lg">
-        <Box sx={{ py: 4 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
-            <Typography variant="h4" component="h1">
-              {{proper featureNamePlural}}
-            </Typography>
-            <Button 
-              variant="contained" 
-              startIcon={<AddIcon />}
-              onClick={handleCreateClick}
-            >
-              Create {{proper featureName}}
-            </Button>
-          </Box>
-
-          <Paper sx={{ p: 3, mb: 4 }}>
-            <form onSubmit={handleSearch}>
-              <TextField
-                fullWidth
-                placeholder="Search {{featureNamePlural}}..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Button 
-                        variant="contained" 
-                        size="small"
-                        type="submit"
-                      >
-                        Search
-                      </Button>
-                    </InputAdornment>
-                  )
-                }}
-              />
-            </form>
-          </Paper>
-
-          <Paper sx={{ p: 4, mb: 3, textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
-              No {{featureNamePlural}} found
-            </Typography>
-            <Typography paragraph color="text.secondary">
-              Get started by creating your first {{featureName}}.
-            </Typography>
-            <Button 
-              variant="contained" 
-              startIcon={<AddIcon />}
-              onClick={handleCreateClick}
-              sx={{ mt: 2 }}
-            >
-              Create {{proper featureName}}
-            </Button>
-          </Paper>
-        </Box>
-      </Container>
-    );
-  }
-
   return (
     <Container maxWidth="lg">
       <Box sx={{ py: 4 }}>
@@ -164,11 +99,7 @@ export default function {{pascalCase featureNamePlural}}Page() {
           <Typography variant="h4" component="h1">
             {{proper featureNamePlural}}
           </Typography>
-          <Button 
-            variant="contained" 
-            startIcon={<AddIcon />}
-            onClick={handleCreateClick}
-          >
+          <Button variant="contained" startIcon={<AddIcon />} onClick={handleCreateClick}>
             Create {{proper featureName}}
           </Button>
         </Box>
@@ -188,15 +119,11 @@ export default function {{pascalCase featureNamePlural}}Page() {
                 ),
                 endAdornment: (
                   <InputAdornment position="end">
-                    <Button 
-                      variant="contained" 
-                      size="small"
-                      type="submit"
-                    >
+                    <Button variant="contained" size="small" type="submit">
                       Search
                     </Button>
                   </InputAdornment>
-                )
+                ),
               }}
             />
           </form>
@@ -214,32 +141,29 @@ export default function {{pascalCase featureNamePlural}}Page() {
           </Alert>
         )}
 
-        {!loading && !error && (
-          <div>
-            <Paper sx={{ p: 3, mb: 3 }}>
-              <Typography variant="body1">
-                Once you've created the {{pascalCase featureName}}List component, import and use it here to display your {{featureNamePlural}}.
-              </Typography>
+        {!loading && !error && {{featureNamePlural}}.length === 0 && (
+          <Paper sx={{ p: 4, mb: 3, textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              No {{featureNamePlural}} found
+            </Typography>
+            <Typography paragraph color="text.secondary">
+              Get started by creating your first {{featureName}}.
+            </Typography>
+            <Button variant="contained" startIcon={<AddIcon />} onClick={handleCreateClick} sx={{ mt: 2 }}>
+              Create {{proper featureName}}
+            </Button>
+          </Paper>
+        )}
 
-              <Typography variant="body2" sx={{ mt: 2, color: 'text.secondary' }}>
-                Example usage:
-              </Typography>
-
-              <Box sx={{ bgcolor: 'background.default', p: 2, borderRadius: 1, mt: 1 }}>
-                <code>
-&#123;`<{{pascalCase featureName}}List
-    {{featureNamePlural}}=&#123;${{featureNamePlural}}&#125;
-    onItemClick=&#123;handle{{pascalCase featureName}}Click&#125;
-    pagination=&#123;pagination&#125;
-    onPageChange=&#123;(newPage) => fetch{{featureNamePlural}}(newPage, searchTerm)&#125;
-  />`&#125;
-                </code>
-              </Box>
-            </Paper>
-          </div>
+        {!loading && !error && {{featureNamePlural}}.length > 0 && (
+          <{{pascalCase featureName}}List
+            {{featureNamePlural}}={{{featureNamePlural}}}
+            onItemClick={handle{{pascalCase featureName}}Click}
+            pagination={pagination}
+            onPageChange={(newPage) => setPagination({ ...pagination, page: newPage })}
+          />
         )}
       </Box>
     </Container>
   );
 }
-{{{{/raw}}}}
