@@ -28,7 +28,7 @@ export default function LandingPage() {
               <Typography variant="h2" sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' }, fontWeight: 400, mb: 4, opacity: 0.9 }}>
                 A production-ready starter template combining the power of Next.js, MongoDB, and Material UI
               </Typography>
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing="{2}">
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <Button 
                   variant="contained" 
                   size="large"
@@ -60,7 +60,7 @@ export default function LandingPage() {
                 </Button>
               </Stack>
             </Grid>
-            <Grid item xs="{12}" md="{5}" sx={{ display: { xs: 'none', md: 'block' } }}>
+            <Grid item xs={12} md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
               <Box sx={{ position: 'relative', height: '100%', minHeight: 300 }}>
                 <Box 
                   component="img" 
@@ -89,100 +89,43 @@ export default function LandingPage() {
         </Typography>
         
         <Grid container spacing={4}>
-          <Grid item xs={12} md={6} lg={3}>
-            <Paper 
-              elevation={0} 
-              sx={{ 
-                p: 4, 
-                height: '100%',
-                borderRadius: 4, 
-                border: '1px solid',
-                borderColor: 'divider'
-              }}
-            >
-              <AutoAwesomeIcon 
-                sx={{ fontSize: 40, color: '#00684A', mb: 2 }} 
-              />
-              <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
-                Modern Stack
-              </Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                Built with Next.js App Router, MongoDB, and Material UI for a modern development experience.
-              </Typography>
-            </Paper>
-          </Grid>
-          
-          <Grid item xs={12} md={6} lg={3}>
-            <Paper 
-              elevation={0} 
-              sx={{ 
-                p: 4, 
-                height: '100%',
-                borderRadius: 4, 
-                border: '1px solid',
-                borderColor: 'divider'
-              }}
-            >
-              <SpeedIcon 
-                sx={{ fontSize: 40, color: '#00684A', mb: 2 }} 
-              />
-              <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
-                Performance First
-              </Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                Optimized for speed and developer experience with fast refresh and efficient data handling.
-              </Typography>
-            </Paper>
-          </Grid>
-          
-          <Grid item xs={12} md={6} lg={3}>
-            <Paper 
-              elevation={0} 
-              sx={{ 
-                p: 4, 
-                height: '100%',
-                borderRadius: 4, 
-                border: '1px solid',
-                borderColor: 'divider'
-              }}
-            >
-              <SecurityIcon 
-                sx={{ fontSize: 40, color: '#00684A', mb: 2 }} 
-              />
-              <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
-                Authentication Ready
-              </Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                Pre-configured auth system with NextAuth.js, supporting various providers and strategies.
-              </Typography>
-            </Paper>
-          </Grid>
-          
-          <Grid item xs={12} md={6} lg={3}>
-            <Paper 
-              elevation={0} 
-              sx={{ 
-                p: 4, 
-                height: '100%',
-                borderRadius: 4, 
-                border: '1px solid',
-                borderColor: 'divider'
-              }}
-            >
-              <CodeIcon 
-                sx={{ fontSize: 40, color: '#00684A', mb: 2 }} 
-              />
-              <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
-                Developer Tools
-              </Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                Includes ESLint, Prettier, and custom components to accelerate development.
-              </Typography>
-            </Paper>
-          </Grid>
+          {[{
+            icon: <AutoAwesomeIcon sx={{ fontSize: 40, color: '#00684A', mb: 2 }} />,
+            title: 'Modern Stack',
+            desc: 'Built with Next.js App Router, MongoDB, and Material UI for a modern development experience.'
+          }, {
+            icon: <SpeedIcon sx={{ fontSize: 40, color: '#00684A', mb: 2 }} />,
+            title: 'Performance First',
+            desc: 'Optimized for speed and developer experience with fast refresh and efficient data handling.'
+          }, {
+            icon: <SecurityIcon sx={{ fontSize: 40, color: '#00684A', mb: 2 }} />,
+            title: 'Authentication Ready',
+            desc: 'Pre-configured auth system with NextAuth.js, supporting various providers and strategies.'
+          }, {
+            icon: <CodeIcon sx={{ fontSize: 40, color: '#00684A', mb: 2 }} />,
+            title: 'Developer Tools',
+            desc: 'Includes ESLint, Prettier, and custom components to accelerate development.'
+          }].map(({ icon, title, desc }, i) => (
+            <Grid item xs={12} md={6} lg={3} key={i}>
+              <Paper 
+                elevation={0} 
+                sx={{ 
+                  p: 4, 
+                  height: '100%',
+                  borderRadius: 4, 
+                  border: '1px solid',
+                  borderColor: 'divider'
+                }}
+              >
+                {icon}
+                <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>{title}</Typography>
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>{desc}</Typography>
+              </Paper>
+            </Grid>
+          ))}
         </Grid>
       </Container>
-      
+
       {/* CTA Section */}
       <Box sx={{ bgcolor: 'background.paper', py: 10, borderTop: '1px solid', borderColor: 'divider' }}>
         <Container maxWidth="md" sx={{ textAlign: 'center' }}>
@@ -215,7 +158,7 @@ export default function LandingPage() {
           </Stack>
         </Container>
       </Box>
-      
+
       {/* Footer */}
       <Box sx={{ bgcolor: '#f5f5f5', py: 6, borderTop: '1px solid', borderColor: 'divider' }}>
         <Container maxWidth="lg">
@@ -239,7 +182,7 @@ export default function LandingPage() {
                 <Link href="https://www.mongodb.com/docs/" target="_blank" style={{ textDecoration: 'none', color: 'inherit' }}>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>MongoDB Docs</Typography>
                 </Link>
-                <Link href="https://mui.com/material-ui/" target="_blank" style="{ textDecoration: 'none', color: 'inherit' }">
+                <Link href="https://mui.com/material-ui/" target="_blank" style={{ textDecoration: 'none', color: 'inherit' }}>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>Material UI</Typography>
                 </Link>
               </Stack>
@@ -249,7 +192,7 @@ export default function LandingPage() {
                 Project
               </Typography>
               <Stack spacing={1}>
-                <Link href="https://github.com/yourusername/mongonext" target="_blank" style="{ textDecoration: 'none', color: 'inherit' }">
+                <Link href="https://github.com/yourusername/mongonext" target="_blank" style={{ textDecoration: 'none', color: 'inherit' }}>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>GitHub</Typography>
                 </Link>
                 <Link href="https://github.com/yourusername/mongonext/issues" target="_blank" style={{ textDecoration: 'none', color: 'inherit' }}>
