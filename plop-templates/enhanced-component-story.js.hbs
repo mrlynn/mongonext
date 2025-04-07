@@ -1,0 +1,42 @@
+/**
+ * @file Storybook story for {{name}} component
+ * @module components/{{type}}/{{name}}.stories
+ */
+
+import React from 'react';
+import {{name}} from './{{name}}';
+
+export default {
+  title: '{{proper type}}/{{name}}',
+  component: {{name}},
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    // Define argTypes here
+  },
+};
+
+/**
+ * Default state of the {{name}} component
+ */
+export const Default = {
+  args: {
+    children: 'Default {{name}} Example',
+  },
+};
+
+/**
+ * Variant with custom content
+ */
+export const WithCustomContent = {
+  args: {
+    children: (
+      <>
+        <h3>Custom {{name}} Content</h3>
+        <p>This is a customized version of the {{name}} component.</p>
+      </>
+    ),
+  },
+};

@@ -243,6 +243,131 @@ export async function GET(request) {
 }
 ```
 
+# Customizing the MongoNext Template
+
+## 🧹 Removing Demo Features
+
+The MongoNext template includes several demonstration features to help you understand its structure and capabilities. When you're ready to build your own application, you can easily remove these features:
+
+### Using the Cleanup Script
+
+We've included a convenient cleanup script to help you remove demonstration features:
+
+```bash
+npm run cleanup
+```
+
+This interactive script will:
+1. Show you a list of demo features you can remove
+2. Delete the selected files and directories
+3. Update the sidebar navigation to remove references to deleted features
+
+### Demo Features You Can Remove
+
+- **Events**: Demo event management pages and components
+- **Teams**: Demo team management pages and components
+- **Users Admin**: Demo user management admin pages (keeps the core auth system)
+- **Settings**: Demo settings pages
+- **Admin Dashboard**: The sample admin dashboard with charts and stats
+
+You can remove individual features or all of them at once, keeping only the essential framework.
+
+## 🏗️ Adding Your Own Features
+
+MongoNext includes a powerful code generation system using Plop.js that makes it easy to create new features.
+
+### Using the Plop Generator
+
+```bash
+npm run plop
+```
+
+This command provides several generators:
+
+- **feature**: Creates a complete feature with model, page, API route, and components
+- **model**: Creates a new Mongoose model
+- **page**: Creates a new Next.js page
+- **api**: Creates a new API route
+- **component**: Creates a new React component
+
+### Example: Creating a Complete Feature
+
+```bash
+npm run plop feature
+```
+
+Follow the prompts to configure your feature:
+- Feature name (e.g., "product")
+- Feature description
+- Include list view? Yes/No
+- Include create form? Yes/No
+- Include edit form? Yes/No
+- Include delete functionality? Yes/No
+- Add to sidebar navigation? Yes/No
+
+This will generate:
+- MongoDB model
+- API endpoints (collection and individual item)
+- Dashboard page
+- List, form, and detail components
+- Navigation items (if selected)
+
+### Customizing Components and Pages
+
+After generating the base code, you can customize the components and pages to match your specific needs. The generated code includes:
+
+- Fully typed Mongoose models with JSDoc comments
+- API routes with proper error handling
+- React components with state management
+- Form validation
+
+## 🔄 Development Workflow
+
+A typical workflow for customizing the MongoNext template:
+
+1. **Clean up**: Remove demo features you don't need
+   ```bash
+   npm run cleanup
+   ```
+
+2. **Generate your features**: Use Plop to generate code for your needs
+   ```bash
+   npm run plop feature
+   ```
+
+3. **Customize**: Modify the generated code to match your requirements
+
+4. **Test**: Run your application to test your changes
+   ```bash
+   npm run dev
+   ```
+
+## 📂 Understanding the File Structure
+
+MongoNext follows a consistent file structure:
+
+```
+src/
+├── app/                    # Next.js App Router pages and layouts
+│   ├── api/                # API routes
+│   ├── auth/               # Authentication pages
+│   ├── admin/              # Admin panel pages
+│   └── dashboard/          # User dashboard pages
+├── components/             # React components
+│   ├── ui/                 # Basic UI components
+│   ├── layout/             # Layout components
+│   ├── forms/              # Form components
+│   └── feature-specific/   # Components for specific features
+├── lib/                    # Utilities and services
+│   ├── api/                # API utilities
+│   ├── auth/               # Auth utilities
+│   ├── db/                 # Database utilities
+│   └── services/           # Business logic services
+└── models/                 # Mongoose models
+```
+
+For more detailed information on customizing your MongoNext application, refer to our [customization guide](docs/getting-started/customizing.md).
+
 ## 📚 Documentation
 
 For more detailed documentation, visit our [official documentation site](https://github.com/yourusername/mongonext/wiki).

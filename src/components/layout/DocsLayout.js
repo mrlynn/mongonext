@@ -56,7 +56,8 @@ export default function DocsLayout({ children }) {
       items: [
         { title: 'Quick Start Guide', path: '/docs/getting-started/quickstart' },
         { title: 'Prerequisites', path: '/docs/getting-started/prerequisites' },
-        { title: 'Installation', path: '/docs/getting-started/installation' }
+        { title: 'Installation', path: '/docs/getting-started/installation' },
+        { title: 'Plop Tutorial', path: '/docs/getting-started/plop-tutorial' }
       ]
     },
     {

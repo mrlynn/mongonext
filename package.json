@@ -28,9 +28,12 @@
     "plop": "plop",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "setup": "node scripts/setup.js"
+    "setup": "node scripts/setup.js",
+    "cleanup": "node scripts/cleanup.js"
   },
   "dependencies": {
+    "@mui/icons-material": "^7.0.1",
+    "@mui/material": "^7.0.1",
     "bcryptjs": "^3.0.2",
     "marked": "^12.0.2",
     "mongoose": "^8.13.2",

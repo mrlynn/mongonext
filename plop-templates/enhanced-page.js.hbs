@@ -1,0 +1,262 @@
+'use client';
+
+/**
+ * @file {{proper featureNamePlural}} listing page
+ * @module app/dashboard/{{featureNamePlural}}/page
+ */
+
+import React, { useState, useEffect } from 'react';
+import { 
+  Box, 
+  Button, 
+  Typography, 
+  Container, 
+  Paper, 
+  TextField,
+  InputAdornment,
+  CircularProgress,
+  Alert,
+  IconButton,
+} from '@mui/material';
+import { Add as AddIcon, Search as SearchIcon } from '@mui/icons-material';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+
+/**
+ * {{proper featureNamePlural}} listing page component
+ * Displays a list of {{featureNamePlural}} with search, pagination, and actions
+ * 
+ * @component
+ * @returns {React.ReactElement} {{proper featureNamePlural}} page component
+ */
+export default function {{pascalCase featureNamePlural}}Page() {
+  const router = useRouter();
+  const [{{featureNamePlural}}, set{{pascalCase featureNamePlural}}] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 10,
+    total: 0,
+    pages: 0
+  });
+
+  // Fetch {{featureNamePlural}} from API
+  const fetch{{pascalCase featureNamePlural}} = async (page = 1, search = '') => {
+    try {
+      setLoading(true);
+      setError('');
+      
+      // Build query parameters
+      const queryParams = new URLSearchParams({
+        page,
+        limit: pagination.limit,
+        sort: 'createdAt',
+        order: 'desc'
+      });
+      
+      // Add search if provided
+      if (search) {
+        queryParams.append('search', search);
+      }
+      
+      // Fetch data from API
+      const response = await fetch(`/api/{{featureNamePlural}}?${queryParams.toString()}`);
+      const result = await response.json();
+      
+      // Check for errors
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to fetch {{featureNamePlural}}');
+      }
+      
+      // Update state with data
+      set{{pascalCase featureNamePlural}}(result.data.{{featureNamePlural}});
+      setPagination(result.data.pagination);
+    } catch (err) {
+      console.error('Error fetching {{featureNamePlural}}:', err);
+      setError(err.message || 'An error occurred while fetching {{featureNamePlural}}');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Load {{featureNamePlural}} on mount and when search/page changes
+  useEffect(() => {
+    fetch{{pascalCase featureNamePlural}}(pagination.page, searchTerm);
+  }, []);
+
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Handle search submission
+  const handleSearch = (e) => {
+    e.preventDefault();
+    fetch{{pascalCase featureNamePlural}}(1, searchTerm);
+  };
+
+  // Handle create button click
+  const handleCreateClick = () => {
+    router.push('/dashboard/{{featureNamePlural}}/create');
+  };
+
+  // Handle {{featureName}} item click
+  const handle{{pascalCase featureName}}Click = (id) => {
+    router.push(`/dashboard/{{featureNamePlural}}/${id}`);
+  };
+
+  // Render placeholder while developing
+  if ({{featureNamePlural}}.length === 0 && !loading && !error) {
+    return (
+      <Container maxWidth="lg">
+        <Box sx={{ py: 4 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+            <Typography variant="h4" component="h1">
+              {{proper featureNamePlural}}
+            </Typography>
+            <Button 
+              variant="contained" 
+              startIcon={<AddIcon />}
+              onClick={handleCreateClick}
+            >
+              Create {{proper featureName}}
+            </Button>
+          </Box>
+          
+          <Paper sx={{ p: 3, mb: 4 }}>
+            <form onSubmit={handleSearch}>
+              <TextField
+                fullWidth
+                placeholder="Search {{featureNamePlural}}..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Button 
+                        variant="contained" 
+                        size="small"
+                        type="submit"
+                      >
+                        Search
+                      </Button>
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </form>
+          </Paper>
+          
+          {/* Placeholder content */}
+          <Paper sx={{ p: 4, mb: 3, textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              No {{featureNamePlural}} found
+            </Typography>
+            <Typography paragraph color="text.secondary">
+              Get started by creating your first {{featureName}}.
+            </Typography>
+            <Button 
+              variant="contained" 
+              startIcon={<AddIcon />}
+              onClick={handleCreateClick}
+              sx={{ mt: 2 }}
+            >
+              Create {{proper featureName}}
+            </Button>
+          </Paper>
+        </Box>
+      </Container>
+    );
+  }
+
+  return (
+    <Container maxWidth="lg">
+      <Box sx={{ py: 4 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+          <Typography variant="h4" component="h1">
+            {{proper featureNamePlural}}
+          </Typography>
+          <Button 
+            variant="contained" 
+            startIcon={<AddIcon />}
+            onClick={handleCreateClick}
+          >
+            Create {{proper featureName}}
+          </Button>
+        </Box>
+        
+        <Paper sx={{ p: 3, mb: 4 }}>
+          <form onSubmit={handleSearch}>
+            <TextField
+              fullWidth
+              placeholder="Search {{featureNamePlural}}..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Button 
+                      variant="contained" 
+                      size="small"
+                      type="submit"
+                    >
+                      Search
+                    </Button>
+                  </InputAdornment>
+                )
+              }}
+            />
+          </form>
+        </Paper>
+        
+        {/* Show loading state */}
+        {loading && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+            <CircularProgress />
+          </Box>
+        )}
+        
+        {/* Show error message */}
+        {error && (
+          <Alert severity="error" sx={{ mb: 3 }}>
+            {error}
+          </Alert>
+        )}
+        
+        {/* Show {{featureNamePlural}} list */}
+        {!loading && !error && (
+          <div>
+            {/* Use the {{pascalCase featureName}}List component here when ready */}
+            <Paper sx={{ p: 3, mb: 3 }}>
+              <Typography variant="body1">
+                Once you've created the {{pascalCase featureName}}List component, import and use it here to display your {{featureNamePlural}}.
+              </Typography>
+              
+              <Typography variant="body2" sx={{ mt: 2, color: 'text.secondary' }}>
+                Example usage:
+              </Typography>
+              
+              <Box sx={{ bgcolor: 'background.default', p: 2, borderRadius: 1, mt: 1 }}>
+                <code>
+                  {`<{{pascalCase featureName}}List\n  {{featureNamePlural}}={${featureNamePlural}}\n  onItemClick={handle{{pascalCase featureName}}Click}\n  pagination={pagination}\n  onPageChange={(newPage) => fetch{{pascalCase featureNamePlural}}(newPage, searchTerm)}\n/>`}
+                </code>
+              </Box>
+            </Paper>
+          </div>
+        )}
+      </Box>
+    </Container>
+  );
+}

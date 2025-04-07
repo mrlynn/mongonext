@@ -132,17 +132,22 @@ export const authOptions = {
     async redirect({ url, baseUrl }) {
       console.log('REDIRECT CALLBACK:', { url, baseUrl });
       
-      // Allows relative callback URLs
-      if (url.startsWith("/")) {
+      // If the URL is already absolute and on the same origin, allow it
+      if (url.startsWith('http')) {
+        const urlOrigin = new URL(url).origin;
+        if (urlOrigin === new URL(baseUrl).origin) {
+          console.log('Redirecting to same-origin URL:', url);
+          return url;
+        }
+      }
+      
+      // If the URL is relative, prepend the base URL
+      if (url.startsWith('/')) {
         console.log('Redirecting to internal URL:', url);
         return `${baseUrl}${url}`;
       }
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) {
-        console.log('Redirecting to same-origin URL:', url);
-        return url;
-      }
       
+      // Default to the base URL
       console.log('Redirecting to default URL:', baseUrl);
       return baseUrl;
     }
@@ -158,7 +163,7 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET || 'your-secret-key-here',
   
   // Debug mode (enable for development)
-  debug: true,
+  debug: process.env.NODE_ENV === 'development',
   
   // Explicitly configure cookies
   cookies: {

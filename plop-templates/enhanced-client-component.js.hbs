@@ -1,0 +1,25 @@
+'use client';
+
+/**
+ * @file {{name}} component
+ * @module components/{{type}}/{{name}}
+ */
+
+import React, { useState } from 'react';
+import { Box, Typography } from '@mui/material';
+
+/**
+ * {{name}} component
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Child elements
+ * @returns {React.ReactElement} {{name}} component
+ */
+export default function {{name}}({ children, ...props }) {
+  return (
+    <Box {...props}>
+      {children}
+    </Box>
+  );
+}

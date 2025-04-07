@@ -1,0 +1,265 @@
+/**
+ * @file API routes for {{routeName}} collection
+ * @module app/api/{{routeName}}
+ */
+
+import { NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth/next';
+import authOptions from '@/lib/auth/config';
+import connectDB from '@/lib/db/connect';
+import {{pascalCase modelName}} from '@/models/{{modelName}}.model';
+
+{{#if (includes methods 'GET')}}
+/**
+ * Handle GET requests to fetch {{routeName}}
+ * Optional query parameters for filtering, pagination, and sorting
+ * 
+ * @async
+ * @function GET
+ * @param {Request} request - The incoming request object
+ * @returns {Promise<NextResponse>} JSON response with {{routeName}} data or error
+ * 
+ * @example
+ * // Get all {{routeName}} with pagination
+ * GET /api/{{routeName}}?page=1&limit=10&sort=name&order=asc
+ */
+export async function GET(request) {
+  try {
+    // Connect to database
+    await connectDB();
+    
+    // Get query parameters
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '10');
+    const sort = searchParams.get('sort') || 'createdAt';
+    const order = searchParams.get('order') === 'asc' ? 1 : -1;
+    const search = searchParams.get('search') || '';
+    
+    // Calculate pagination
+    const skip = (page - 1) * limit;
+    
+    // Build query
+    let query = {};
+    
+    // Add search if provided
+    if (search) {
+      query = {
+        $or: [
+          { name: { $regex: search, $options: 'i' } },
+          { description: { $regex: search, $options: 'i' } }
+        ]
+      };
+    }
+    
+    // Get {{routeName}} with pagination
+    const [items, total] = await Promise.all([
+      {{pascalCase modelName}}
+        .find(query)
+        .sort({ [sort]: order })
+        .skip(skip)
+        .limit(limit),
+      {{pascalCase modelName}}.countDocuments(query)
+    ]);
+    
+    // Return success response
+    return NextResponse.json({
+      success: true,
+      data: {
+        {{routeName}}: items,
+        pagination: {
+          total,
+          page,
+          limit,
+          pages: Math.ceil(total / limit)
+        }
+      }
+    });
+  } catch (error) {
+    console.error('API error:', error);
+    return NextResponse.json(
+      { success: false, error: error.message },
+      { status: 500 }
+    );
+  }
+}
+{{/if}}
+
+{{#if (includes methods 'POST')}}
+/**
+ * Handle POST requests to create a new {{modelName}}
+ * 
+ * @async
+ * @function POST
+ * @param {Request} request - The incoming request with {{modelName}} data
+ * @returns {Promise<NextResponse>} JSON response with created {{modelName}} or error
+ * 
+ * @example
+ * // Create a new {{modelName}}
+ * POST /api/{{routeName}}
+ * {
+ *   "name": "Example {{modelName}}",
+ *   "description": "This is an example {{modelName}}"
+ * }
+ */
+export async function POST(request) {
+  try {
+    // Check authentication (optional, remove if public access is allowed)
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json(
+        { success: false, error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+    
+    // Connect to database
+    await connectDB();
+    
+    // Get request body
+    const data = await request.json();
+    
+    // Create new {{modelName}}
+    const {{modelName}} = new {{pascalCase modelName}}({
+      ...data,
+      // Add userId from session if applicable
+      userId: session.user.id
+    });
+    
+    // Save to database
+    await {{modelName}}.save();
+    
+    // Return success response
+    return NextResponse.json(
+      { success: true, data: {{modelName}} },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error('API error:', error);
+    return NextResponse.json(
+      { success: false, error: error.message },
+      { status: 500 }
+    );
+  }
+}
+{{/if}}
+
+{{#if (includes methods 'PUT')}}
+/**
+ * Handle PUT requests to replace multiple items (bulk update)
+ * 
+ * @async
+ * @function PUT
+ * @param {Request} request - The incoming request with {{modelName}} data
+ * @returns {Promise<NextResponse>} JSON response with success or error
+ */
+export async function PUT(request) {
+  try {
+    // Check authentication
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json(
+        { success: false, error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+    
+    // Connect to database
+    await connectDB();
+    
+    // Get request body
+    const { items } = await request.json();
+    
+    if (!Array.isArray(items)) {
+      return NextResponse.json(
+        { success: false, error: 'Expected an array of items' },
+        { status: 400 }
+      );
+    }
+    
+    // Update items (example of bulk operation)
+    const updateResults = await Promise.all(
+      items.map(async (item) => {
+        if (!item._id) {
+          return { success: false, error: 'Item ID is required' };
+        }
+        
+        const updated = await {{pascalCase modelName}}.findByIdAndUpdate(
+          item._id,
+          item,
+          { new: true, runValidators: true }
+        );
+        
+        return updated ? 
+          { success: true, data: updated } : 
+          { success: false, error: '{{pascalCase modelName}} not found' };
+      })
+    );
+    
+    // Return success response
+    return NextResponse.json({
+      success: true,
+      data: { results: updateResults }
+    });
+  } catch (error) {
+    console.error('API error:', error);
+    return NextResponse.json(
+      { success: false, error: error.message },
+      { status: 500 }
+    );
+  }
+}
+{{/if}}
+
+{{#if (includes methods 'DELETE')}}
+/**
+ * Handle DELETE requests to remove multiple items
+ * 
+ * @async
+ * @function DELETE
+ * @param {Request} request - The incoming request with IDs to delete
+ * @returns {Promise<NextResponse>} JSON response with success or error
+ */
+export async function DELETE(request) {
+  try {
+    // Check authentication
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json(
+        { success: false, error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+    
+    // Connect to database
+    await connectDB();
+    
+    // Get request body
+    const { ids } = await request.json();
+    
+    if (!Array.isArray(ids)) {
+      return NextResponse.json(
+        { success: false, error: 'Expected an array of IDs' },
+        { status: 400 }
+      );
+    }
+    
+    // Delete items
+    const result = await {{pascalCase modelName}}.deleteMany({
+      _id: { $in: ids }
+    });
+    
+    // Return success response
+    return NextResponse.json({
+      success: true,
+      data: { deleted: result.deletedCount }
+    });
+  } catch (error) {
+    console.error('API error:', error);
+    return NextResponse.json(
+      { success: false, error: error.message },
+      { status: 500 }
+    );
+  }
+}
+{{/if}}
