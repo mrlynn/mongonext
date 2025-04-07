@@ -219,11 +219,11 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
           >
             {{proper featureNamePlural}}
           </MuiLink>
-          <Typography color="text.primary">{{{featureName}}?.name || id}</Typography>
+          <Typography color="text.primary">{ {{featureName}}?.name || id}</Typography>
         </Breadcrumbs>
         
         <Typography variant="h4" component="h1" gutterBottom>
-          {isEditing ? 'Edit' : ''} {{proper featureName}}: {{{featureName}}?.name}
+          {isEditing ? 'Edit' : ''} {{proper featureName}}: { {{featureName}}?.name}
         </Typography>
         
         {error && (
@@ -234,13 +234,13 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
         
         {isEditing ? (
           <{{PascalFeatureName}}Form 
-            {{featureName}}={{{featureName}}} 
+            {{featureName}}={{featureName}} 
             onSubmit={handleSubmit} 
             onCancel={handleCancelEdit}
           />
         ) : (
           <{{PascalFeatureName}}Detail 
-            {{featureName}}={{{featureName}}} 
+            {{featureName}}={{featureName}} 
             onEdit={handleEdit} 
             onDelete={handleDelete}
           />
@@ -268,7 +268,7 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
             Confirm Delete
           </Typography>
           <Typography paragraph>
-            Are you sure you want to delete "{{{featureName}}?.name}"? This action cannot be undone.
+            Are you sure you want to delete "{{featureName}}?.name"? This action cannot be undone.
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3 }}>
             <Button

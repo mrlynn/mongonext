@@ -54,7 +54,7 @@ export default function {{PascalFeatureName}}Detail({
     <Paper sx={{ p: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
         <Typography variant="h5" component="h2">
-          {{{featureName}}.name}
+          {{featureName}}.name
         </Typography>
         
         <Box sx={{ display: 'flex', gap: 1 }}>
@@ -89,7 +89,7 @@ export default function {{PascalFeatureName}}Detail({
             ID
           </Typography>
           <Typography variant="body1" gutterBottom>
-            {{{featureName}}._id}
+            { {{featureName}}._id}
           </Typography>
         </Grid>
         
@@ -102,13 +102,13 @@ export default function {{PascalFeatureName}}Detail({
           </Typography>
         </Grid>
         
-        {{{featureName}}.description && (
+        { {{featureName}}.description && (
           <Grid item xs={12}>
             <Typography variant="body2" color="text.secondary">
               Description
             </Typography>
             <Typography variant="body1" paragraph>
-              {{featureName}}.description
+              { {{featureName}}.description}
             </Typography>
           </Grid>
         )}

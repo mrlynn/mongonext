@@ -251,15 +251,15 @@ const Sidebar = ({ open, onClose }) => {
       }}
     >
       <Drawer
-        variant="persistent"
+        variant="permanent"
         open={open}
         sx={{
-          display: { xs: 'none', md: 'block' },
-          '& .MuiDrawer-paper': {
+          '& .MuiDrawer-paper': { 
             width: drawerWidth,
             boxSizing: 'border-box',
-            position: 'static',
-            height: '100%',
+            border: 'none',
+            backgroundColor: 'background.paper',
+            boxShadow: 1,
           },
         }}
       >
