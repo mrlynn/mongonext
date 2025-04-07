@@ -172,7 +172,7 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
   if (loading) {
     return (
       <Container maxWidth="lg">
-        <Box sx={{ py: 4, display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{{{ py: 4, display: 'flex', justifyContent: 'center' }}}}>
           <CircularProgress />
         </Box>
       </Container>
@@ -183,8 +183,8 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
   if (error && !{{featureName}}) {
     return (
       <Container maxWidth="lg">
-        <Box sx={{ py: 4 }}>
-          <Alert severity="error" sx={{ mb: 3 }}>
+        <Box sx={{{{ py: 4 }}}}>
+          <Alert severity="error" sx={{{{ mb: 3 }}}}>
             {error}
           </Alert>
           <Button 
@@ -201,8 +201,8 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
   
   return (
     <Container maxWidth="lg">
-      <Box sx={{ py: 4 }}>
-        <Breadcrumbs sx={{ mb: 2 }}>
+      <Box sx={{{{ py: 4 }}}}>
+        <Breadcrumbs sx={{{{ mb: 2 }}}}>
           <MuiLink 
             component={Link} 
             href="/dashboard"
@@ -227,7 +227,7 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
         </Typography>
         
         \{error && (
-          <Alert severity="error" sx=\{{ mb: 3 }}>
+          <Alert severity="error" sx={{{{ mb: 3 }}}}>
             \{error}
           </Alert>
         )}

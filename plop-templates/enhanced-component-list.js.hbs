@@ -76,7 +76,7 @@ export default function {{PascalFeatureName}}List({
   // If no items, show message
   if ({{featureNamePlural}}.length === 0) {
     return (
-      <Paper sx={{ p: 3, textAlign: 'center' }}>
+      <Paper sx={{{{ p: 3, textAlign: 'center' }}}}>
         <Typography variant="body1">
           No {{featureNamePlural}} found.
         </Typography>
@@ -92,7 +92,7 @@ export default function {{PascalFeatureName}}List({
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper sx={{{{ width: '100%', overflow: 'hidden' }}}}>
       <TableContainer>
         <Table>
           <TableHead>
@@ -109,7 +109,7 @@ export default function {{PascalFeatureName}}List({
                 key=\{{{featureName}}._id}
                 hover
                 onClick=\{() => onItemClick && onItemClick({{featureName}}._id)}
-                sx=\{{ cursor: 'pointer' }}
+                sx={{{{ cursor: 'pointer' }}}}
               >
                 <TableCell component="th" scope="row">
                   \{{{{featureName}}.name}}
@@ -121,7 +121,7 @@ export default function {{PascalFeatureName}}List({
                   \{{formatDate({{featureName}}.createdAt)}}
                 </TableCell>
                 <TableCell align="right">
-                  <Box sx=\{{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <Box sx={{{{ display: 'flex', justifyContent: 'flex-end' }}}}>
                     <Tooltip title="View/Edit">
                       <IconButton
                         size="small"
