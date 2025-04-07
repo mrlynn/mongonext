@@ -99,19 +99,37 @@ function updateSidebarNavigation(removedFeatures) {
     
     // Look for entries in the navigationItems array
     if (featureNames.length > 0) {
-      const itemsToRemove = featureNames.map(name => {
-        // Create a pattern that matches the navigation item object
-        return new RegExp(`\\s*\\{\\s*text:\\s*['"]${name}['"].*?\\},?\\s*`, 'gis');
-      });
+      // First, find the navigationItems array
+      const navItemsMatch = sidebarContent.match(/const\s+navigationItems\s*=\s*\[([\s\S]*?)\];/);
       
-      // Apply each pattern
-      itemsToRemove.forEach(pattern => {
-        sidebarContent = sidebarContent.replace(pattern, '');
-      });
-      
-      // Write the updated content back
-      fs.writeFileSync(sidebarPath, sidebarContent);
-      console.log('Updated sidebar navigation to remove demo links.');
+      if (navItemsMatch) {
+        let navItemsContent = navItemsMatch[1];
+        
+        // Remove each feature
+        featureNames.forEach(name => {
+          // Create a pattern that matches the navigation item object
+          const pattern = new RegExp(`\\s*\\{\\s*text:\\s*['"]${name}['"].*?\\},?\\s*`, 'gis');
+          navItemsContent = navItemsContent.replace(pattern, '');
+        });
+        
+        // Fix any double commas that might have been created
+        navItemsContent = navItemsContent.replace(/,\s*,/g, ',');
+        
+        // Fix any trailing commas before closing brackets
+        navItemsContent = navItemsContent.replace(/,\s*\]/g, ']');
+        
+        // Replace the original navigationItems array with the updated one
+        sidebarContent = sidebarContent.replace(
+          /const\s+navigationItems\s*=\s*\[([\s\S]*?)\];/,
+          `const navigationItems = [${navItemsContent}];`
+        );
+        
+        // Write the updated content back
+        fs.writeFileSync(sidebarPath, sidebarContent);
+        console.log('Updated sidebar navigation to remove demo links.');
+      } else {
+        console.log('Could not find navigationItems array in Sidebar.js');
+      }
     }
   } catch (error) {
     console.error('Error updating sidebar navigation:', error);
