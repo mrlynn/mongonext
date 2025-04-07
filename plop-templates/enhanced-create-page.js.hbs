@@ -1,8 +1,8 @@
 'use client';
 
 /**
- * @file Create {{featureName}} page
- * @module app/dashboard/{{featureNamePlural}}/create/page
+ * @file Create {{featureName}&#125; page
+ * @module app/dashboard/{{featureNamePlural}&#125;/create/page
  */
 
 import React, { useState } from 'react';
@@ -16,17 +16,17 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import {{PascalFeatureName}}Form from '@/components/dashboard/{{featureNamePlural}}/{{PascalFeatureName}}Form';
+import {{PascalFeatureName}&#125;Form from '@/components/dashboard/{{featureNamePlural}&#125;/{{PascalFeatureName}&#125;Form';
 
 /**
- * Create {{featureName}} page
- * Page for creating a new {{featureName}}
+ * Create {{featureName}&#125; page
+ * Page for creating a new {{featureName}&#125;
  * 
  * @component
- * @returns {React.ReactElement} Create {{featureName}} page
+ * @returns {React.ReactElement} Create {{featureName}&#125; page
  */
-{{{{raw}}}}
-export default function Create{{PascalFeatureName}}Page() {
+{{{{raw}&#125;}&#125;
+export default function Create{{PascalFeatureName}&#125;Page() {
   const router = useRouter();
   const [error, setError] = useState('');
 
@@ -34,7 +34,7 @@ export default function Create{{PascalFeatureName}}Page() {
     try {
       setError('');
 
-      const response = await fetch(`/api/{{featureNamePlural}}`, {
+      const response = await fetch(`/api/{{featureNamePlural}&#125;`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,21 +45,21 @@ export default function Create{{PascalFeatureName}}Page() {
       const result = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error || 'Failed to create {{featureName}}');
+        throw new Error(result.error || 'Failed to create {{featureName}&#125;');
       }
 
-      router.push('/dashboard/{{featureNamePlural}}');
+      router.push('/dashboard/{{featureNamePlural}&#125;');
       router.refresh();
     } catch (err) {
-      console.error('Error creating {{featureName}}:', err);
-      setError(err.message || 'An error occurred while creating the {{featureName}}');
+      console.error('Error creating {{featureName}&#125;:', err);
+      setError(err.message || 'An error occurred while creating the {{featureName}&#125;');
     }
   };
 
   return (
     <Container maxWidth="lg">
-      <Box sx={{ py: 4 }}>
-        <Breadcrumbs sx={{ mb: 2 }}>
+      <Box sx=&#123;{ py: 4 }&#125;>
+        <Breadcrumbs sx=&#123;{ mb: 2 }&#125;>
           <MuiLink 
             component={Link} 
             href="/dashboard"
@@ -70,28 +70,28 @@ export default function Create{{PascalFeatureName}}Page() {
           </MuiLink>
           <MuiLink 
             component={Link} 
-            href="/dashboard/{{featureNamePlural}}"
+            href="/dashboard/{{featureNamePlural}&#125;"
             underline="hover"
             color="inherit"
           >
-            {{proper featureNamePlural}}
+            {{proper featureNamePlural}&#125;
           </MuiLink>
           <Typography color="text.primary">Create</Typography>
         </Breadcrumbs>
 
         <Typography variant="h4" component="h1" gutterBottom>
-          Create {{proper featureName}}
+          Create {{proper featureName}&#125;
         </Typography>
 
         {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>
+          <Alert severity="error" sx=&#123;{ mb: 3 }&#125;>
             {error}
           </Alert>
         )}
 
-        <{{PascalFeatureName}}Form onSubmit={handleSubmit} />
+        <{{PascalFeatureName}&#125;Form onSubmit={handleSubmit} />
       </Box>
     </Container>
   );
 }
-{{{{/raw}}}}
+{{{{/raw}&#125;}&#125;

@@ -1,27 +1,27 @@
 /**
- * @file API routes for {{routeName}} collection
- * @module app/api/{{routeName}}
+ * @file API routes for {{routeName}&#125; collection
+ * @module app/api/{{routeName}&#125;
  */
 
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import authOptions from '@/lib/auth/config';
 import connectDB from '@/lib/db/connect';
-import {{pascalCase modelName}} from '@/models/{{modelName}}.model';
+import {{pascalCase modelName}&#125; from '@/models/{{modelName}&#125;.model';
 
-{{#if (includes methods 'GET')}}
+{{#if (includes methods 'GET')}&#125;
 /**
- * Handle GET requests to fetch {{routeName}}
+ * Handle GET requests to fetch {{routeName}&#125;
  * Optional query parameters for filtering, pagination, and sorting
  * 
  * @async
  * @function GET
  * @param {Request} request - The incoming request object
- * @returns {Promise<NextResponse>} JSON response with {{routeName}} data or error
+ * @returns {Promise<NextResponse>} JSON response with {{routeName}&#125; data or error
  * 
  * @example
- * // Get all {{routeName}} with pagination
- * GET /api/{{routeName}}?page=1&limit=10&sort=name&order=asc
+ * // Get all {{routeName}&#125; with pagination
+ * GET /api/{{routeName}&#125;?page=1&limit=10&sort=name&order=asc
  */
 export async function GET(request) {
   try {
@@ -52,21 +52,21 @@ export async function GET(request) {
       };
     }
     
-    // Get {{routeName}} with pagination
+    // Get {{routeName}&#125; with pagination
     const [items, total] = await Promise.all([
-      {{pascalCase modelName}}
+      {{pascalCase modelName}&#125;
         .find(query)
         .sort({ [sort]: order })
         .skip(skip)
         .limit(limit),
-      {{pascalCase modelName}}.countDocuments(query)
+      {{pascalCase modelName}&#125;.countDocuments(query)
     ]);
     
     // Return success response
     return NextResponse.json({
       success: true,
       data: {
-        {{routeName}}: items,
+        {{routeName}&#125;: items,
         pagination: {
           total,
           page,
@@ -83,23 +83,23 @@ export async function GET(request) {
     );
   }
 }
-{{/if}}
+{{/if}&#125;
 
-{{#if (includes methods 'POST')}}
+{{#if (includes methods 'POST')}&#125;
 /**
- * Handle POST requests to create a new {{modelName}}
+ * Handle POST requests to create a new {{modelName}&#125;
  * 
  * @async
  * @function POST
- * @param {Request} request - The incoming request with {{modelName}} data
- * @returns {Promise<NextResponse>} JSON response with created {{modelName}} or error
+ * @param {Request} request - The incoming request with {{modelName}&#125; data
+ * @returns {Promise<NextResponse>} JSON response with created {{modelName}&#125; or error
  * 
  * @example
- * // Create a new {{modelName}}
- * POST /api/{{routeName}}
+ * // Create a new {{modelName}&#125;
+ * POST /api/{{routeName}&#125;
  * {
- *   "name": "Example {{modelName}}",
- *   "description": "This is an example {{modelName}}"
+ *   "name": "Example {{modelName}&#125;",
+ *   "description": "This is an example {{modelName}&#125;"
  * }
  */
 export async function POST(request) {
@@ -119,19 +119,19 @@ export async function POST(request) {
     // Get request body
     const data = await request.json();
     
-    // Create new {{modelName}}
-    const {{modelName}} = new {{pascalCase modelName}}({
+    // Create new {{modelName}&#125;
+    const {{modelName}&#125; = new {{pascalCase modelName}&#125;({
       ...data,
       // Add userId from session if applicable
       userId: session.user.id
     });
     
     // Save to database
-    await {{modelName}}.save();
+    await {{modelName}&#125;.save();
     
     // Return success response
     return NextResponse.json(
-      { success: true, data: {{modelName}} },
+      { success: true, data: {{modelName}&#125; },
       { status: 201 }
     );
   } catch (error) {
@@ -142,15 +142,15 @@ export async function POST(request) {
     );
   }
 }
-{{/if}}
+{{/if}&#125;
 
-{{#if (includes methods 'PUT')}}
+{{#if (includes methods 'PUT')}&#125;
 /**
  * Handle PUT requests to replace multiple items (bulk update)
  * 
  * @async
  * @function PUT
- * @param {Request} request - The incoming request with {{modelName}} data
+ * @param {Request} request - The incoming request with {{modelName}&#125; data
  * @returns {Promise<NextResponse>} JSON response with success or error
  */
 export async function PUT(request) {
@@ -184,7 +184,7 @@ export async function PUT(request) {
           return { success: false, error: 'Item ID is required' };
         }
         
-        const updated = await {{pascalCase modelName}}.findByIdAndUpdate(
+        const updated = await {{pascalCase modelName}&#125;.findByIdAndUpdate(
           item._id,
           item,
           { new: true, runValidators: true }
@@ -192,7 +192,7 @@ export async function PUT(request) {
         
         return updated ? 
           { success: true, data: updated } : 
-          { success: false, error: '{{pascalCase modelName}} not found' };
+          { success: false, error: '{{pascalCase modelName}&#125; not found' };
       })
     );
     
@@ -209,9 +209,9 @@ export async function PUT(request) {
     );
   }
 }
-{{/if}}
+{{/if}&#125;
 
-{{#if (includes methods 'DELETE')}}
+{{#if (includes methods 'DELETE')}&#125;
 /**
  * Handle DELETE requests to remove multiple items
  * 
@@ -245,7 +245,7 @@ export async function DELETE(request) {
     }
     
     // Delete items
-    const result = await {{pascalCase modelName}}.deleteMany({
+    const result = await {{pascalCase modelName}&#125;.deleteMany({
       _id: { $in: ids }
     });
     
@@ -262,4 +262,4 @@ export async function DELETE(request) {
     );
   }
 }
-{{/if}}
+{{/if}&#125;
