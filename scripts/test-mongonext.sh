@@ -79,6 +79,18 @@ EMAIL_FROM=noreply@example.com
 AUTH_REQUIRED=$AUTH_REQUIRED
 EOF
 
+# Verify .env.local was created correctly
+if [ ! -f .env.local ]; then
+    print_error "Failed to create .env.local file"
+    exit 1
+fi
+
+# Verify AUTH_REQUIRED is in the file
+if ! grep -q "AUTH_REQUIRED=$AUTH_REQUIRED" .env.local; then
+    print_error "AUTH_REQUIRED setting not found in .env.local"
+    exit 1
+fi
+
 print_success "Environment file created with AUTH_REQUIRED=$AUTH_REQUIRED"
 
 print_step "Running setup script"
