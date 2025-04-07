@@ -152,12 +152,12 @@ Plop will generate the following files:
 - `src/models/product.model.js` - Mongoose model with proper validation
 - `src/app/api/products/route.js` - API routes for collection operations
 - `src/app/api/products/[id]/route.js` - API routes for individual items
-- `src/app/dashboard/products/page.js` - List page with search and pagination
-- `src/app/dashboard/products/create/page.js` - Create page with form
-- `src/app/dashboard/products/[id]/page.js` - Detail/edit page with form
-- `src/components/dashboard/products/ProductList.js` - List component with actions
-- `src/components/dashboard/products/ProductForm.js` - Form component with validation
-- `src/components/dashboard/products/ProductDetail.js` - Detail component
+- `src/app/admin/products/page.js` - List page with search and pagination
+- `src/app/admin/products/create/page.js` - Create page with form
+- `src/app/admin/products/[id]/page.js` - Detail/edit page with form
+- `src/components/admin/products/ProductList.js` - List component with actions
+- `src/components/admin/products/ProductForm.js` - Form component with validation
+- `src/components/admin/products/ProductDetail.js` - Detail component
 
 It will also update the sidebar navigation in `src/components/layout/Sidebar.js` to include your new feature.
 

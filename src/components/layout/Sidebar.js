@@ -12,43 +12,51 @@ import {
   Divider,
   IconButton,
   useMediaQuery,
-  useTheme
+  useTheme,
+  Collapse
 } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-// Example icon (feel free to remove or replace)
-import FolderIcon from '@mui/icons-material/Folder';
+import PeopleIcon from '@mui/icons-material/People';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-const navigationItems = [
-  {
-    text: 'Dashboard',
-    icon: <DashboardIcon />,
-    path: '/admin',
-  },
-
-  // Example Section (commented out)
-  // {
-  //   text: 'Projects',
-  //   icon: <FolderIcon />,
-  //   path: '/admin/projects',
-  //   children: [
-  //     { text: 'All Projects', path: '/admin/projects' },
-  //     { text: 'Create Project', path: '/admin/projects/create' },
-  //   ],
-  // },
-];
 
 const Sidebar = ({ open, onClose }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const pathname = usePathname();
+  const [usersOpen, setUsersOpen] = useState(pathname.startsWith('/admin/users'));
 
   const drawerWidth = 240;
 
   const isActive = (path) => pathname === path;
+  const isGroupActive = (path) => pathname.startsWith(path);
+
+  const navigationItems = [
+    {
+      text: 'Dashboard',
+      icon: <DashboardIcon />,
+      path: '/admin',
+    },
+    {
+      text: 'User Management',
+      icon: <PeopleIcon />,
+      path: '/admin/users',
+      children: [
+        { text: 'All Users', path: '/admin/users', icon: <PeopleIcon /> },
+        { text: 'Invite User', path: '/admin/users/invite', icon: <PersonAddIcon /> },
+      ],
+    },
+    // You can add more sections here as needed
+  ];
+
+  const handleToggleUsers = () => {
+    setUsersOpen(!usersOpen);
+  };
 
   const drawerContent = (
     <>
@@ -62,36 +70,95 @@ const Sidebar = ({ open, onClose }) => {
       <Divider />
       <List>
         {navigationItems.map((item) => (
-          <ListItem disablePadding key={item.text}>
-            <ListItemButton
-              component={Link}
-              href={item.path}
-              selected={isActive(item.path)}
-              sx={{
-                pl: 2,
-                '&.Mui-selected': {
-                  backgroundColor: 'rgba(25, 118, 210, 0.08)',
-                  '&:hover': {
-                    backgroundColor: 'rgba(25, 118, 210, 0.12)',
+          item.children ? (
+            <React.Fragment key={item.text}>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={handleToggleUsers}
+                  selected={isGroupActive(item.path)}
+                  sx={{
+                    pl: 2,
+                    '&.Mui-selected': {
+                      backgroundColor: 'rgba(25, 118, 210, 0.08)',
+                      '&:hover': {
+                        backgroundColor: 'rgba(25, 118, 210, 0.12)',
+                      },
+                    },
+                  }}
+                >
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.text} />
+                  {usersOpen ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+              </ListItem>
+              <Collapse in={usersOpen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {item.children.map((child) => (
+                    <ListItemButton
+                      key={child.text}
+                      component={Link}
+                      href={child.path}
+                      selected={isActive(child.path)}
+                      sx={{
+                        pl: 4,
+                        '&.Mui-selected': {
+                          backgroundColor: 'rgba(25, 118, 210, 0.08)',
+                          '&:hover': {
+                            backgroundColor: 'rgba(25, 118, 210, 0.12)',
+                          },
+                          '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            left: 0,
+                            top: 0,
+                            bottom: 0,
+                            width: 4,
+                            backgroundColor: 'primary.main',
+                            borderTopRightRadius: 4,
+                            borderBottomRightRadius: 4,
+                          },
+                        },
+                      }}
+                    >
+                      <ListItemIcon sx={{ minWidth: 36 }}>{child.icon}</ListItemIcon>
+                      <ListItemText primary={child.text} />
+                    </ListItemButton>
+                  ))}
+                </List>
+              </Collapse>
+            </React.Fragment>
+          ) : (
+            <ListItem disablePadding key={item.text}>
+              <ListItemButton
+                component={Link}
+                href={item.path}
+                selected={isActive(item.path)}
+                sx={{
+                  pl: 2,
+                  '&.Mui-selected': {
+                    backgroundColor: 'rgba(25, 118, 210, 0.08)',
+                    '&:hover': {
+                      backgroundColor: 'rgba(25, 118, 210, 0.12)',
+                    },
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      left: 0,
+                      top: 0,
+                      bottom: 0,
+                      width: 4,
+                      backgroundColor: 'primary.main',
+                      borderTopRightRadius: 4,
+                      borderBottomRightRadius: 4,
+                    },
                   },
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    left: 0,
-                    top: 0,
-                    bottom: 0,
-                    width: 4,
-                    backgroundColor: 'primary.main',
-                    borderTopRightRadius: 4,
-                    borderBottomRightRadius: 4,
-                  },
-                },
-              }}
-            >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
+                }}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          )
         ))}
       </List>
     </>
