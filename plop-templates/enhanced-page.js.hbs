@@ -112,27 +112,27 @@ export default function {{pascalCase featureNamePlural}}Page() {
     return (
       <Container maxWidth="lg">
         <Box sx={{ py: 4 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+          <Box sx=\{{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
             <Typography variant="h4" component="h1">
               {{proper featureNamePlural}}
             </Typography>
             <Button 
               variant="contained" 
-              startIcon={<AddIcon />}
-              onClick={handleCreateClick}
+              startIcon=\{<AddIcon />}
+              onClick=\{handleCreateClick}
             >
               Create {{proper featureName}}
             </Button>
           </Box>
           
-          <Paper sx={{ p: 3, mb: 4 }}>
-            <form onSubmit={handleSearch}>
+          <Paper sx=\{{ p: 3, mb: 4 }}>
+            <form onSubmit=\{handleSearch}>
               <TextField
                 fullWidth
                 placeholder="Search {{featureNamePlural}}..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-                InputProps={{
+                value=\{searchTerm}
+                onChange=\{handleSearchChange}
+                InputProps=\{{
                   startAdornment: (
                     <InputAdornment position="start">
                       <SearchIcon />
@@ -155,8 +155,8 @@ export default function {{pascalCase featureNamePlural}}Page() {
           </Paper>
           
           {/* Placeholder content */}
-          <Paper sx={{ p: 4, mb: 3, textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
+          <Paper sx=\{{ p: 4, mb: 3, textAlign: 'center' }}>
+            <Typography variant="h6" sx=\{{ mb: 2 }}>
               No {{featureNamePlural}} found
             </Typography>
             <Typography paragraph color="text.secondary">
@@ -164,9 +164,9 @@ export default function {{pascalCase featureNamePlural}}Page() {
             </Typography>
             <Button 
               variant="contained" 
-              startIcon={<AddIcon />}
-              onClick={handleCreateClick}
-              sx={{ mt: 2 }}
+              startIcon=\{<AddIcon />}
+              onClick=\{handleCreateClick}
+              sx=\{{ mt: 2 }}
             >
               Create {{proper featureName}}
             </Button>
@@ -178,28 +178,28 @@ export default function {{pascalCase featureNamePlural}}Page() {
 
   return (
     <Container maxWidth="lg">
-      <Box sx={{ py: 4 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+      <Box sx=\{{ py: 4 }}>
+        <Box sx=\{{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
           <Typography variant="h4" component="h1">
             {{proper featureNamePlural}}
           </Typography>
           <Button 
             variant="contained" 
-            startIcon={<AddIcon />}
-            onClick={handleCreateClick}
+            startIcon=\{<AddIcon />}
+            onClick=\{handleCreateClick}
           >
             Create {{proper featureName}}
           </Button>
         </Box>
         
-        <Paper sx={{ p: 3, mb: 4 }}>
-          <form onSubmit={handleSearch}>
+        <Paper sx=\{{ p: 3, mb: 4 }}>
+          <form onSubmit=\{handleSearch}>
             <TextField
               fullWidth
               placeholder="Search {{featureNamePlural}}..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-              InputProps={{
+              value=\{searchTerm}
+              onChange=\{handleSearchChange}
+              InputProps=\{{
                 startAdornment: (
                   <InputAdornment position="start">
                     <SearchIcon />
@@ -222,35 +222,35 @@ export default function {{pascalCase featureNamePlural}}Page() {
         </Paper>
         
         {/* Show loading state */}
-        {loading && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+        \{loading && (
+          <Box sx=\{{ display: 'flex', justifyContent: 'center', py: 8 }}>
             <CircularProgress />
           </Box>
         )}
         
         {/* Show error message */}
-        {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>
-            {error}
+        \{error && (
+          <Alert severity="error" sx=\{{ mb: 3 }}>
+            \{error}
           </Alert>
         )}
         
         {/* Show {{featureNamePlural}} list */}
-        {!loading && !error && (
+        \{!loading && !error && (
           <div>
             {/* Use the {{pascalCase featureName}}List component here when ready */}
-            <Paper sx={{ p: 3, mb: 3 }}>
+            <Paper sx=\{{ p: 3, mb: 3 }}>
               <Typography variant="body1">
                 Once you've created the {{pascalCase featureName}}List component, import and use it here to display your {{featureNamePlural}}.
               </Typography>
               
-              <Typography variant="body2" sx={{ mt: 2, color: 'text.secondary' }}>
+              <Typography variant="body2" sx=\{{ mt: 2, color: 'text.secondary' }}>
                 Example usage:
               </Typography>
               
-              <Box sx={{ bgcolor: 'background.default', p: 2, borderRadius: 1, mt: 1 }}>
+              <Box sx=\{{ bgcolor: 'background.default', p: 2, borderRadius: 1, mt: 1 }}>
                 <code>
-                  {`<{{pascalCase featureName}}List\n  {{featureNamePlural}}={${featureNamePlural}}\n  onItemClick={handle{{pascalCase featureName}}Click}\n  pagination={pagination}\n  onPageChange={(newPage) => fetch{{featureNamePlural}}(newPage, searchTerm)}\n/>`}
+                  \{`<{{pascalCase featureName}}List\n  {{featureNamePlural}}=\{${featureNamePlural}}\n  onItemClick=\{handle{{pascalCase featureName}}Click}\n  pagination=\{pagination}\n  onPageChange=\{(newPage) => fetch{{featureNamePlural}}(newPage, searchTerm)}\n/>`}
                 </code>
               </Box>
             </Paper>

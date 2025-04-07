@@ -104,28 +104,28 @@ export default function {{PascalFeatureName}}List({
             </TableRow>
           </TableHead>
           <TableBody>
-            {{{featureNamePlural}}.map(({{featureName}}) => (
+            \{{{featureNamePlural}}.map(({{featureName}}) => (
               <TableRow
-                key={{{featureName}}._id}
+                key=\{{{featureName}}._id}
                 hover
-                onClick={() => onItemClick && onItemClick({{featureName}}._id)}
-                sx={{ cursor: 'pointer' }}
+                onClick=\{() => onItemClick && onItemClick({{featureName}}._id)}
+                sx=\{{ cursor: 'pointer' }}
               >
                 <TableCell component="th" scope="row">
-                  {{{featureName}}.name}
+                  \{{{{featureName}}.name}}
                 </TableCell>
                 <TableCell>
-                  {{{featureName}}.description || 'No description'}
+                  \{{{{featureName}}.description || 'No description'}}
                 </TableCell>
                 <TableCell>
-                  {formatDate({{featureName}}.createdAt)}
+                  \{{formatDate({{featureName}}.createdAt)}}
                 </TableCell>
                 <TableCell align="right">
-                  <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <Box sx=\{{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Tooltip title="View/Edit">
                       <IconButton
                         size="small"
-                        onClick={(e) => {
+                        onClick=\{(e) => {
                           e.stopPropagation();
                           onItemClick && onItemClick({{featureName}}._id);
                         }}
@@ -138,7 +138,7 @@ export default function {{PascalFeatureName}}List({
                       <IconButton
                         size="small"
                         color="error"
-                        onClick={(e) => {
+                        onClick=\{(e) => {
                           e.stopPropagation();
                           onDeleteItem && onDeleteItem({{featureName}}._id);
                         }}
