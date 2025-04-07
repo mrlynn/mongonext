@@ -23,6 +23,14 @@ module.exports = function (plop) {
       return Array.isArray(arr) && arr.includes(val);
     });
   
+    // Helper to convert to PascalCase
+    plop.setHelper('pascalCase', (txt) => {
+      return txt
+        .split(/[-_\s]+/)
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join('');
+    });
+  
     // Validate feature name
     const validateFeatureName = (input) => {
       if (!input) return 'Feature name is required';

@@ -31,7 +31,7 @@ import Link from 'next/link';
  */
 export default function {{pascalCase featureNamePlural}}Page() {
   const router = useRouter();
-  const [{{featureNamePlural}}, set{{pascalCase featureNamePlural}}] = useState([]);
+  const [{{featureNamePlural}}, set{{featureNamePlural}}] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -43,7 +43,7 @@ export default function {{pascalCase featureNamePlural}}Page() {
   });
 
   // Fetch {{featureNamePlural}} from API
-  const fetch{{pascalCase featureNamePlural}} = async (page = 1, search = '') => {
+  const fetch{{featureNamePlural}} = async (page = 1, search = '') => {
     try {
       setLoading(true);
       setError('');
@@ -71,7 +71,7 @@ export default function {{pascalCase featureNamePlural}}Page() {
       }
       
       // Update state with data
-      set{{pascalCase featureNamePlural}}(result.data.{{featureNamePlural}});
+      set{{featureNamePlural}}(result.data.{{featureNamePlural}});
       setPagination(result.data.pagination);
     } catch (err) {
       console.error('Error fetching {{featureNamePlural}}:', err);
@@ -83,7 +83,7 @@ export default function {{pascalCase featureNamePlural}}Page() {
 
   // Load {{featureNamePlural}} on mount and when search/page changes
   useEffect(() => {
-    fetch{{pascalCase featureNamePlural}}(pagination.page, searchTerm);
+    fetch{{featureNamePlural}}(pagination.page, searchTerm);
   }, []);
 
   // Handle search input change
@@ -94,7 +94,7 @@ export default function {{pascalCase featureNamePlural}}Page() {
   // Handle search submission
   const handleSearch = (e) => {
     e.preventDefault();
-    fetch{{pascalCase featureNamePlural}}(1, searchTerm);
+    fetch{{featureNamePlural}}(1, searchTerm);
   };
 
   // Handle create button click
@@ -250,7 +250,7 @@ export default function {{pascalCase featureNamePlural}}Page() {
               
               <Box sx={{ bgcolor: 'background.default', p: 2, borderRadius: 1, mt: 1 }}>
                 <code>
-                  {`<{{pascalCase featureName}}List\n  {{featureNamePlural}}={${featureNamePlural}}\n  onItemClick={handle{{pascalCase featureName}}Click}\n  pagination={pagination}\n  onPageChange={(newPage) => fetch{{pascalCase featureNamePlural}}(newPage, searchTerm)}\n/>`}
+                  {`<{{pascalCase featureName}}List\n  {{featureNamePlural}}={${featureNamePlural}}\n  onItemClick={handle{{pascalCase featureName}}Click}\n  pagination={pagination}\n  onPageChange={(newPage) => fetch{{featureNamePlural}}(newPage, searchTerm)}\n/>`}
                 </code>
               </Box>
             </Paper>

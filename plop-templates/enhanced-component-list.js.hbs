@@ -104,18 +104,18 @@ export default function {{PascalFeatureName}}List({
             </TableRow>
           </TableHead>
           <TableBody>
-            { {{featureNamePlural}}.map(({{featureName}}) => (
+            {{{featureNamePlural}}.map(({{featureName}}) => (
               <TableRow
-                key={ {{featureName}}._id}
+                key={{{featureName}}._id}
                 hover
                 onClick={() => onItemClick && onItemClick({{featureName}}._id)}
                 sx={{ cursor: 'pointer' }}
               >
                 <TableCell component="th" scope="row">
-                  { {{featureName}}.name}
+                  {{{featureName}}.name}
                 </TableCell>
                 <TableCell>
-                  { {{featureName}}.description || 'No description'}
+                  {{{featureName}}.description || 'No description'}
                 </TableCell>
                 <TableCell>
                   {formatDate({{featureName}}.createdAt)}

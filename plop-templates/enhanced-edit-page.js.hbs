@@ -219,11 +219,11 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
           >
             {{proper featureNamePlural}}
           </MuiLink>
-          <Typography color="text.primary">{ {{featureName}}?.name || id}</Typography>
+          <Typography color="text.primary">{{{featureName}}?.name || id}}</Typography>
         </Breadcrumbs>
         
         <Typography variant="h4" component="h1" gutterBottom>
-          {isEditing ? 'Edit' : ''} {{proper featureName}}: { {{featureName}}?.name}
+          {isEditing ? 'Edit' : ''} {{proper featureName}}: {{{featureName}}?.name}}
         </Typography>
         
         {error && (
