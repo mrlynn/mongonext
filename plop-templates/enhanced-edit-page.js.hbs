@@ -23,42 +23,30 @@ import Link from 'next/link';
 import {{PascalFeatureName}}Form from '@/components/dashboard/{{featureNamePlural}}/{{PascalFeatureName}}Form';
 import {{PascalFeatureName}}Detail from '@/components/dashboard/{{featureNamePlural}}/{{PascalFeatureName}}Detail';
 
-/**
- * Edit {{featureName}} page
- * Page for viewing and editing a {{featureName}}
- * 
- * @component
- * @param {Object} props - Component props
- * @param {Object} props.params - URL parameters
- * @param {string} props.params.id - {{featureName}} ID
- * @returns {React.ReactElement} Edit {{featureName}} page
- */
+{{{{raw}}}}
 export default function Edit{{PascalFeatureName}}Page({ params }) {
   const { id } = params;
   const router = useRouter();
-  
-  // State
+
   const [{{featureName}}, set{{PascalFeatureName}}] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  
-  // Fetch {{featureName}} data
+
   useEffect(() => {
     const fetch{{PascalFeatureName}} = async () => {
       try {
         setLoading(true);
         setError('');
-        
         const response = await fetch(`/api/{{featureNamePlural}}/${id}`);
         const result = await response.json();
-        
+
         if (!result.success) {
           throw new Error(result.error || '{{pascalCase featureName}} not found');
         }
-        
+
         set{{PascalFeatureName}}(result.data);
       } catch (err) {
         console.error('Error fetching {{featureName}}:', err);
@@ -67,97 +55,51 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
         setLoading(false);
       }
     };
-    
+
     if (id) {
       fetch{{PascalFeatureName}}();
     }
   }, [id]);
-  
-  /**
-   * Handle edit button click
-   */
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-  
-  /**
-   * Handle cancel edit
-   */
-  const handleCancelEdit = () => {
-    setIsEditing(false);
-  };
-  
-  /**
-   * Handle form submission for edit
-   * @param {Object} data - Form data
-   */
+
+  const handleEdit = () => setIsEditing(true);
+  const handleCancelEdit = () => setIsEditing(false);
+
   const handleSubmit = async (data) => {
     try {
-      // Clear any previous errors
       setError('');
-      
-      // Send data to API
       const response = await fetch(`/api/{{featureNamePlural}}/${id}`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-      
+
       const result = await response.json();
-      
       if (!result.success) {
         throw new Error(result.error || 'Failed to update {{featureName}}');
       }
-      
-      // Update state with new data
+
       set{{PascalFeatureName}}(result.data);
-      
-      // Exit edit mode
       setIsEditing(false);
     } catch (err) {
       console.error('Error updating {{featureName}}:', err);
       setError(err.message || 'An error occurred while updating the {{featureName}}');
     }
   };
-  
-  /**
-   * Handle delete button click
-   */
-  const handleDelete = () => {
-    setIsDeleteModalOpen(true);
-  };
-  
-  /**
-   * Handle cancel delete
-   */
-  const handleCancelDelete = () => {
-    setIsDeleteModalOpen(false);
-  };
-  
-  /**
-   * Handle confirm delete
-   */
+
+  const handleDelete = () => setIsDeleteModalOpen(true);
+  const handleCancelDelete = () => setIsDeleteModalOpen(false);
+
   const handleConfirmDelete = async () => {
     try {
       setIsDeleting(true);
-      
-      // Send delete request to API
-      const response = await fetch(`/api/{{featureNamePlural}}/${id}`, {
-        method: 'DELETE',
-      });
-      
+      const response = await fetch(`/api/{{featureNamePlural}}/${id}`, { method: 'DELETE' });
       const result = await response.json();
-      
+
       if (!result.success) {
         throw new Error(result.error || 'Failed to delete {{featureName}}');
       }
-      
-      // Close modal
+
       setIsDeleteModalOpen(false);
-      
-      // Redirect to {{featureNamePlural}} list
       router.push('/dashboard/{{featureNamePlural}}');
       router.refresh();
     } catch (err) {
@@ -167,8 +109,7 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
       setIsDeleteModalOpen(false);
     }
   };
-  
-  // Loading state
+
   if (loading) {
     return (
       <Container maxWidth="lg">
@@ -178,8 +119,7 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
       </Container>
     );
   }
-  
-  // Error state
+
   if (error && !{{featureName}}) {
     return (
       <Container maxWidth="lg">
@@ -187,51 +127,37 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
           <Alert severity="error" sx={{ mb: 3 }}>
             {error}
           </Alert>
-          <Button 
-            component={Link} 
-            href="/dashboard/{{featureNamePlural}}"
-            variant="outlined"
-          >
+          <Button component={Link} href="/dashboard/{{featureNamePlural}}" variant="outlined">
             Back to {{proper featureNamePlural}}
           </Button>
         </Box>
       </Container>
     );
   }
-  
+
   return (
     <Container maxWidth="lg">
       <Box sx={{ py: 4 }}>
         <Breadcrumbs sx={{ mb: 2 }}>
-          <MuiLink 
-            component={Link} 
-            href="/dashboard"
-            underline="hover"
-            color="inherit"
-          >
+          <MuiLink component={Link} href="/dashboard" underline="hover" color="inherit">
             Dashboard
           </MuiLink>
-          <MuiLink 
-            component={Link} 
-            href="/dashboard/{{featureNamePlural}}"
-            underline="hover"
-            color="inherit"
-          >
+          <MuiLink component={Link} href="/dashboard/{{featureNamePlural}}" underline="hover" color="inherit">
             {{proper featureNamePlural}}
           </MuiLink>
-          <Typography color="text.primary">{{{featureName}}?.name || id}</Typography>
+          <Typography color="text.primary">{{featureName}}?.name || id</Typography>
         </Breadcrumbs>
-        
+
         <Typography variant="h4" component="h1" gutterBottom>
-          {isEditing ? 'Edit' : ''} {{proper featureName}}: {{{featureName}}?.name}
+          {isEditing ? 'Edit' : ''} {{proper featureName}}: {{featureName}}?.name
         </Typography>
-        
+
         {error && (
           <Alert severity="error" sx={{ mb: 3 }}>
             {error}
           </Alert>
         )}
-        
+
         {isEditing ? (
           <{{PascalFeatureName}}Form 
             {{featureName}}={{{featureName}}} 
@@ -246,13 +172,8 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
           />
         )}
       </Box>
-      
-      {/* Delete Confirmation Modal */}
-      <Modal
-        open={isDeleteModalOpen}
-        onClose={handleCancelDelete}
-        aria-labelledby="delete-modal-title"
-      >
+
+      <Modal open={isDeleteModalOpen} onClose={handleCancelDelete} aria-labelledby="delete-modal-title">
         <Paper
           sx={{ 
             position: 'absolute',
@@ -268,21 +189,11 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
             Confirm Delete
           </Typography>
           <Typography paragraph>
-            Are you sure you want to delete "{ {{featureName}}?.name }"? This action cannot be undone.
+            Are you sure you want to delete "{{featureName}}?.name"? This action cannot be undone.
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3 }}>
-            <Button
-              onClick={handleCancelDelete}
-              disabled={isDeleting}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleConfirmDelete}
-              variant="contained"
-              color="error"
-              disabled={isDeleting}
-            >
+            <Button onClick={handleCancelDelete} disabled={isDeleting}>Cancel</Button>
+            <Button onClick={handleConfirmDelete} variant="contained" color="error" disabled={isDeleting}>
               {isDeleting ? <CircularProgress size={24} /> : 'Delete'}
             </Button>
           </Box>
@@ -291,3 +202,4 @@ export default function Edit{{PascalFeatureName}}Page({ params }) {
     </Container>
   );
 }
+{{{{/raw}}}}

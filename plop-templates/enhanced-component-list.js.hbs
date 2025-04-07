@@ -44,6 +44,7 @@ import {
  * @param {Function} props.onLimitChange - Handler for page size change
  * @returns {React.ReactElement} {{PascalFeatureName}}List component
  */
+{{{{raw}}}}
 export default function {{PascalFeatureName}}List({
   {{featureNamePlural}} = [],
   onItemClick,
@@ -52,31 +53,27 @@ export default function {{PascalFeatureName}}List({
   onPageChange,
   onLimitChange
 }) {
-  // Format date
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
     const date = new Date(dateString);
     return date.toLocaleDateString();
   };
 
-  // Handle page change
   const handlePageChange = (event, newPage) => {
     if (onPageChange) {
       onPageChange(newPage + 1);
     }
   };
 
-  // Handle rows per page change
   const handleLimitChange = (event) => {
     if (onLimitChange) {
       onLimitChange(parseInt(event.target.value, 10));
     }
   };
 
-  // If no items, show message
   if ({{featureNamePlural}}.length === 0) {
     return (
-      <Paper sx="{ p: 3, textAlign: 'center' }">
+      <Paper sx={{ p: 3, textAlign: 'center' }}>
         <Typography variant="body1">
           No {{featureNamePlural}} found.
         </Typography>
@@ -84,7 +81,6 @@ export default function {{PascalFeatureName}}List({
     );
   }
 
-  // Convert API pagination to MUI pagination (0-indexed)
   const muiPagination = {
     page: (pagination.page || 1) - 1,
     rowsPerPage: pagination.limit || 10,
@@ -92,7 +88,7 @@ export default function {{PascalFeatureName}}List({
   };
 
   return (
-    <Paper sx="{ width: '100%', overflow: 'hidden' }">
+    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer>
         <Table>
           <TableHead>
@@ -104,28 +100,28 @@ export default function {{PascalFeatureName}}List({
             </TableRow>
           </TableHead>
           <TableBody>
-            \{{{featureNamePlural}}.map(({{featureName}}) => (
+            { {{featureNamePlural}}.map(({{featureName}}) => (
               <TableRow
-                key=\{{{featureName}}._id}
+                key={{{featureName}}._id}
                 hover
-                onClick=\{() => onItemClick && onItemClick({{featureName}}._id)}
-                sx="{ cursor: 'pointer' }"
+                onClick={() => onItemClick && onItemClick({{featureName}}._id)}
+                sx={{ cursor: 'pointer' }}
               >
                 <TableCell component="th" scope="row">
-                  \{{{{featureName}}.name}}
+                  {{featureName}}.name
                 </TableCell>
                 <TableCell>
-                  \{{{{featureName}}.description || 'No description'}}
+                  {{featureName}}.description || 'No description'
                 </TableCell>
                 <TableCell>
-                  \{{formatDate({{featureName}}.createdAt)}}
+                  {formatDate({{featureName}}.createdAt)}
                 </TableCell>
                 <TableCell align="right">
-                  <Box sx="{ display: 'flex', justifyContent: 'flex-end' }">
+                  <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Tooltip title="View/Edit">
                       <IconButton
                         size="small"
-                        onClick=\{(e) => {
+                        onClick={(e) => {
                           e.stopPropagation();
                           onItemClick && onItemClick({{featureName}}._id);
                         }}
@@ -138,7 +134,7 @@ export default function {{PascalFeatureName}}List({
                       <IconButton
                         size="small"
                         color="error"
-                        onClick=\{(e) => {
+                        onClick={(e) => {
                           e.stopPropagation();
                           onDeleteItem && onDeleteItem({{featureName}}._id);
                         }}
@@ -150,11 +146,11 @@ export default function {{PascalFeatureName}}List({
                   </Box>
                 </TableCell>
               </TableRow>
-            ))}
+            )) }
           </TableBody>
         </Table>
       </TableContainer>
-      
+
       <TablePagination
         component="div"
         count={muiPagination.count}
@@ -167,3 +163,4 @@ export default function {{PascalFeatureName}}List({
     </Paper>
   );
 }
+{{{{/raw}}}}

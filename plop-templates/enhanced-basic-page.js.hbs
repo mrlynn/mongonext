@@ -26,14 +26,15 @@ export const metadata = {
  * @returns {React.ReactElement} {{proper name}} page component
  */
 export default function {{pascalCase name}}Page() {
+  {{{{raw}}}}
   return (
     <Container maxWidth="lg">
-      <Box sx="{ py: 4 }">
+      <Box sx={{ py: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          {{proper name}}
+          {{{{/raw}}}}{{proper name}}{{{{raw}}}}
         </Typography>
         
-        <Paper sx="{ p: 3 }">
+        <Paper sx={{ p: 3 }}>
           <Typography paragraph>
             This is the {{name}} page. Customize this content to suit your needs.
           </Typography>
@@ -41,4 +42,5 @@ export default function {{pascalCase name}}Page() {
       </Box>
     </Container>
   );
+  {{{{/raw}}}}
 }

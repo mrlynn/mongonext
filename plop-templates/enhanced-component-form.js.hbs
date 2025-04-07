@@ -32,6 +32,7 @@ import { useRouter } from 'next/navigation';
  * @param {Function} props.onCancel - Function to call when cancel is clicked
  * @returns {React.ReactElement} {{PascalFeatureName}}Form component
  */
+{{{{raw}}}}
 export default function {{PascalFeatureName}}Form({
   {{featureName}},
   onSubmit,
@@ -39,80 +40,59 @@ export default function {{PascalFeatureName}}Form({
 }) {
   const router = useRouter();
   const isEditMode = !!{{featureName}};
-  
-  // Form state
+
   const [formData, setFormData] = useState({
     name: {{featureName}}?.name || '',
     description: {{featureName}}?.description || '',
-    // Add other fields here based on your model
   });
-  
-  // Form state
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [errors, setErrors] = useState({});
-  
-  /**
-   * Handle form input changes
-   * @param {React.ChangeEvent<HTMLInputElement>} e - Input change event
-   */
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const newValue = type === 'checkbox' ? checked : value;
-    
-    setFormData(prev => ({
+
+    setFormData((prev) => ({
       ...prev,
-      [name]: newValue
+      [name]: newValue,
     }));
-    
-    // Clear field-specific error when typing
+
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ''
+        [name]: '',
       }));
     }
-    
-    // Clear general error
+
     if (error) {
       setError('');
     }
   };
-  
-  /**
-   * Validate form data
-   * @returns {boolean} True if form is valid
-   */
+
   const validateForm = () => {
     const newErrors = {};
-    
-    // Validate name
+
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
     }
-    
-    // Add validation for other fields here
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  
-  /**
-   * Handle form submission
-   * @param {React.FormEvent<HTMLFormElement>} e - Form submission event
-   */
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setIsLoading(true);
     setError('');
-    
+
     try {
-      // Call onSubmit with form data
       await onSubmit(formData);
     } catch (err) {
       setError(err.message || 'An error occurred');
@@ -120,10 +100,7 @@ export default function {{PascalFeatureName}}Form({
       setIsLoading(false);
     }
   };
-  
-  /**
-   * Handle cancel button click
-   */
+
   const handleCancel = () => {
     if (onCancel) {
       onCancel();
@@ -131,15 +108,15 @@ export default function {{PascalFeatureName}}Form({
       router.back();
     }
   };
-  
+
   return (
-    <Paper sx="{ p: 3 }">
+    <Paper sx={{ p: 3 }}>
       {error && (
-        <Alert severity="error" sx="{ mb: 3 }">
+        <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
       )}
-      
+
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -155,7 +132,7 @@ export default function {{PascalFeatureName}}Form({
               disabled={isLoading}
             />
           </Grid>
-          
+
           <Grid item xs={12}>
             <TextField
               fullWidth
@@ -170,12 +147,10 @@ export default function {{PascalFeatureName}}Form({
               rows={3}
             />
           </Grid>
-          
-          {/* Add other form fields here based on your model */}
-          
+
           <Grid item xs={12}>
-            <Divider sx="{ my: 2 }" />
-            <Box sx="{ display: 'flex', justifyContent: 'flex-end', gap: 2 }">
+            <Divider sx={{ my: 2 }} />
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
               <Button
                 variant="outlined"
                 onClick={handleCancel}
@@ -187,10 +162,10 @@ export default function {{PascalFeatureName}}Form({
                 type="submit"
                 variant="contained"
                 disabled={isLoading}
-                sx="{ position: 'relative' }"
+                sx={{ position: 'relative' }}
               >
                 {isLoading ? (
-                  <CircularProgress size={24} sx="{ position: 'absolute' }" />
+                  <CircularProgress size={24} sx={{ position: 'absolute' }} />
                 ) : isEditMode ? 'Update' : 'Create'}
               </Button>
             </Box>
@@ -200,3 +175,4 @@ export default function {{PascalFeatureName}}Form({
     </Paper>
   );
 }
+{{{{/raw}}}}

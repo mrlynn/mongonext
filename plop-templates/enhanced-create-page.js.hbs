@@ -25,20 +25,15 @@ import {{PascalFeatureName}}Form from '@/components/dashboard/{{featureNamePlura
  * @component
  * @returns {React.ReactElement} Create {{featureName}} page
  */
+{{{{raw}}}}
 export default function Create{{PascalFeatureName}}Page() {
   const router = useRouter();
   const [error, setError] = useState('');
-  
-  /**
-   * Handle form submission
-   * @param {Object} data - Form data
-   */
+
   const handleSubmit = async (data) => {
     try {
-      // Clear any previous errors
       setError('');
-      
-      // Send data to API
+
       const response = await fetch(`/api/{{featureNamePlural}}`, {
         method: 'POST',
         headers: {
@@ -46,14 +41,13 @@ export default function Create{{PascalFeatureName}}Page() {
         },
         body: JSON.stringify(data),
       });
-      
+
       const result = await response.json();
-      
+
       if (!result.success) {
         throw new Error(result.error || 'Failed to create {{featureName}}');
       }
-      
-      // Redirect to {{featureNamePlural}} list
+
       router.push('/dashboard/{{featureNamePlural}}');
       router.refresh();
     } catch (err) {
@@ -61,11 +55,11 @@ export default function Create{{PascalFeatureName}}Page() {
       setError(err.message || 'An error occurred while creating the {{featureName}}');
     }
   };
-  
+
   return (
     <Container maxWidth="lg">
-      <Box sx="{ py: 4 }">
-        <Breadcrumbs sx="{ mb: 2 }">
+      <Box sx={{ py: 4 }}>
+        <Breadcrumbs sx={{ mb: 2 }}>
           <MuiLink 
             component={Link} 
             href="/dashboard"
@@ -84,19 +78,20 @@ export default function Create{{PascalFeatureName}}Page() {
           </MuiLink>
           <Typography color="text.primary">Create</Typography>
         </Breadcrumbs>
-        
+
         <Typography variant="h4" component="h1" gutterBottom>
           Create {{proper featureName}}
         </Typography>
-        
+
         {error && (
-          <Alert severity="error" sx="{ mb: 3 }">
+          <Alert severity="error" sx={{ mb: 3 }}>
             {error}
           </Alert>
         )}
-        
+
         <{{PascalFeatureName}}Form onSubmit={handleSubmit} />
       </Box>
     </Container>
   );
 }
+{{{{/raw}}}}
