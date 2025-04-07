@@ -28,11 +28,11 @@ export default function LandingPage() {
               <Typography variant="h2" sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' }, fontWeight: 400, mb: 4, opacity: 0.9 }}>
                 A production-ready starter template combining the power of Next.js, MongoDB, and Material UI
               </Typography>
-              <Stack direction="{ xs: 'column', sm: 'row' }" spacing="{2}">
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing="{2}">
                 <Button 
                   variant="contained" 
                   size="large"
-                  component="{Link}"
+                  component={Link}
                   href="https://github.com/yourusername/mongonext"
                   target="_blank"
                   sx={{ 
@@ -192,7 +192,7 @@ export default function LandingPage() {
           <Typography variant="body1" sx={{ mb: 4, color: 'text.secondary' }}>
             Jump start your Next.js and MongoDB project today with MongoNext.
           </Typography>
-          <Stack direction="{ xs: 'column', sm: 'row' }" spacing={2} justifyContent="center">
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
             <Button 
               variant="contained" 
               size="large"
