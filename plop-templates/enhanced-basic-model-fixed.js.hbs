@@ -1,0 +1,66 @@
+/**
+ * @file {{modelName}&#125; model definition with mongoose schema
+ * @module models/{{modelName}&#125;
+ */
+
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
+
+/**
+ * {{proper modelName}&#125; schema definition for MongoDB
+ * @typedef {Object} {{pascalCase modelName}&#125;Schema
+ */
+const {{modelName}&#125;Schema = new Schema({
+  /**
+   * Name of the {{modelName}&#125;
+   * @type {String}
+   * @required
+   */
+  name: { 
+    type: String, 
+    required: [true, 'Name is required'],
+    trim: true,
+    maxlength: [100, 'Name cannot be more than 100 characters']
+  },
+  
+  /**
+   * Description of the {{modelName}&#125;
+   * @type {String}
+   */
+  description: { 
+    type: String,
+    trim: true,
+    maxlength: [500, 'Description cannot be more than 500 characters']
+  },
+  
+  /**
+   * User who created/owns this {{modelName}&#125;
+   * @type {mongoose.Schema.Types.ObjectId}
+   * @ref 'User'
+   */
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  
+  // Add your custom fields here
+}, {
+  /**
+   * Adds createdAt and updatedAt timestamps
+   * @type {Object}
+   * @property {Boolean} timestamps - Enable automatic timestamps
+   */
+  timestamps: true
+});
+
+// Create indexes for better query performance
+{{modelName}&#125;Schema.index({ name: 1 });
+{{modelName}&#125;Schema.index({ userId: 1 });
+
+/**
+ * {{proper modelName}&#125; model compiled from schema
+ * @type {mongoose.Model}
+ */
+const {{pascalCase modelName}&#125; = mongoose.models.{{pascalCase modelName}&#125; || mongoose.model('{{pascalCase modelName}&#125;', {{modelName}&#125;Schema);
+
+export default {{pascalCase modelName}&#125;;

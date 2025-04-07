@@ -1,0 +1,46 @@
+{{#if section}&#125;
+'use client';
+{{/if}&#125;
+
+/**
+ * @file {{proper name}&#125; page
+ * @module app/{{section}&#125;/{{name}&#125;/page
+ */
+
+import React from 'react';
+import { Box, Typography, Container, Paper } from '@mui/material';
+
+/**
+ * Metadata for {{name}&#125; page
+ * @type {Object}
+ */
+export const metadata = {
+  title: "{{title}&#125;",
+  description: "{{title}&#125; page",
+};
+
+/**
+ * {{proper name}&#125; page component
+ * 
+ * @component
+ * @returns {React.ReactElement} {{proper name}&#125; page component
+ */
+export default function {{pascalCase name}&#125;Page() {
+  {{{{raw}&#125;}&#125;
+  return (
+    <Container maxWidth="lg">
+      <Box sx=&#123;{ py: 4 }&#125;>
+        <Typography variant="h4" component="h1" gutterBottom>
+          {{{{/raw}&#125;}&#125;{{proper name}&#125;{{{{raw}&#125;}&#125;
+        </Typography>
+        
+        <Paper sx=&#123;{ p: 3 }&#125;>
+          <Typography paragraph>
+            This is the {{name}&#125; page. Customize this content to suit your needs.
+          </Typography>
+        </Paper>
+      </Box>
+    </Container>
+  );
+  {{{{/raw}&#125;}&#125;
+}

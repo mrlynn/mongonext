@@ -1,0 +1,15 @@
+enhanced-api-route-id-methods.js.hbs
+enhanced-api-route-id.js.hbs
+enhanced-api-route.js.hbs
+enhanced-basic-model.js.hbs
+enhanced-basic-page.js.hbs
+enhanced-client-component.js.hbs
+enhanced-component-detail.js.hbs
+enhanced-component-form.js.hbs
+enhanced-component-list.js.hbs
+enhanced-component-story.js.hbs
+enhanced-create-page.js.hbs
+enhanced-edit-page.js.hbs
+enhanced-model.js.hbs
+enhanced-page.js.hbs
+enhanced-server-component.js.hbs
