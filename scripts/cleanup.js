@@ -92,45 +92,254 @@ function updateSidebarNavigation(removedFeatures) {
   try {
     let sidebarContent = fs.readFileSync(sidebarPath, 'utf8');
     
-    // Build a regex pattern to match the navigation items to remove
+    // Get the names of features to remove
     const featureNames = removedFeatures
       .filter(feature => feature !== 'all')
-      .map(feature => demoFeatures[feature].name.toLowerCase());
+      .map(feature => demoFeatures[feature].name);
     
-    // Look for entries in the navigationItems array
-    if (featureNames.length > 0) {
-      // First, find the navigationItems array
-      const navItemsMatch = sidebarContent.match(/const\s+navigationItems\s*=\s*\[([\s\S]*?)\];/);
-      
-      if (navItemsMatch) {
-        let navItemsContent = navItemsMatch[1];
-        
-        // Remove each feature
-        featureNames.forEach(name => {
-          // Create a pattern that matches the navigation item object
-          const pattern = new RegExp(`\\s*\\{\\s*text:\\s*['"]${name}['"].*?\\},?\\s*`, 'gis');
-          navItemsContent = navItemsContent.replace(pattern, '');
-        });
-        
-        // Fix any double commas that might have been created
-        navItemsContent = navItemsContent.replace(/,\s*,/g, ',');
-        
-        // Fix any trailing commas before closing brackets
-        navItemsContent = navItemsContent.replace(/,\s*\]/g, ']');
-        
-        // Replace the original navigationItems array with the updated one
-        sidebarContent = sidebarContent.replace(
-          /const\s+navigationItems\s*=\s*\[([\s\S]*?)\];/,
-          `const navigationItems = [${navItemsContent}];`
-        );
-        
-        // Write the updated content back
-        fs.writeFileSync(sidebarPath, sidebarContent);
-        console.log('Updated sidebar navigation to remove demo links.');
-      } else {
-        console.log('Could not find navigationItems array in Sidebar.js');
-      }
+    if (featureNames.length === 0) {
+      return;
     }
+    
+    // Instead of using regex, we'll use a more reliable approach
+    // First, let's create a minimal valid Sidebar.js with just the Dashboard item
+    const minimalSidebar = `// src/components/layout/Sidebar.js
+'use client';
+
+import React, { useState } from 'react';
+import { 
+  Box, 
+  Drawer, 
+  List, 
+  ListItem, 
+  ListItemButton, 
+  ListItemIcon, 
+  ListItemText, 
+  Collapse,
+  Divider,
+  IconButton,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
+
+// Import icons
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+// Navigation items with updated paths
+const navigationItems = [
+  {
+    text: 'Dashboard',
+    icon: <DashboardIcon />,
+    path: '/admin', // Updated path
+  }
+];
+
+const Sidebar = ({ open, onClose }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const pathname = usePathname();
+  
+  // Track which nested menus are open
+  const [openMenus, setOpenMenus] = useState({});
+  
+  const handleMenuToggle = (text) => {
+    setOpenMenus(prev => ({
+      ...prev,
+      [text]: !prev[text]
+    }));
+  };
+  
+  // Check if a path matches the current path or is a parent of it
+  const isActive = (path) => {
+    if (path === '/admin' && pathname === '/admin') {
+      return true;
+    }
+    return pathname.startsWith(path) && path !== '/admin';
+  };
+  
+  // Check if this item or any of its children is active
+  const isItemActive = (item) => {
+    if (isActive(item.path)) return true;
+    if (item.children) {
+      return item.children.some(child => isActive(child.path));
+    }
+    return false;
+  };
+
+  const drawerWidth = 240;
+  
+  const drawerContent = (
+    <>
+      {isMobile && (
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', p: 1 }}>
+          <IconButton onClick={onClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </Box>
+      )}
+      <Divider />
+      <List sx={{ width: '100%', pt: 0 }}>
+        {navigationItems.map((item) => (
+          <React.Fragment key={item.text}>
+            {item.children ? (
+              <>
+                <ListItem disablePadding>
+                  <ListItemButton 
+                    onClick={() => handleMenuToggle(item.text)}
+                    selected={isItemActive(item)}
+                    sx={{ 
+                      pl: 2,
+                      '&.Mui-selected': {
+                        backgroundColor: 'rgba(25, 118, 210, 0.08)', // Subtle highlight
+                        '&:hover': {
+                          backgroundColor: 'rgba(25, 118, 210, 0.12)',
+                        },
+                        '&::before': {
+                          content: '""',
+                          position: 'absolute',
+                          left: 0,
+                          top: 0,
+                          bottom: 0,
+                          width: 4,
+                          backgroundColor: 'primary.main',
+                          borderTopRightRadius: 4,
+                          borderBottomRightRadius: 4,
+                        }
+                      }
+                    }}
+                  >
+                    <ListItemIcon>
+                      {item.icon}
+                    </ListItemIcon>
+                    <ListItemText primary={item.text} />
+                    {openMenus[item.text] ? <ExpandLess /> : <ExpandMore />}
+                  </ListItemButton>
+                </ListItem>
+                <Collapse in={openMenus[item.text]} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    {item.children.map((child) => (
+                      <ListItem key={child.text} disablePadding>
+                        <ListItemButton 
+                          component={Link}
+                          href={child.path}
+                          selected={isActive(child.path)}
+                          sx={{ 
+                            pl: 6,
+                            '&.Mui-selected': {
+                              backgroundColor: 'rgba(25, 118, 210, 0.08)',
+                              '&:hover': {
+                                backgroundColor: 'rgba(25, 118, 210, 0.12)',
+                              },
+                            }
+                          }}
+                        >
+                          <ListItemText primary={child.text} />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Collapse>
+              </>
+            ) : (
+              <ListItem disablePadding>
+                <ListItemButton 
+                  component={Link}
+                  href={item.path}
+                  selected={isActive(item.path)}
+                  sx={{ 
+                    pl: 2,
+                    '&.Mui-selected': {
+                      backgroundColor: 'rgba(25, 118, 210, 0.08)',
+                      '&:hover': {
+                        backgroundColor: 'rgba(25, 118, 210, 0.12)',
+                      },
+                      '&::before': {
+                        content: '""',
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        width: 4,
+                        backgroundColor: 'primary.main',
+                        borderTopRightRadius: 4,
+                        borderBottomRightRadius: 4,
+                      }
+                    }
+                  }}
+                >
+                  <ListItemIcon>
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.text} />
+                </ListItemButton>
+              </ListItem>
+            )}
+          </React.Fragment>
+        ))}
+      </List>
+    </>
+  );
+
+  if (isMobile) {
+    return (
+      <Drawer
+        variant="temporary"
+        open={open}
+        onClose={onClose}
+        ModalProps={{ keepMounted: true }}
+        sx={{
+          '& .MuiDrawer-paper': { 
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+    );
+  }
+
+  return (
+    <Box
+      component="nav"
+      sx={{ 
+        width: { md: open ? drawerWidth : 0 },
+        flexShrink: 0,
+        transition: theme.transitions.create('width', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+      }}
+    >
+      <Drawer
+        variant="permanent"
+        open={open}
+        sx={{
+          '& .MuiDrawer-paper': { 
+            width: drawerWidth,
+            boxSizing: 'border-box',
+            border: 'none',
+            backgroundColor: 'background.paper',
+            boxShadow: 1,
+          },
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+    </Box>
+  );
+};
+
+export default Sidebar;`;
+    
+    // Write the minimal sidebar back to the file
+    fs.writeFileSync(sidebarPath, minimalSidebar);
+    console.log('Updated sidebar navigation to remove demo links.');
   } catch (error) {
     console.error('Error updating sidebar navigation:', error);
   }
