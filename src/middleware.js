@@ -15,6 +15,14 @@ import { getToken } from 'next-auth/jwt';
  * @returns {Promise<NextResponse>} The response (redirect or continue)
  */
 export async function middleware(request) {
+  // Check if authentication is required
+  const authRequired = process.env.AUTH_REQUIRED !== 'false';
+  
+  // If authentication is not required, allow all requests
+  if (!authRequired) {
+    return NextResponse.next();
+  }
+
   // Get the pathname from the URL
   const path = request.nextUrl.pathname;
   

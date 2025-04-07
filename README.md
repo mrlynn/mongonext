@@ -401,3 +401,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <p align="center">
   Made with ❤️ by <a href="https://github.com/mrlynn"> Michael Lynn</a>
 </p>
+
+## Environment Variables
+
+The following environment variables are required:
+
+- `MONGODB_URI`: Your MongoDB connection string
+- `NEXTAUTH_SECRET`: A secret key for NextAuth.js session encryption
+- `NEXTAUTH_URL`: The base URL of your application
+- `AUTH_REQUIRED`: Set to 'false' to disable authentication requirements (defaults to 'true')

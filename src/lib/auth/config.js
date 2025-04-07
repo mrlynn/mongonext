@@ -8,13 +8,16 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import User from '@/models/user.model';
 import connectDB from '@/lib/db/connect';
 
+// Check if authentication is required
+const authRequired = process.env.AUTH_REQUIRED !== 'false';
+
 /**
  * NextAuth.js configuration options
  * @type {NextAuthOptions}
  */
 export const authOptions = {
   // Configure one or more authentication providers
-  providers: [
+  providers: authRequired ? [
     // Email/Password auth
     CredentialsProvider({
       id: 'credentials',
@@ -81,7 +84,7 @@ export const authOptions = {
     //   clientId: process.env.GOOGLE_CLIENT_ID,
     //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     // }),
-  ],
+  ] : [],
   
   // Customize pages
   pages: {
