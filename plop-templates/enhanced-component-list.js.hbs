@@ -112,10 +112,10 @@ export default function {{PascalFeatureName}}List({
                 sx={{ cursor: 'pointer' }}
               >
                 <TableCell component="th" scope="row">
-                  {{{featureName}}.name}
+                  {{featureName}}.name
                 </TableCell>
                 <TableCell>
-                  {{{featureName}}.description || 'No description'}
+                  {{featureName}}.description || 'No description'
                 </TableCell>
                 <TableCell>
                   {formatDate({{featureName}}.createdAt)}
