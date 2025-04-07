@@ -17,19 +17,59 @@ rl.question('🔧 MongoDB URI (leave blank for development): ', (mongoUri) => {
     // Generate a random secret for NextAuth
     const randomSecret = require('crypto').randomBytes(32).toString('hex');
     
-    // Create .env.local file
-    const envContent = `MONGODB_URI=${mongoUri || 'mongodb://localhost:27017/mongonext-dev'}
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=${randomSecret}
-
-# Email Configuration (for verification and password reset)
-${useEmail.toLowerCase() === 'y' ? `EMAIL_SERVER_HOST=smtp.example.com
-EMAIL_SERVER_PORT=587
-EMAIL_SERVER_USER=user@example.com
-EMAIL_SERVER_PASSWORD=password
-EMAIL_FROM=noreply@example.com` : '# Email configuration not enabled'}
-`;
-
+    // Read existing .env.local file if it exists
+    let existingEnvContent = '';
+    try {
+      if (fs.existsSync('.env.local')) {
+        existingEnvContent = fs.readFileSync('.env.local', 'utf8');
+        console.log('📝 Found existing .env.local file. Preserving existing configurations.');
+      }
+    } catch (error) {
+      console.error('Error reading existing .env.local file:', error);
+    }
+    
+    // Parse existing environment variables
+    const existingEnvVars = {};
+    existingEnvContent.split('\n').forEach(line => {
+      const match = line.match(/^([^#=]+)=(.*)$/);
+      if (match) {
+        const key = match[1].trim();
+        const value = match[2].trim();
+        existingEnvVars[key] = value;
+      }
+    });
+    
+    // Create new environment variables
+    const newEnvVars = {
+      'MONGODB_URI': mongoUri || 'mongodb://localhost:27017/mongonext-dev',
+      'NEXTAUTH_URL': 'http://localhost:3000',
+      'NEXTAUTH_SECRET': randomSecret
+    };
+    
+    // Add email configuration if needed
+    if (useEmail.toLowerCase() === 'y') {
+      newEnvVars['EMAIL_SERVER_HOST'] = 'smtp.example.com';
+      newEnvVars['EMAIL_SERVER_PORT'] = '587';
+      newEnvVars['EMAIL_SERVER_USER'] = 'user@example.com';
+      newEnvVars['EMAIL_SERVER_PASSWORD'] = 'password';
+      newEnvVars['EMAIL_FROM'] = 'noreply@example.com';
+    }
+    
+    // Merge existing and new environment variables
+    const mergedEnvVars = { ...existingEnvVars, ...newEnvVars };
+    
+    // Convert to .env format
+    let envContent = '';
+    Object.entries(mergedEnvVars).forEach(([key, value]) => {
+      envContent += `${key}=${value}\n`;
+    });
+    
+    // Add email configuration comment if not using email
+    if (useEmail.toLowerCase() !== 'y') {
+      envContent += '\n# Email configuration not enabled\n';
+    }
+    
+    // Write to .env.local file
     fs.writeFileSync('.env.local', envContent);
     console.log('✅ Environment variables configured!');
     
