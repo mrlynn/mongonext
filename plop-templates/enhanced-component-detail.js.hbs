@@ -1,8 +1,8 @@
 'use client';
 
 /**
- * @file {{PascalFeatureName}&#125; detail component
- * @module components/dashboard/{{featureNamePlural}&#125;/{{PascalFeatureName}&#125;Detail
+ * @file {{PascalFeatureName}} detail component
+ * @module components/dashboard/{{featureNamePlural}}/{{PascalFeatureName}}Detail
  */
 
 import React from 'react';
@@ -18,27 +18,26 @@ import {
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 
 /**
- * {{PascalFeatureName}&#125; detail component
- * Displays detailed information about a {{featureName}&#125;
+ * {{PascalFeatureName}} detail component
+ * Displays detailed information about a {{featureName}}
  * 
  * @component
  * @param {Object} props - Component props
- * @param {Object} props.{{featureName}&#125; - The {{featureName}&#125; to display
+ * @param {Object} props.{{featureName}} - The {{featureName}} to display
  * @param {Function} props.onEdit - Function to call when edit button is clicked
  * @param {Function} props.onDelete - Function to call when delete button is clicked
- * @returns {React.ReactElement} {{PascalFeatureName}&#125;Detail component
+ * @returns {React.ReactElement} {{PascalFeatureName}}Detail component
  */
-{{{{raw}&#125;}&#125;
-export default function {{PascalFeatureName}&#125;Detail({
-  {{featureName}&#125;,
+export default function {{PascalFeatureName}}Detail({
+  {{featureName}},
   onEdit,
   onDelete
 }) {
-  if (!{{featureName}&#125;) {
+  if (!{{featureName}}) {
     return (
-      <Paper sx=&#123;{ p: 3, textAlign: 'center' }&#125;>
+      <Paper sx=\{\{ p: 3, textAlign: 'center' \}\}>
         <Typography>
-          No {{featureName}&#125; data available.
+          No {{featureName}} data available.
         </Typography>
       </Paper>
     );
@@ -51,13 +50,13 @@ export default function {{PascalFeatureName}&#125;Detail({
   };
 
   return (
-    <Paper sx=&#123;{ p: 3 }&#125;>
-      <Box sx=&#123;{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }&#125;>
+    <Paper sx=\{\{ p: 3 \}\}>
+      <Box sx=\{\{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 \}\}>
         <Typography variant="h5" component="h2">
-          { {{featureName}&#125;.name }
+          { {{featureName}}.name }
         </Typography>
 
-        <Box sx=&#123;{ display: 'flex', gap: 1 }&#125;>
+        <Box sx=\{\{ display: 'flex', gap: 1 \}\}>
           <Button
             startIcon={<EditIcon />}
             onClick={onEdit}
@@ -81,7 +80,7 @@ export default function {{PascalFeatureName}&#125;Detail({
         </Box>
       </Box>
 
-      <Divider sx=&#123;{ mb: 3 }&#125; />
+      <Divider sx=\{\{ mb: 3 \}\}; />
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
@@ -89,7 +88,7 @@ export default function {{PascalFeatureName}&#125;Detail({
             ID
           </Typography>
           <Typography variant="body1" gutterBottom>
-            { {{featureName}&#125;._id }
+            { {{featureName}}._id }
           </Typography>
         </Grid>
 
@@ -98,17 +97,17 @@ export default function {{PascalFeatureName}&#125;Detail({
             Created At
           </Typography>
           <Typography variant="body1" gutterBottom>
-            { formatDate({{featureName}&#125;.createdAt) }
+            { formatDate({{featureName}}.createdAt) }
           </Typography>
         </Grid>
 
-        { {{featureName}&#125;.description && (
+        { {{featureName}}.description && (
           <Grid item xs={12}>
             <Typography variant="body2" color="text.secondary">
               Description
             </Typography>
             <Typography variant="body1" paragraph>
-              { {{featureName}&#125;.description }
+              { {{featureName}}.description }
             </Typography>
           </Grid>
         )}
@@ -118,4 +117,3 @@ export default function {{PascalFeatureName}&#125;Detail({
     </Paper>
   );
 }
-{{{{/raw}&#125;}&#125;

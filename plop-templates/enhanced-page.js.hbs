@@ -1,8 +1,8 @@
 'use client';
 
 /**
- * @file {{proper featureNamePlural}&#125; listing page
- * @module app/admin/{{featureNamePlural}&#125;/page
+ * @file {{proper featureNamePlural}} listing page
+ * @module app/admin/{{featureNamePlural}}/page
  */
 
 import React, { useState, useEffect } from 'react';
@@ -20,15 +20,15 @@ import {
 import { Add as AddIcon, Search as SearchIcon } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import {{pascalCase featureName}&#125;List from '@/components/admin/{{featureNamePlural}&#125;/{{pascalCase featureName}&#125;List';
+import {{pascalCase featureName}}List from '@/components/admin/{{featureNamePlural}}/{{pascalCase featureName}}List';
 
 /**
- * Renders the {{proper featureNamePlural}&#125; admin listing page.
+ * Renders the {{proper featureNamePlural}} admin listing page.
  * @returns {JSX.Element}
  */
-export default function {{pascalCase featureNamePlural}&#125;Page() {
+export default function {{pascalCase featureNamePlural}}Page() {
   const router = useRouter();
-  const [{{featureNamePlural}&#125;, set{{featureNamePlural}&#125;] = useState([]);
+  const [{{featureNamePlural}}, set{{featureNamePlural}}] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -39,7 +39,7 @@ export default function {{pascalCase featureNamePlural}&#125;Page() {
     pages: 0,
   });
 
-  const fetch{{featureNamePlural}&#125; = async (page = 1, search = '') => {
+  const fetch{{featureNamePlural}} = async (page = 1, search = '') => {
     try {
       setLoading(true);
       setError('');
@@ -53,25 +53,25 @@ export default function {{pascalCase featureNamePlural}&#125;Page() {
         queryParams.append('search', search);
       }
 
-      const response = await fetch(`/api/{{featureNamePlural}&#125;?${queryParams.toString()}`);
+      const response = await fetch(`/api/{{featureNamePlural}}?${queryParams.toString()}`);
       const result = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error || 'Failed to fetch {{featureNamePlural}&#125;');
+        throw new Error(result.error || 'Failed to fetch {{featureNamePlural}}');
       }
 
-      set{{featureNamePlural}&#125;(result.data.{{featureNamePlural}&#125;);
+      set{{featureNamePlural}}(result.data.{{featureNamePlural}});
       setPagination(result.data.pagination);
     } catch (err) {
-      console.error('Error fetching {{featureNamePlural}&#125;:', err);
-      setError(err.message || 'An error occurred while fetching {{featureNamePlural}&#125;');
+      console.error('Error fetching {{featureNamePlural}}:', err);
+      setError(err.message || 'An error occurred while fetching {{featureNamePlural}}');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetch{{featureNamePlural}&#125;(pagination.page, searchTerm);
+    fetch{{featureNamePlural}}(pagination.page, searchTerm);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagination.page, searchTerm]);
 
@@ -81,34 +81,34 @@ export default function {{pascalCase featureNamePlural}&#125;Page() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    fetch{{featureNamePlural}&#125;(1, searchTerm);
+    fetch{{featureNamePlural}}(1, searchTerm);
   };
 
   const handleCreateClick = () => {
-    router.push('/admin/{{featureNamePlural}&#125;/create');
+    router.push('/admin/{{featureNamePlural}}/create');
   };
 
-  const handle{{pascalCase featureName}&#125;Click = (id) => {
-    router.push(`/admin/{{featureNamePlural}&#125;/${id}`);
+  const handle{{pascalCase featureName}}Click = (id) => {
+    router.push(`/admin/{{featureNamePlural}}/${id}`);
   };
 
   return (
     <Container maxWidth="lg">
-      <Box sx=&#123;{ py: 4 }&#125;>
-        <Box sx=&#123;{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }&#125;>
+      <Box sx=\{\{ py: 4 \}\}>
+        <Box sx=\{\{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 \}\}>
           <Typography variant="h4" component="h1">
-            {{proper featureNamePlural}&#125;
+            {{proper featureNamePlural}}
           </Typography>
           <Button variant="contained" startIcon={<AddIcon />} onClick={handleCreateClick}>
-            Create {{proper featureName}&#125;
+            Create {{proper featureName}}
           </Button>
         </Box>
 
-        <Paper sx=&#123;{ p: 3, mb: 4 }&#125;>
+        <Paper sx=\{\{ p: 3, mb: 4 \}\}>
           <form onSubmit={handleSearch}>
             <TextField
               fullWidth
-              placeholder="Search {{featureNamePlural}&#125;..."
+              placeholder="Search {{featureNamePlural}}..."
               value={searchTerm}
               onChange={handleSearchChange}
               InputProps={{
@@ -124,41 +124,41 @@ export default function {{pascalCase featureNamePlural}&#125;Page() {
                     </Button>
                   </InputAdornment>
                 ),
-              }&#125;
+              }}
             />
           </form>
         </Paper>
 
         {loading && (
-          <Box sx=&#123;{ display: 'flex', justifyContent: 'center', py: 8 }&#125;>
+          <Box sx=\{\{ display: 'flex', justifyContent: 'center', py: 8 \}\}>
             <CircularProgress />
           </Box>
         )}
 
         {error && (
-          <Alert severity="error" sx=&#123;{ mb: 3 }&#125;>
+          <Alert severity="error" sx=\{\{ mb: 3 \}\}>
             {error}
           </Alert>
         )}
 
-        {!loading && !error && {{featureNamePlural}&#125;.length === 0 && (
-          <Paper sx=&#123;{ p: 4, mb: 3, textAlign: 'center' }&#125;>
-            <Typography variant="h6" sx=&#123;{ mb: 2 }&#125;>
-              No {{featureNamePlural}&#125; found
+        {!loading && !error && {{featureNamePlural}}.length === 0 && (
+          <Paper sx=\{\{ p: 4, mb: 3, textAlign: 'center' \}\}>
+            <Typography variant="h6" sx=\{\{ mb: 2 \}\}>
+              No {{featureNamePlural}} found
             </Typography>
             <Typography paragraph color="text.secondary">
-              Get started by creating your first {{featureName}&#125;.
+              Get started by creating your first {{featureName}}.
             </Typography>
-            <Button variant="contained" startIcon={<AddIcon />} onClick={handleCreateClick} sx=&#123;{ mt: 2 }&#125;>
-              Create {{proper featureName}&#125;
+            <Button variant="contained" startIcon={<AddIcon />} onClick={handleCreateClick} sx=\{\{ mt: 2 \}\}>
+              Create {{proper featureName}}
             </Button>
           </Paper>
         )}
 
-        {!loading && !error && {{featureNamePlural}&#125;.length > 0 && (
-          <{{pascalCase featureName}&#125;List
-            {{featureNamePlural}&#125;={{{featureNamePlural}&#125;}
-            onItemClick={handle{{pascalCase featureName}&#125;Click}
+        {!loading && !error && {{featureNamePlural}}.length > 0 && (
+          <{{pascalCase featureName}}List
+            {{featureNamePlural}}={{{featureNamePlural}}}
+            onItemClick={handle{{pascalCase featureName}}Click}
             pagination={pagination}
             onPageChange={(newPage) => setPagination({ ...pagination, page: newPage })}
           />

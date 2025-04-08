@@ -1,26 +1,26 @@
 /**
- * @file API routes for {{featureNamePlural}&#125; collection
- * @module app/api/{{featureNamePlural}&#125;
+ * @file API routes for {{featureNamePlural}} collection
+ * @module app/api/{{featureNamePlural}}
  */
 
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import authOptions from '@/lib/auth/config';
 import connectDB from '@/lib/db/connect';
-import {{pascalCase featureName}&#125; from '@/models/{{featureName}&#125;.model';
+import {{pascalCase featureName}} from '@/models/{{featureName}}.model';
 
 /**
- * Handle GET requests to fetch {{featureNamePlural}&#125;
+ * Handle GET requests to fetch {{featureNamePlural}}
  * Optional query parameters for filtering, pagination, and sorting
  * 
  * @async
  * @function GET
  * @param {Request} request - The incoming request object
- * @returns {Promise<NextResponse>} JSON response with {{featureNamePlural}&#125; data or error
+ * @returns {Promise<NextResponse>} JSON response with {{featureNamePlural}} data or error
  * 
  * @example
- * // Get all {{featureNamePlural}&#125; with pagination
- * GET /api/{{featureNamePlural}&#125;?page=1&limit=10&sort=name&order=asc
+ * // Get all {{featureNamePlural}} with pagination
+ * GET /api/{{featureNamePlural}}?page=1&limit=10&sort=name&order=asc
  */
 export async function GET(request) {
   try {
@@ -51,21 +51,21 @@ export async function GET(request) {
       };
     }
     
-    // Get {{featureNamePlural}&#125; with pagination
-    const [{{featureNamePlural}&#125;, total] = await Promise.all([
-      {{pascalCase featureName}&#125;
+    // Get {{featureNamePlural}} with pagination
+    const [{{featureNamePlural}}, total] = await Promise.all([
+      {{pascalCase featureName}}
         .find(query)
         .sort({ [sort]: order })
         .skip(skip)
         .limit(limit),
-      {{pascalCase featureName}&#125;.countDocuments(query)
+      {{pascalCase featureName}}.countDocuments(query)
     ]);
     
     // Return success response
     return NextResponse.json({
       success: true,
       data: {
-        {{featureNamePlural}&#125;,
+        {{featureNamePlural}},
         pagination: {
           total,
           page,
@@ -84,19 +84,19 @@ export async function GET(request) {
 }
 
 /**
- * Handle POST requests to create a new {{featureName}&#125;
+ * Handle POST requests to create a new {{featureName}}
  * 
  * @async
  * @function POST
- * @param {Request} request - The incoming request with {{featureName}&#125; data
- * @returns {Promise<NextResponse>} JSON response with created {{featureName}&#125; or error
+ * @param {Request} request - The incoming request with {{featureName}} data
+ * @returns {Promise<NextResponse>} JSON response with created {{featureName}} or error
  * 
  * @example
- * // Create a new {{featureName}&#125;
- * POST /api/{{featureNamePlural}&#125;
+ * // Create a new {{featureName}}
+ * POST /api/{{featureNamePlural}}
  * {
- *   "name": "Example {{proper featureName}&#125;",
- *   "description": "This is an example {{featureName}&#125;"
+ *   "name": "Example {{proper featureName}}",
+ *   "description": "This is an example {{featureName}}"
  * }
  */
 export async function POST(request) {
@@ -116,19 +116,19 @@ export async function POST(request) {
     // Get request body
     const data = await request.json();
     
-    // Create new {{featureName}&#125;
-    const {{featureName}&#125; = new {{pascalCase featureName}&#125;({
+    // Create new {{featureName}}
+    const {{featureName}} = new {{pascalCase featureName}}({
       ...data,
       // Add userId from session if applicable
       userId: session.user.id
     });
     
     // Save to database
-    await {{featureName}&#125;.save();
+    await {{featureName}}.save();
     
     // Return success response
     return NextResponse.json(
-      { success: true, data: {{featureName}&#125; },
+      { success: true, data: {{featureName}} },
       { status: 201 }
     );
   } catch (error) {

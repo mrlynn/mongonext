@@ -1,18 +1,18 @@
 /**
- * @file {{modelName}&#125; model definition with mongoose schema
- * @module models/{{modelName}&#125;
+ * @file {{modelName}} model definition with mongoose schema
+ * @module models/{{modelName}}
  */
 
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 /**
- * {{proper modelName}&#125; schema definition for MongoDB
- * @typedef {Object} {{pascalCase modelName}&#125;Schema
+ * {{proper modelName}} schema definition for MongoDB
+ * @typedef {Object} {{pascalCase modelName}}Schema
  */
-const {{modelName}&#125;Schema = new Schema({
+const {{modelName}}Schema = new Schema({
   /**
-   * Name of the {{modelName}&#125;
+   * Name of the {{modelName}}
    * @type {String}
    * @required
    */
@@ -24,7 +24,7 @@ const {{modelName}&#125;Schema = new Schema({
   },
   
   /**
-   * Description of the {{modelName}&#125;
+   * Description of the {{modelName}}
    * @type {String}
    */
   description: { 
@@ -34,7 +34,7 @@ const {{modelName}&#125;Schema = new Schema({
   },
   
   /**
-   * User who created/owns this {{modelName}&#125;
+   * User who created/owns this {{modelName}}
    * @type {mongoose.Schema.Types.ObjectId}
    * @ref 'User'
    */
@@ -54,13 +54,13 @@ const {{modelName}&#125;Schema = new Schema({
 });
 
 // Create indexes for better query performance
-{{modelName}&#125;Schema.index({ name: 1 });
-{{modelName}&#125;Schema.index({ userId: 1 });
+{{modelName}}Schema.index({ name: 1 });
+{{modelName}}Schema.index({ userId: 1 });
 
 /**
- * {{proper modelName}&#125; model compiled from schema
+ * {{proper modelName}} model compiled from schema
  * @type {mongoose.Model}
  */
-const {{pascalCase modelName}&#125; = mongoose.models.{{pascalCase modelName}&#125; || mongoose.model('{{pascalCase modelName}&#125;', {{modelName}&#125;Schema);
+const {{pascalCase modelName}} = mongoose.models.{{pascalCase modelName}} || mongoose.model('{{pascalCase modelName}}', {{modelName}}Schema);
 
-export default {{pascalCase modelName}&#125;;
+export default {{pascalCase modelName}};
