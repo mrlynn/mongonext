@@ -1,13 +1,13 @@
 /**
- * @file API routes for individual {{featureName}&#125; operations
- * @module app/api/{{featureNamePlural}&#125;/[id]
+ * @file API routes for individual {{featureName}} operations
+ * @module app/api/{{featureNamePlural}}/[id]
  */
 
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import authOptions from '@/lib/auth/config';
 import connectDB from '@/lib/db/connect';
-import {{pascalCase featureName}&#125; from '@/models/{{featureName}&#125;.model';
+import {{pascalCase featureName}} from '@/models/{{featureName}}.model';
 
 /**
  * Helper function to check if ObjectId is valid
@@ -19,18 +19,18 @@ function isValidObjectId(id) {
 }
 
 /**
- * Handle GET requests to fetch a single {{featureName}&#125; by ID
+ * Handle GET requests to fetch a single {{featureName}} by ID
  * 
  * @async
  * @function GET
  * @param {Request} request - The incoming request
  * @param {Object} params - Route parameters
- * @param {string} params.id - {{pascalCase featureName}&#125; ID
- * @returns {Promise<NextResponse>} JSON response with {{featureName}&#125; data or error
+ * @param {string} params.id - {{pascalCase featureName}} ID
+ * @returns {Promise<NextResponse>} JSON response with {{featureName}} data or error
  * 
  * @example
- * // Get a single {{featureName}&#125;
- * GET /api/{{featureNamePlural}&#125;/60d21b4667d0d8992e610c85
+ * // Get a single {{featureName}}
+ * GET /api/{{featureNamePlural}}/60d21b4667d0d8992e610c85
  */
 export async function GET(request, { params }) {
   try {
@@ -48,13 +48,13 @@ export async function GET(request, { params }) {
       );
     }
     
-    // Find {{featureName}&#125; by ID
-    const {{featureName}&#125; = await {{pascalCase featureName}&#125;.findById(id);
+    // Find {{featureName}} by ID
+    const {{featureName}} = await {{pascalCase featureName}}.findById(id);
     
-    // Check if {{featureName}&#125; exists
-    if (!{{featureName}&#125;) {
+    // Check if {{featureName}} exists
+    if (!{{featureName}}) {
       return NextResponse.json(
-        { success: false, error: '{{pascalCase featureName}&#125; not found' },
+        { success: false, error: '{{pascalCase featureName}} not found' },
         { status: 404 }
       );
     }
@@ -62,7 +62,7 @@ export async function GET(request, { params }) {
     // Return success response
     return NextResponse.json({
       success: true,
-      data: {{featureName}&#125;
+      data: {{featureName}}
     });
   } catch (error) {
     console.error('API error:', error);
@@ -72,22 +72,22 @@ export async function GET(request, { params }) {
     );
   }
 }
-
+ 
 /**
- * Handle PUT/PATCH requests to update a {{featureName}&#125;
+ * Handle PUT/PATCH requests to update a {{featureName}}
  * 
  * @async
  * @function PUT
  * @param {Request} request - The incoming request with update data
  * @param {Object} params - Route parameters
- * @param {string} params.id - {{pascalCase featureName}&#125; ID
- * @returns {Promise<NextResponse>} JSON response with updated {{featureName}&#125; or error
+ * @param {string} params.id - {{pascalCase featureName}} ID
+ * @returns {Promise<NextResponse>} JSON response with updated {{featureName}} or error
  * 
  * @example
- * // Update a {{featureName}&#125;
- * PUT /api/{{featureNamePlural}&#125;/60d21b4667d0d8992e610c85
+ * // Update a {{featureName}}
+ * PUT /api/{{featureNamePlural}}/60d21b4667d0d8992e610c85
  * {
- *   "name": "Updated {{pascalCase featureName}&#125; Name",
+ *   "name": "Updated {{pascalCase featureName}} Name",
  *   "description": "Updated description"
  * }
  */
@@ -100,7 +100,7 @@ export async function PATCH(request, { params }) {
 }
 
 /**
- * Helper function for updating a {{featureName}&#125;
+ * Helper function for updating a {{featureName}}
  */
 async function updateItem(request, { params }) {
   try {
@@ -130,17 +130,17 @@ async function updateItem(request, { params }) {
     // Get request body
     const data = await request.json();
     
-    // Find and update {{featureName}&#125;
-    const {{featureName}&#125; = await {{pascalCase featureName}&#125;.findByIdAndUpdate(
+    // Find and update {{featureName}}
+    const {{featureName}} = await {{pascalCase featureName}}.findByIdAndUpdate(
       id,
       data,
       { new: true, runValidators: true }
     );
     
-    // Check if {{featureName}&#125; exists
-    if (!{{featureName}&#125;) {
+    // Check if {{featureName}} exists
+    if (!{{featureName}}) {
       return NextResponse.json(
-        { success: false, error: '{{pascalCase featureName}&#125; not found' },
+        { success: false, error: '{{pascalCase featureName}} not found' },
         { status: 404 }
       );
     }
@@ -148,7 +148,7 @@ async function updateItem(request, { params }) {
     // Return success response
     return NextResponse.json({
       success: true,
-      data: {{featureName}&#125;
+      data: {{featureName}}
     });
   } catch (error) {
     console.error('API error:', error);
@@ -160,18 +160,18 @@ async function updateItem(request, { params }) {
 }
 
 /**
- * Handle DELETE requests to remove a {{featureName}&#125;
+ * Handle DELETE requests to remove a {{featureName}}
  * 
  * @async
  * @function DELETE
  * @param {Request} request - The incoming request
  * @param {Object} params - Route parameters
- * @param {string} params.id - {{pascalCase featureName}&#125; ID
+ * @param {string} params.id - {{pascalCase featureName}} ID
  * @returns {Promise<NextResponse>} JSON response with success or error
  * 
  * @example
- * // Delete a {{featureName}&#125;
- * DELETE /api/{{featureNamePlural}&#125;/60d21b4667d0d8992e610c85
+ * // Delete a {{featureName}}
+ * DELETE /api/{{featureNamePlural}}/60d21b4667d0d8992e610c85
  */
 export async function DELETE(request, { params }) {
   try {
@@ -198,13 +198,13 @@ export async function DELETE(request, { params }) {
       );
     }
     
-    // Find and delete {{featureName}&#125;
-    const {{featureName}&#125; = await {{pascalCase featureName}&#125;.findByIdAndDelete(id);
+    // Find and delete {{featureName}}
+    const {{featureName}} = await {{pascalCase featureName}}.findByIdAndDelete(id);
     
-    // Check if {{featureName}&#125; exists
-    if (!{{featureName}&#125;) {
+    // Check if {{featureName}} exists
+    if (!{{featureName}}) {
       return NextResponse.json(
-        { success: false, error: '{{pascalCase featureName}&#125; not found' },
+        { success: false, error: '{{pascalCase featureName}} not found' },
         { status: 404 }
       );
     }
@@ -212,7 +212,7 @@ export async function DELETE(request, { params }) {
     // Return success response
     return NextResponse.json({
       success: true,
-      message: '{{pascalCase featureName}&#125; deleted successfully'
+      message: '{{pascalCase featureName}} deleted successfully'
     });
   } catch (error) {
     console.error('API error:', error);

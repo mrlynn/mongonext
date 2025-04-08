@@ -2,7 +2,7 @@
  * @file API routes for {{routeName}} collection
  * @module app/api/{{routeName}}
  */
-
+ 
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import authOptions from '@/lib/auth/config';
@@ -112,7 +112,7 @@ export async function POST(request) {
         { status: 401 }
       );
     }
-    
+     
     // Connect to database
     await connectDB();
     
