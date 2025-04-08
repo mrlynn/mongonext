@@ -35,7 +35,7 @@ export default function [[PascalFeatureName]]Detail({
 }) {
   if (![[featureName]]) {
     return (
-      <Paper sx={{ p: 3, textAlign: 'center' }}>
+      <Paper sx=\{{ p: 3, textAlign: 'center' }}>
         <Typography>
           No [[featureName]] data available.
         </Typography>
@@ -50,13 +50,13 @@ export default function [[PascalFeatureName]]Detail({
   };
 
   return (
-    <Paper sx={{ p: 3 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+    <Paper sx=\{{ p: 3 }}>
+      <Box sx=\{{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
         <Typography variant="h5" component="h2">
-          { [[featureName]].name }
+          {[[featureName]].name}
         </Typography>
 
-        <Box sx={{ display: 'flex', gap: 1 }}>
+        <Box sx=\{{ display: 'flex', gap: 1 }}>
           <Button
             startIcon={<EditIcon />}
             onClick={onEdit}
@@ -80,7 +80,7 @@ export default function [[PascalFeatureName]]Detail({
         </Box>
       </Box>
 
-      <Divider sx={{ mb: 3 }} />
+      <Divider sx=\{{ mb: 3 }} />
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
@@ -88,7 +88,7 @@ export default function [[PascalFeatureName]]Detail({
             ID
           </Typography>
           <Typography variant="body1" gutterBottom>
-            { [[featureName]]._id }
+            {[[featureName]]._id}
           </Typography>
         </Grid>
 
@@ -97,22 +97,18 @@ export default function [[PascalFeatureName]]Detail({
             Created At
           </Typography>
           <Typography variant="body1" gutterBottom>
-            { formatDate([[featureName]].createdAt) }
+            {formatDate([[featureName]].createdAt)}
           </Typography>
         </Grid>
 
-        { [[featureName]].description && (
-          <Grid item xs={12}>
-            <Typography variant="body2" color="text.secondary">
-              Description
-            </Typography>
-            <Typography variant="body1" paragraph>
-              { [[featureName]].description }
-            </Typography>
-          </Grid>
-        )}
-
-        {/* Add more fields based on your model */}
+        <Grid item xs={12}>
+          <Typography variant="body2" color="text.secondary">
+            Description
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            {[[featureName]].description || 'No description provided'}
+          </Typography>
+        </Grid>
       </Grid>
     </Paper>
   );

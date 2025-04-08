@@ -110,24 +110,33 @@ export default function [[PascalFeatureName]]Form({
 
   return (
     <Paper sx={{ p: 3 }}>
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
-      )}
-
-      <Box component="form" onSubmit={handleSubmit} noValidate>
+      <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Typography variant="h6" gutterBottom>
+              {isEditMode ? 'Edit' : 'Create'} [[proper featureName]]
+            </Typography>
+            <Divider sx={{ mb: 3 }} />
+          </Grid>
+
+          {error && (
+            <Grid item xs={12}>
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {error}
+              </Alert>
+            </Grid>
+          )}
+
           <Grid item xs={12}>
             <TextField
               fullWidth
-              required
               label="Name"
               name="name"
               value={formData.name}
               onChange={handleChange}
               error={!!errors.name}
-              helperText={errors.name || ' '}
+              helperText={errors.name}
+              required
               disabled={isLoading}
             />
           </Grid>
@@ -139,38 +148,35 @@ export default function [[PascalFeatureName]]Form({
               name="description"
               value={formData.description}
               onChange={handleChange}
-              error={!!errors.description}
-              helperText={errors.description || ' '}
-              disabled={isLoading}
               multiline
-              rows={3}
+              rows={4}
+              disabled={isLoading}
             />
           </Grid>
 
           <Grid item xs={12}>
-            <Divider sx={{ my: 2 }} />
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-              <Button
-                variant="outlined"
-                onClick={handleCancel}
-                disabled={isLoading}
-              >
-                Cancel
-              </Button>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 2 }}>
+              {onCancel && (
+                <Button
+                  variant="outlined"
+                  onClick={onCancel}
+                  disabled={isLoading}
+                >
+                  Cancel
+                </Button>
+              )}
               <Button
                 type="submit"
                 variant="contained"
                 disabled={isLoading}
-                sx={{ position: 'relative' }}
+                startIcon={isLoading ? <CircularProgress size={20} /> : null}
               >
-                {isLoading ? (
-                  <CircularProgress size={24} sx={{ position: 'absolute' }} />
-                ) : isEditMode ? 'Update' : 'Create'}
+                {isLoading ? 'Saving...' : isEditMode ? 'Update' : 'Create'}
               </Button>
             </Box>
           </Grid>
         </Grid>
-      </Box>
+      </form>
     </Paper>
   );
 }

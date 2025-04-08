@@ -98,35 +98,36 @@ export default function Edit[[PascalFeatureName]]Page({ params }) {
         throw new Error(result.error || 'Failed to delete [[featureName]]');
       }
 
-      setIsDeleteModalOpen(false);
-      router.push('/dashboard/[[featureNamePlural]]');
+      router.push('/admin/[[featureNamePlural]]');
       router.refresh();
     } catch (err) {
       console.error('Error deleting [[featureName]]:', err);
       setError(err.message || 'An error occurred while deleting the [[featureName]]');
       setIsDeleting(false);
-      setIsDeleteModalOpen(false);
     }
   };
 
   if (loading) {
     return (
       <Container maxWidth="lg">
-        <Box sx={{ py: 4, display: 'flex', justifyContent: 'center' }}>
+        <Box sx=\{{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
           <CircularProgress />
         </Box>
       </Container>
     );
   }
 
-  if (error && ![[[featureName]]]) {
+  if (error && ![[featureName]]) {
     return (
       <Container maxWidth="lg">
-        <Box sx={{ py: 4 }}>
-          <Alert severity="error" sx={{ mb: 3 }}>
+        <Box sx=\{{ py: 4 }}>
+          <Alert severity="error" sx=\{{ mb: 3 }}>
             {error}
           </Alert>
-          <Button component={Link} href="/dashboard/[[featureNamePlural]]" variant="outlined">
+          <Button 
+            variant="contained" 
+            onClick={() => router.push('/admin/[[featureNamePlural]]')}
+          >
             Back to [[proper featureNamePlural]]
           </Button>
         </Box>
@@ -136,68 +137,116 @@ export default function Edit[[PascalFeatureName]]Page({ params }) {
 
   return (
     <Container maxWidth="lg">
-      <Box sx={{ py: 4 }}>
-        <Breadcrumbs sx={{ mb: 2 }}>
-          <MuiLink component={Link} href="/dashboard" underline="hover" color="inherit">
+      <Box sx=\{{ py: 4 }}>
+        <Breadcrumbs sx=\{{ mb: 2 }}>
+          <MuiLink 
+            component={Link} 
+            href="/admin"
+            underline="hover"
+            color="inherit"
+          >
             Dashboard
           </MuiLink>
-          <MuiLink component={Link} href="/dashboard/[[featureNamePlural]]" underline="hover" color="inherit">
+          <MuiLink 
+            component={Link} 
+            href="/admin/[[featureNamePlural]]"
+            underline="hover"
+            color="inherit"
+          >
             [[proper featureNamePlural]]
           </MuiLink>
-          <Typography color="text.primary">[[[featureName]]]?.name || id</Typography>
+          <Typography color="text.primary">
+            {isEditing ? 'Edit' : 'View'} [[proper featureName]]
+          </Typography>
         </Breadcrumbs>
 
-        <Typography variant="h4" component="h1" gutterBottom>
-          {isEditing ? 'Edit' : ''} [[proper featureName]]: [[[featureName]]]?.name
-        </Typography>
+        <Box sx=\{{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+          <Typography variant="h4" component="h1">
+            {isEditing ? 'Edit' : 'View'} [[proper featureName]]
+          </Typography>
+          
+          {!isEditing && (
+            <Box sx=\{{ display: 'flex', gap: 1 }}>
+              <Button 
+                variant="outlined" 
+                onClick={handleEdit}
+              >
+                Edit
+              </Button>
+              [[#if includeDelete]]
+              <Button 
+                variant="outlined" 
+                color="error" 
+                onClick={handleDelete}
+              >
+                Delete
+              </Button>
+              [[/if]]
+            </Box>
+          )}
+        </Box>
 
         {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>
+          <Alert severity="error" sx=\{{ mb: 3 }}>
             {error}
           </Alert>
         )}
 
         {isEditing ? (
           <[[PascalFeatureName]]Form 
-            [[featureName]]={[[[featureName]]]} 
+            [[featureName]]={[[featureName]]} 
             onSubmit={handleSubmit} 
-            onCancel={handleCancelEdit}
+            onCancel={handleCancelEdit} 
           />
         ) : (
           <[[PascalFeatureName]]Detail 
-            [[featureName]]={[[[featureName]]]} 
-            onEdit={handleEdit} 
+            [[featureName]]={[[featureName]]} 
+            onEdit={handleEdit}
+            [[#if includeDelete]]
             onDelete={handleDelete}
+            [[/if]]
           />
         )}
-      </Box>
 
-      <Modal open={isDeleteModalOpen} onClose={handleCancelDelete} aria-labelledby="delete-modal-title">
-        <Paper
-          sx={{ 
+        <Modal
+          open={isDeleteModalOpen}
+          onClose={handleCancelDelete}
+          aria-labelledby="delete-modal-title"
+          aria-describedby="delete-modal-description"
+        >
+          <Box sx=\{{ 
             position: 'absolute',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             width: 400,
+            bgcolor: 'background.paper',
+            boxShadow: 24,
             p: 4,
-            outline: 'none'
-          }}
-        >
-          <Typography id="delete-modal-title" variant="h6" component="h2" gutterBottom>
-            Confirm Delete
-          </Typography>
-          <Typography paragraph>
-            Are you sure you want to delete "[[[featureName]]]?.name"? This action cannot be undone.
-          </Typography>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3 }}>
-            <Button onClick={handleCancelDelete} disabled={isDeleting}>Cancel</Button>
-            <Button onClick={handleConfirmDelete} variant="contained" color="error" disabled={isDeleting}>
-              {isDeleting ? <CircularProgress size={24} /> : 'Delete'}
-            </Button>
+            borderRadius: 1
+          }}>
+            <Typography id="delete-modal-title" variant="h6" component="h2" gutterBottom>
+              Delete [[proper featureName]]
+            </Typography>
+            <Typography id="delete-modal-description" sx=\{{ mb: 3 }}>
+              Are you sure you want to delete this [[featureName]]? This action cannot be undone.
+            </Typography>
+            <Box sx=\{{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+              <Button onClick={handleCancelDelete} disabled={isDeleting}>
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleConfirmDelete} 
+                color="error" 
+                variant="contained"
+                disabled={isDeleting}
+              >
+                {isDeleting ? 'Deleting...' : 'Delete'}
+              </Button>
+            </Box>
           </Box>
-        </Paper>
-      </Modal>
+        </Modal>
+      </Box>
     </Container>
   );
 }

@@ -20,13 +20,13 @@ import {
 import { Add as AddIcon, Search as SearchIcon } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import [[pascalCase featureName]]List from '@/components/admin/[[featureNamePlural]]/[[pascalCase featureName]]List';
+import [[PascalFeatureName]]List from '@/components/admin/[[featureNamePlural]]/[[PascalFeatureName]]List';
 
 /**
  * Renders the [[proper featureNamePlural]] admin listing page.
  * @returns {JSX.Element}
  */
-export default function [[pascalCase featureNamePlural]]Page() {
+export default function [[PascalFeatureNamePlural]]Page() {
   const router = useRouter();
   const [[[featureNamePlural]]], set[[[featureNamePlural]]] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -88,7 +88,7 @@ export default function [[pascalCase featureNamePlural]]Page() {
     router.push('/admin/[[featureNamePlural]]/create');
   };
 
-  const handle[[pascalCase featureName]]Click = (id) => {
+  const handle[[PascalFeatureName]]Click = (id) => {
     router.push(`/admin/[[featureNamePlural]]/${id}`);
   };
 
@@ -99,7 +99,11 @@ export default function [[pascalCase featureNamePlural]]Page() {
           <Typography variant="h4" component="h1">
             [[proper featureNamePlural]]
           </Typography>
-          <Button variant="contained" startIcon={<AddIcon />} onClick={handleCreateClick}>
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={handleCreateClick}
+          >
             Create [[proper featureName]]
           </Button>
         </Box>
@@ -117,23 +121,10 @@ export default function [[pascalCase featureNamePlural]]Page() {
                     <SearchIcon />
                   </InputAdornment>
                 ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Button variant="contained" size="small" type="submit">
-                      Search
-                    </Button>
-                  </InputAdornment>
-                ),
               }}
             />
           </form>
         </Paper>
-
-        {loading && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
-            <CircularProgress />
-          </Box>
-        )}
 
         {error && (
           <Alert severity="error" sx={{ mb: 3 }}>
@@ -141,26 +132,39 @@ export default function [[pascalCase featureNamePlural]]Page() {
           </Alert>
         )}
 
-        {!loading && !error && [[[featureNamePlural]]].length === 0 && (
-          <Paper sx={{ p: 4, mb: 3, textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
-              No [[featureNamePlural]] found
-            </Typography>
-            <Typography paragraph color="text.secondary">
-              Get started by creating your first [[featureName]].
-            </Typography>
-            <Button variant="contained" startIcon={<AddIcon />} onClick={handleCreateClick} sx={{ mt: 2 }}>
-              Create [[proper featureName]]
-            </Button>
-          </Paper>
-        )}
-
-        {!loading && !error && [[[featureNamePlural]]].length > 0 && (
-          <[[pascalCase featureName]]List
-            [[[featureNamePlural]]]={[[[featureNamePlural]]]}
-            onItemClick={handle[[pascalCase featureName]]Click}
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <[[PascalFeatureName]]List
+            [[featureNamePlural]]={[[[featureNamePlural]]]}
+            onItemClick={handle[[PascalFeatureName]]Click}
             pagination={pagination}
-            onPageChange={(newPage) => setPagination({ ...pagination, page: newPage })}
+            onPageChange={(page) => setPagination((prev) => ({ ...prev, page }))}
+            onLimitChange={(limit) => setPagination((prev) => ({ ...prev, limit, page: 1 }))}
+            [[#if includeDelete]]
+            onDeleteItem={async (id) => {
+              if (window.confirm('Are you sure you want to delete this [[featureName]]?')) {
+                try {
+                  const response = await fetch(`/api/[[featureNamePlural]]/${id}`, {
+                    method: 'DELETE',
+                  });
+                  const result = await response.json();
+
+                  if (!result.success) {
+                    throw new Error(result.error || 'Failed to delete [[featureName]]');
+                  }
+
+                  // Refresh the list
+                  fetch[[[featureNamePlural]]](pagination.page, searchTerm);
+                } catch (err) {
+                  console.error('Error deleting [[featureName]]:', err);
+                  setError(err.message || 'An error occurred while deleting the [[featureName]]');
+                }
+              }
+            }}
+            [[/if]]
           />
         )}
       </Box>
