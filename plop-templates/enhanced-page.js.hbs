@@ -94,8 +94,8 @@ export default function {{pascalCase featureNamePlural}}Page() {
 
   return (
     <Container maxWidth="lg">
-      <Box sx=\{\{ py: 4 \}\}>
-        <Box sx=\{\{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 \}\}>
+      <Box sx={{ py: 4 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
           <Typography variant="h4" component="h1">
             {{proper featureNamePlural}}
           </Typography>
@@ -104,14 +104,14 @@ export default function {{pascalCase featureNamePlural}}Page() {
           </Button>
         </Box>
 
-        <Paper sx=\{\{ p: 3, mb: 4 \}\}>
+        <Paper sx={{ p: 3, mb: 4 }}>
           <form onSubmit={handleSearch}>
             <TextField
               fullWidth
               placeholder="Search {{featureNamePlural}}..."
               value={searchTerm}
               onChange={handleSearchChange}
-              InputProps=\{\{
+              InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
                     <SearchIcon />
@@ -124,32 +124,32 @@ export default function {{pascalCase featureNamePlural}}Page() {
                     </Button>
                   </InputAdornment>
                 ),
-              \}\}
+              }}
             />
           </form>
         </Paper>
 
         {loading && (
-          <Box sx=\{\{ display: 'flex', justifyContent: 'center', py: 8 \}\}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
             <CircularProgress />
           </Box>
         )}
 
         {error && (
-          <Alert severity="error" sx=\{\{ mb: 3 \}\}>
+          <Alert severity="error" sx={{ mb: 3 }}>
             {error}
           </Alert>
         )}
 
         {!loading && !error && {{featureNamePlural}}.length === 0 && (
-          <Paper sx=\{\{ p: 4, mb: 3, textAlign: 'center' \}\}>
-            <Typography variant="h6" sx=\{\{ mb: 2 \}\}>
+          <Paper sx={{ p: 4, mb: 3, textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ mb: 2 }}>
               No {{featureNamePlural}} found
             </Typography>
             <Typography paragraph color="text.secondary">
               Get started by creating your first {{featureName}}.
             </Typography>
-            <Button variant="contained" startIcon={<AddIcon />} onClick={handleCreateClick} sx=\{\{ mt: 2 \}\}>
+            <Button variant="contained" startIcon={<AddIcon />} onClick={handleCreateClick} sx={{ mt: 2 }}>
               Create {{proper featureName}}
             </Button>
           </Paper>
