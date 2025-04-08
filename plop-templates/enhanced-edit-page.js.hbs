@@ -1,8 +1,8 @@
 'use client';
 
 /**
- * @file Edit {{featureName}&#125; page
- * @module app/dashboard/{{featureNamePlural}&#125;/[id]/page
+ * @file Edit {{featureName}} page
+ * @module app/dashboard/{{featureNamePlural}}/[id]/page
  */
 
 import React, { useState, useEffect } from 'react';
@@ -20,15 +20,14 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import {{PascalFeatureName}&#125;Form from '@/components/dashboard/{{featureNamePlural}&#125;/{{PascalFeatureName}&#125;Form';
-import {{PascalFeatureName}&#125;Detail from '@/components/dashboard/{{featureNamePlural}&#125;/{{PascalFeatureName}&#125;Detail';
+import {{PascalFeatureName}}Form from '@/components/dashboard/{{featureNamePlural}}/{{PascalFeatureName}}Form';
+import {{PascalFeatureName}}Detail from '@/components/dashboard/{{featureNamePlural}}/{{PascalFeatureName}}Detail';
 
-{{{{raw}&#125;}&#125;
-export default function Edit{{PascalFeatureName}&#125;Page({ params }) {
+export default function Edit{{PascalFeatureName}}Page({ params }) {
   const { id } = params;
   const router = useRouter();
 
-  const [{{featureName}&#125;, set{{PascalFeatureName}&#125;] = useState(null);
+  const [{{featureName}}, set{{PascalFeatureName}}] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -36,28 +35,28 @@ export default function Edit{{PascalFeatureName}&#125;Page({ params }) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const fetch{{PascalFeatureName}&#125; = async () => {
+    const fetch{{PascalFeatureName}} = async () => {
       try {
         setLoading(true);
         setError('');
-        const response = await fetch(`/api/{{featureNamePlural}&#125;/${id}`);
+        const response = await fetch(`/api/{{featureNamePlural}}/${id}`);
         const result = await response.json();
 
         if (!result.success) {
-          throw new Error(result.error || '{{pascalCase featureName}&#125; not found');
+          throw new Error(result.error || '{{pascalCase featureName}} not found');
         }
 
-        set{{PascalFeatureName}&#125;(result.data);
+        set{{PascalFeatureName}}(result.data);
       } catch (err) {
-        console.error('Error fetching {{featureName}&#125;:', err);
-        setError(err.message || 'Failed to load {{featureName}&#125;');
+        console.error('Error fetching {{featureName}}:', err);
+        setError(err.message || 'Failed to load {{featureName}}');
       } finally {
         setLoading(false);
       }
     };
 
     if (id) {
-      fetch{{PascalFeatureName}&#125;();
+      fetch{{PascalFeatureName}}();
     }
   }, [id]);
 
@@ -67,7 +66,7 @@ export default function Edit{{PascalFeatureName}&#125;Page({ params }) {
   const handleSubmit = async (data) => {
     try {
       setError('');
-      const response = await fetch(`/api/{{featureNamePlural}&#125;/${id}`, {
+      const response = await fetch(`/api/{{featureNamePlural}}/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -75,14 +74,14 @@ export default function Edit{{PascalFeatureName}&#125;Page({ params }) {
 
       const result = await response.json();
       if (!result.success) {
-        throw new Error(result.error || 'Failed to update {{featureName}&#125;');
+        throw new Error(result.error || 'Failed to update {{featureName}}');
       }
 
-      set{{PascalFeatureName}&#125;(result.data);
+      set{{PascalFeatureName}}(result.data);
       setIsEditing(false);
     } catch (err) {
-      console.error('Error updating {{featureName}&#125;:', err);
-      setError(err.message || 'An error occurred while updating the {{featureName}&#125;');
+      console.error('Error updating {{featureName}}:', err);
+      setError(err.message || 'An error occurred while updating the {{featureName}}');
     }
   };
 
@@ -92,19 +91,19 @@ export default function Edit{{PascalFeatureName}&#125;Page({ params }) {
   const handleConfirmDelete = async () => {
     try {
       setIsDeleting(true);
-      const response = await fetch(`/api/{{featureNamePlural}&#125;/${id}`, { method: 'DELETE' });
+      const response = await fetch(`/api/{{featureNamePlural}}/${id}`, { method: 'DELETE' });
       const result = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error || 'Failed to delete {{featureName}&#125;');
+        throw new Error(result.error || 'Failed to delete {{featureName}}');
       }
 
       setIsDeleteModalOpen(false);
-      router.push('/dashboard/{{featureNamePlural}&#125;');
+      router.push('/dashboard/{{featureNamePlural}}');
       router.refresh();
     } catch (err) {
-      console.error('Error deleting {{featureName}&#125;:', err);
-      setError(err.message || 'An error occurred while deleting the {{featureName}&#125;');
+      console.error('Error deleting {{featureName}}:', err);
+      setError(err.message || 'An error occurred while deleting the {{featureName}}');
       setIsDeleting(false);
       setIsDeleteModalOpen(false);
     }
@@ -113,22 +112,22 @@ export default function Edit{{PascalFeatureName}&#125;Page({ params }) {
   if (loading) {
     return (
       <Container maxWidth="lg">
-        <Box sx=&#123;{ py: 4, display: 'flex', justifyContent: 'center' }&#125;>
+        <Box sx=\{\{ py: 4, display: 'flex', justifyContent: 'center' }}>
           <CircularProgress />
         </Box>
       </Container>
     );
   }
 
-  if (error && !{{featureName}&#125;) {
+  if (error && !{{featureName}}) {
     return (
       <Container maxWidth="lg">
-        <Box sx=&#123;{ py: 4 }&#125;>
-          <Alert severity="error" sx=&#123;{ mb: 3 }&#125;>
+        <Box sx=\{\{ py: 4 \}\}>
+          <Alert severity="error" sx=\{\{ mb: 3 \}\}>
             {error}
           </Alert>
-          <Button component={Link} href="/dashboard/{{featureNamePlural}&#125;" variant="outlined">
-            Back to {{proper featureNamePlural}&#125;
+          <Button component={Link} href="/dashboard/{{featureNamePlural}}" variant="outlined">
+            Back to {{proper featureNamePlural}}
           </Button>
         </Box>
       </Container>
@@ -137,36 +136,36 @@ export default function Edit{{PascalFeatureName}&#125;Page({ params }) {
 
   return (
     <Container maxWidth="lg">
-      <Box sx=&#123;{ py: 4 }&#125;>
-        <Breadcrumbs sx=&#123;{ mb: 2 }&#125;>
+      <Box sx=\{\{ py: 4 \}\}>
+        <Breadcrumbs sx=\{\{ mb: 2 \}\}>
           <MuiLink component={Link} href="/dashboard" underline="hover" color="inherit">
             Dashboard
           </MuiLink>
-          <MuiLink component={Link} href="/dashboard/{{featureNamePlural}&#125;" underline="hover" color="inherit">
-            {{proper featureNamePlural}&#125;
+          <MuiLink component={Link} href="/dashboard/{{featureNamePlural}}" underline="hover" color="inherit">
+            {{proper featureNamePlural}}
           </MuiLink>
-          <Typography color="text.primary">{{featureName}&#125;?.name || id</Typography>
+          <Typography color="text.primary">{{featureName}}?.name || id</Typography>
         </Breadcrumbs>
 
         <Typography variant="h4" component="h1" gutterBottom>
-          {isEditing ? 'Edit' : ''} {{proper featureName}&#125;: {{featureName}&#125;?.name
+          {isEditing ? 'Edit' : ''} {{proper featureName}}: {{featureName}}?.name
         </Typography>
 
         {error && (
-          <Alert severity="error" sx=&#123;{ mb: 3 }&#125;>
+          <Alert severity="error" sx=\{\{ mb: 3 \}\}>
             {error}
           </Alert>
         )}
 
         {isEditing ? (
-          <{{PascalFeatureName}&#125;Form 
-            {{featureName}&#125;={{{featureName}&#125;} 
+          <{{PascalFeatureName}}Form 
+            {{featureName}}={{{featureName}}} 
             onSubmit={handleSubmit} 
             onCancel={handleCancelEdit}
           />
         ) : (
-          <{{PascalFeatureName}&#125;Detail 
-            {{featureName}&#125;={{{featureName}&#125;} 
+          <{{PascalFeatureName}}Detail 
+            {{featureName}}={{{featureName}}} 
             onEdit={handleEdit} 
             onDelete={handleDelete}
           />
@@ -175,7 +174,7 @@ export default function Edit{{PascalFeatureName}&#125;Page({ params }) {
 
       <Modal open={isDeleteModalOpen} onClose={handleCancelDelete} aria-labelledby="delete-modal-title">
         <Paper
-          sx=&#123;{ 
+          sx=\{\{ 
             position: 'absolute',
             top: '50%',
             left: '50%',
@@ -183,15 +182,15 @@ export default function Edit{{PascalFeatureName}&#125;Page({ params }) {
             width: 400,
             p: 4,
             outline: 'none'
-          }&#125;
+          \}\}
         >
           <Typography id="delete-modal-title" variant="h6" component="h2" gutterBottom>
             Confirm Delete
           </Typography>
           <Typography paragraph>
-            Are you sure you want to delete "{{featureName}&#125;?.name"? This action cannot be undone.
+            Are you sure you want to delete "{{featureName}}?.name"? This action cannot be undone.
           </Typography>
-          <Box sx=&#123;{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3 }&#125;>
+          <Box sx=\{\{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3 \}\}>
             <Button onClick={handleCancelDelete} disabled={isDeleting}>Cancel</Button>
             <Button onClick={handleConfirmDelete} variant="contained" color="error" disabled={isDeleting}>
               {isDeleting ? <CircularProgress size={24} /> : 'Delete'}
@@ -202,4 +201,3 @@ export default function Edit{{PascalFeatureName}&#125;Page({ params }) {
     </Container>
   );
 }
-{{{{/raw}&#125;}&#125;
