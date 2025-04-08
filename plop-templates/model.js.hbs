@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-const {{name}}Schema = new Schema({
+const [[name]]Schema = new Schema({
   name: { 
     type: String, 
     required: true 
@@ -11,6 +11,6 @@ const {{name}}Schema = new Schema({
   timestamps: true
 });
 
-const {{name}} = mongoose.models.{{name}} || mongoose.model('{{name}}', {{name}}Schema);
+const [[name]] = mongoose.models.[[name]] || mongoose.model('[[name]]', [[name]]Schema);
 
-export default {{name}};
+export default [[name]];

@@ -1,8 +1,8 @@
 'use client';
 
 /**
- * @file Create {{featureName}} page
- * @module app/admin/{{featureNamePlural}}/create/page
+ * @file Create [[featureName]] page
+ * @module app/admin/[[featureNamePlural]]/create/page
  */
 
 import React, { useState } from 'react';
@@ -16,16 +16,16 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import {{PascalFeatureName}}Form from '@/components/admin/{{featureNamePlural}}/{{PascalFeatureName}}Form';
+import [[PascalFeatureName]]Form from '@/components/admin/[[featureNamePlural]]/[[PascalFeatureName]]Form';
 
 /**
- * Create {{featureName}} page
- * Page for creating a new {{featureName}}
+ * Create [[featureName]] page
+ * Page for creating a new [[featureName]]
  * 
  * @component
- * @returns {React.ReactElement} Create {{featureName}} page
+ * @returns {React.ReactElement} Create [[featureName]] page
  */
-export default function Create{{PascalFeatureName}}Page() {
+export default function Create[[PascalFeatureName]]Page() {
   const router = useRouter();
   const [error, setError] = useState('');
 
@@ -33,7 +33,7 @@ export default function Create{{PascalFeatureName}}Page() {
     try {
       setError('');
 
-      const response = await fetch(`/api/{{featureNamePlural}}`, {
+      const response = await fetch(`/api/[[featureNamePlural]]`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,14 +44,14 @@ export default function Create{{PascalFeatureName}}Page() {
       const result = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error || 'Failed to create {{featureName}}');
+        throw new Error(result.error || 'Failed to create [[featureName]]');
       }
 
-      router.push('/admin/{{featureNamePlural}}');
+      router.push('/admin/[[featureNamePlural]]');
       router.refresh();
     } catch (err) {
-      console.error('Error creating {{featureName}}:', err);
-      setError(err.message || 'An error occurred while creating the {{featureName}}');
+      console.error('Error creating [[featureName]]:', err);
+      setError(err.message || 'An error occurred while creating the [[featureName]]');
     }
   };
 
@@ -69,17 +69,17 @@ export default function Create{{PascalFeatureName}}Page() {
           </MuiLink>
           <MuiLink 
             component={Link} 
-            href="/admin/{{featureNamePlural}}"
+            href="/admin/[[featureNamePlural]]"
             underline="hover"
             color="inherit"
           >
-            {{proper featureNamePlural}}
+            [[proper featureNamePlural]]
           </MuiLink>
           <Typography color="text.primary">Create</Typography>
         </Breadcrumbs>
 
         <Typography variant="h4" component="h1" gutterBottom>
-          Create {{proper featureName}}
+          Create [[proper featureName]]
         </Typography>
 
         {error && (
@@ -88,7 +88,7 @@ export default function Create{{PascalFeatureName}}Page() {
           </Alert>
         )}
 
-        <{{PascalFeatureName}}Form onSubmit={handleSubmit} />
+        <[[PascalFeatureName]]Form onSubmit={handleSubmit} />
       </Box>
     </Container>
   );

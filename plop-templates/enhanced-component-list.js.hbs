@@ -1,8 +1,8 @@
 'use client';
 
 /**
- * @file {{PascalFeatureName}} list component
- * @module components/dashboard/{{featureNamePlural}}/{{PascalFeatureName}}List
+ * @file [[PascalFeatureName]] list component
+ * @module components/dashboard/[[featureNamePlural]]/[[PascalFeatureName]]List
  */
 
 import React from 'react';
@@ -28,12 +28,12 @@ import {
 } from '@mui/icons-material';
 
 /**
- * {{PascalFeatureName}} list component
- * Displays a table of {{featureNamePlural}} with actions
+ * [[PascalFeatureName]] list component
+ * Displays a table of [[featureNamePlural]] with actions
  * 
  * @component
  * @param {Object} props - Component props
- * @param {Array} props.{{featureNamePlural}} - Array of {{featureName}} objects
+ * @param {Array} props.[[featureNamePlural]] - Array of [[featureName]] objects
  * @param {Function} props.onItemClick - Handler for when an item is clicked
  * @param {Function} props.onDeleteItem - Handler for when delete is clicked
  * @param {Object} props.pagination - Pagination info
@@ -42,10 +42,10 @@ import {
  * @param {number} props.pagination.total - Total items
  * @param {Function} props.onPageChange - Handler for page change
  * @param {Function} props.onLimitChange - Handler for page size change
- * @returns {React.ReactElement} {{PascalFeatureName}}List component
+ * @returns {React.ReactElement} [[PascalFeatureName]]List component
  */
-export default function {{PascalFeatureName}}List({
-  {{featureNamePlural}} = [],
+export default function [[PascalFeatureName]]List({
+  [[featureNamePlural]] = [],
   onItemClick,
   onDeleteItem,
   pagination = { page: 0, limit: 10, total: 0 },
@@ -70,11 +70,11 @@ export default function {{PascalFeatureName}}List({
     }
   };
 
-  if ({{featureNamePlural}}.length === 0) {
+  if ([[featureNamePlural]].length === 0) {
     return (
-      <Paper sx=\{\{ p: 3, textAlign: 'center' \}\}>
+      <Paper sx={{ p: 3, textAlign: 'center' }}>
         <Typography variant="body1">
-          No {{featureNamePlural}} found.
+          No [[featureNamePlural]] found.
         </Typography>
       </Paper>
     );
@@ -87,7 +87,7 @@ export default function {{PascalFeatureName}}List({
   };
 
   return (
-    <Paper sx=\{\{ width: '100%', overflow: 'hidden' \}\}>
+    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer>
         <Table>
           <TableHead>
@@ -99,49 +99,49 @@ export default function {{PascalFeatureName}}List({
             </TableRow>
           </TableHead>
           <TableBody>
-            { {{featureNamePlural}}.map(({{featureName}}) => (
+            { [[featureNamePlural]].map(([[featureName]]) => (
               <TableRow
-                key=\{ {{featureName}}._id \}
+                key={ [[featureName]]._id }
                 hover
-                onClick=\{() => onItemClick && onItemClick({{featureName}}._id)\}
-                sx=\{ \{ cursor: 'pointer' \} \}
+                onClick={() => onItemClick && onItemClick([[featureName]]._id)}
+                sx={{ cursor: 'pointer' }}
               >
                 <TableCell component="th" scope="row">
-                  {{featureName}}.name
+                  [[featureName]].name
                 </TableCell>
                 <TableCell>
-                  {{featureName}}.description || 'No description'
+                  [[featureName]].description || 'No description'
                 </TableCell>
                 <TableCell>
-                  {formatDate({{featureName}}.createdAt)}
+                  {formatDate([[featureName]].createdAt)}
                 </TableCell>
                 <TableCell align="right">
-                  <Box sx=\{\{ display: 'flex', justifyContent: 'flex-end' \}\}>
+                  <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Tooltip title="View/Edit">
                       <IconButton
                         size="small"
                         onClick={(e) => {
                           e.stopPropagation();
-                          onItemClick && onItemClick({{featureName}}._id);
+                          onItemClick && onItemClick([[featureName]]._id);
                         }}
                       >
                         <EditIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                    {{#if includeDelete}}
+                    [[#if includeDelete]]
                     <Tooltip title="Delete">
                       <IconButton
                         size="small"
                         color="error"
                         onClick={(e) => {
                           e.stopPropagation();
-                          onDeleteItem && onDeleteItem({{featureName}}._id);
+                          onDeleteItem && onDeleteItem([[featureName]]._id);
                         }}
                       >
                         <DeleteIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                    {{/if}}
+                    [[/if]]
                   </Box>
                 </TableCell>
               </TableRow>

@@ -1,46 +1,44 @@
-{{#if section}}
+[[#if section]]
 'use client';
-{{/if}}
+[[/if]]
 
 /**
- * @file {{proper name}} page
- * @module app/{{section}}/{{name}}/page
+ * @file [[proper name]] page
+ * @module app/[[section]]/[[name]]/page
  */
 
 import React from 'react';
 import { Box, Typography, Container, Paper } from '@mui/material';
 
 /**
- * Metadata for {{name}} page
+ * Metadata for [[name]] page
  * @type {Object}
  */
 export const metadata = {
-  title: "{{title}}",
-  description: "{{title}} page",
+  title: "[[title]]",
+  description: "[[title]] page",
 };
 
 /**
- * {{proper name}} page component
+ * [[proper name]] page component
  * 
  * @component
- * @returns {React.ReactElement} {{proper name}} page component
+ * @returns {React.ReactElement} [[proper name]] page component
  */
-export default function {{pascalCase name}}Page() {
-  {{{{raw}}}}
+export default function [[pascalCase name]]Page() {
   return (
     <Container maxWidth="lg">
       <Box sx={{ py: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          {{{{/raw}}}}{{proper name}}{{{{raw}}}}
+          [[proper name]]
         </Typography>
         
         <Paper sx={{ p: 3 }}>
           <Typography paragraph>
-            This is the {{name}} page. Customize this content to suit your needs.
+            This is the [[name]] page. Customize this content to suit your needs.
           </Typography>
         </Paper>
       </Box>
     </Container>
   );
-  {{{{/raw}}}}
 }

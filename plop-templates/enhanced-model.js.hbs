@@ -1,19 +1,19 @@
 /**
- * @file {{proper featureName}} model definition with mongoose schema
- * @module models/{{featureName}}
- * @description {{description}}
+ * @file [[proper featureName]] model definition with mongoose schema
+ * @module models/[[featureName]]
+ * @description [[description]]
  */
 
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 /**
- * {{proper featureName}} schema definition for MongoDB
- * @typedef {Object} {{pascalCase featureName}}Schema
+ * [[proper featureName]] schema definition for MongoDB
+ * @typedef {Object} [[pascalCase featureName]]Schema
  */
-const {{featureName}}Schema = new Schema({
+const [[featureName]]Schema = new Schema({
   /**
-   * Name of the {{featureName}}
+   * Name of the [[featureName]]
    * @type {String}
    * @required
    */
@@ -25,7 +25,7 @@ const {{featureName}}Schema = new Schema({
   },
   
   /**
-   * Description of the {{featureName}}
+   * Description of the [[featureName]]
    * @type {String}
    */
   description: { 
@@ -33,9 +33,9 @@ const {{featureName}}Schema = new Schema({
     trim: true,
     maxlength: [500, 'Description cannot be more than 500 characters']
   },
-  {{#if (includes fields 'price')}}
+  [[#if (includes fields 'price')]]
   /**
-   * Price of the {{featureName}}
+   * Price of the [[featureName]]
    * @type {Number}
    */
   price: {
@@ -43,50 +43,50 @@ const {{featureName}}Schema = new Schema({
     default: 0,
     min: [0, 'Price cannot be negative']
   },
-  {{/if}}
-  {{#if (includes fields 'isActive')}}
+  [[/if]]
+  [[#if (includes fields 'isActive')]]
   /**
-   * Whether the {{featureName}} is active
+   * Whether the [[featureName]] is active
    * @type {Boolean}
    */
   isActive: {
     type: Boolean,
     default: true
   },
-  {{/if}}
-  {{#if (includes fields 'category')}}
+  [[/if]]
+  [[#if (includes fields 'category')]]
   /**
-   * Category of the {{featureName}}
+   * Category of the [[featureName]]
    * @type {String}
    */
   category: {
     type: String,
     trim: true
   },
-  {{/if}}
-  {{#if (includes fields 'tags')}}
+  [[/if]]
+  [[#if (includes fields 'tags')]]
   /**
-   * Tags associated with the {{featureName}}
+   * Tags associated with the [[featureName]]
    * @type {Array<String>}
    */
   tags: [{
     type: String,
     trim: true
   }],
-  {{/if}}
-  {{#if (includes fields 'image')}}
+  [[/if]]
+  [[#if (includes fields 'image')]]
   /**
-   * Image URL for the {{featureName}}
+   * Image URL for the [[featureName]]
    * @type {String}
    */
   image: {
     type: String,
     trim: true
   },
-  {{/if}}
-  {{#if (includes fields 'userId')}}
+  [[/if]]
+  [[#if (includes fields 'userId')]]
   /**
-   * User who created/owns this {{featureName}}
+   * User who created/owns this [[featureName]]
    * @type {mongoose.Schema.Types.ObjectId}
    * @ref 'User'
    */
@@ -94,7 +94,7 @@ const {{featureName}}Schema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  {{/if}}
+  [[/if]]
   
   // Add your custom fields here
 }, {
@@ -103,22 +103,22 @@ const {{featureName}}Schema = new Schema({
    * @type {Object}
    * @property {Boolean} timestamps - Enable automatic timestamps
    */
-  timestamps: {{includeTimestamps}}
+  timestamps: [[includeTimestamps]]
 });
 
 // Create indexes for better query performance
-{{featureName}}Schema.index({ name: 1 });
-{{#if (includes fields 'userId')}}
-{{featureName}}Schema.index({ userId: 1 });
-{{/if}}
-{{#if (includes fields 'category')}}
-{{featureName}}Schema.index({ category: 1 });
-{{/if}}
+[[featureName]]Schema.index({ name: 1 });
+[[#if (includes fields 'userId')]]
+[[featureName]]Schema.index({ userId: 1 });
+[[/if]]
+[[#if (includes fields 'category')]]
+[[featureName]]Schema.index({ category: 1 });
+[[/if]]
 
 /**
- * {{proper featureName}} model compiled from schema
+ * [[proper featureName]] model compiled from schema
  * @type {mongoose.Model}
  */
-const {{pascalCase featureName}} = mongoose.models.{{pascalCase featureName}} || mongoose.model('{{pascalCase featureName}}', {{featureName}}Schema);
+const [[pascalCase featureName]] = mongoose.models.[[pascalCase featureName]] || mongoose.model('[[pascalCase featureName]]', [[featureName]]Schema);
 
-export default {{pascalCase featureName}};
+export default [[pascalCase featureName]];

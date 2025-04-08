@@ -1,8 +1,8 @@
 'use client';
 
 /**
- * @file {{proper featureNamePlural}} listing page
- * @module app/admin/{{featureNamePlural}}/page
+ * @file [[proper featureNamePlural]] listing page
+ * @module app/admin/[[featureNamePlural]]/page
  */
 
 import React, { useState, useEffect } from 'react';
@@ -20,15 +20,15 @@ import {
 import { Add as AddIcon, Search as SearchIcon } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import {{pascalCase featureName}}List from '@/components/admin/{{featureNamePlural}}/{{pascalCase featureName}}List';
+import [[pascalCase featureName]]List from '@/components/admin/[[featureNamePlural]]/[[pascalCase featureName]]List';
 
 /**
- * Renders the {{proper featureNamePlural}} admin listing page.
+ * Renders the [[proper featureNamePlural]] admin listing page.
  * @returns {JSX.Element}
  */
-export default function {{pascalCase featureNamePlural}}Page() {
+export default function [[pascalCase featureNamePlural]]Page() {
   const router = useRouter();
-  const [{{featureNamePlural}}, set{{featureNamePlural}}] = useState([]);
+  const [[[featureNamePlural]]], set[[[featureNamePlural]]] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -39,7 +39,7 @@ export default function {{pascalCase featureNamePlural}}Page() {
     pages: 0,
   });
 
-  const fetch{{featureNamePlural}} = async (page = 1, search = '') => {
+  const fetch[[[featureNamePlural]]] = async (page = 1, search = '') => {
     try {
       setLoading(true);
       setError('');
@@ -53,25 +53,25 @@ export default function {{pascalCase featureNamePlural}}Page() {
         queryParams.append('search', search);
       }
 
-      const response = await fetch(`/api/{{featureNamePlural}}?${queryParams.toString()}`);
+      const response = await fetch(`/api/[[featureNamePlural]]?${queryParams.toString()}`);
       const result = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error || 'Failed to fetch {{featureNamePlural}}');
+        throw new Error(result.error || 'Failed to fetch [[featureNamePlural]]');
       }
 
-      set{{featureNamePlural}}(result.data.{{featureNamePlural}});
+      set[[[featureNamePlural]]](result.data.[[[featureNamePlural]]]);
       setPagination(result.data.pagination);
     } catch (err) {
-      console.error('Error fetching {{featureNamePlural}}:', err);
-      setError(err.message || 'An error occurred while fetching {{featureNamePlural}}');
+      console.error('Error fetching [[featureNamePlural]]:', err);
+      setError(err.message || 'An error occurred while fetching [[featureNamePlural]]');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetch{{featureNamePlural}}(pagination.page, searchTerm);
+    fetch[[[featureNamePlural]]](pagination.page, searchTerm);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagination.page, searchTerm]);
 
@@ -81,15 +81,15 @@ export default function {{pascalCase featureNamePlural}}Page() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    fetch{{featureNamePlural}}(1, searchTerm);
+    fetch[[[featureNamePlural]]](1, searchTerm);
   };
 
   const handleCreateClick = () => {
-    router.push('/admin/{{featureNamePlural}}/create');
+    router.push('/admin/[[featureNamePlural]]/create');
   };
 
-  const handle{{pascalCase featureName}}Click = (id) => {
-    router.push(`/admin/{{featureNamePlural}}/${id}`);
+  const handle[[pascalCase featureName]]Click = (id) => {
+    router.push(`/admin/[[featureNamePlural]]/${id}`);
   };
 
   return (
@@ -97,10 +97,10 @@ export default function {{pascalCase featureNamePlural}}Page() {
       <Box sx={{ py: 4 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
           <Typography variant="h4" component="h1">
-            {{proper featureNamePlural}}
+            [[proper featureNamePlural]]
           </Typography>
           <Button variant="contained" startIcon={<AddIcon />} onClick={handleCreateClick}>
-            Create {{proper featureName}}
+            Create [[proper featureName]]
           </Button>
         </Box>
 
@@ -108,7 +108,7 @@ export default function {{pascalCase featureNamePlural}}Page() {
           <form onSubmit={handleSearch}>
             <TextField
               fullWidth
-              placeholder="Search {{featureNamePlural}}..."
+              placeholder="Search [[featureNamePlural]]..."
               value={searchTerm}
               onChange={handleSearchChange}
               InputProps={{
@@ -141,24 +141,24 @@ export default function {{pascalCase featureNamePlural}}Page() {
           </Alert>
         )}
 
-        {!loading && !error && {{featureNamePlural}}.length === 0 && (
+        {!loading && !error && [[[featureNamePlural]]].length === 0 && (
           <Paper sx={{ p: 4, mb: 3, textAlign: 'center' }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
-              No {{featureNamePlural}} found
+              No [[featureNamePlural]] found
             </Typography>
             <Typography paragraph color="text.secondary">
-              Get started by creating your first {{featureName}}.
+              Get started by creating your first [[featureName]].
             </Typography>
             <Button variant="contained" startIcon={<AddIcon />} onClick={handleCreateClick} sx={{ mt: 2 }}>
-              Create {{proper featureName}}
+              Create [[proper featureName]]
             </Button>
           </Paper>
         )}
 
-        {!loading && !error && {{featureNamePlural}}.length > 0 && (
-          <{{pascalCase featureName}}List
-            {{featureNamePlural}}={{{featureNamePlural}}}
-            onItemClick={handle{{pascalCase featureName}}Click}
+        {!loading && !error && [[[featureNamePlural]]].length > 0 && (
+          <[[pascalCase featureName]]List
+            [[[featureNamePlural]]]={[[[featureNamePlural]]]}
+            onItemClick={handle[[pascalCase featureName]]Click}
             pagination={pagination}
             onPageChange={(newPage) => setPagination({ ...pagination, page: newPage })}
           />
