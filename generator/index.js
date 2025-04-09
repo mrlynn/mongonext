@@ -268,7 +268,7 @@ async function generateFeature() {
     
     if (fs.existsSync(sidebarPath)) {
       // Add icon import to Sidebar.js
-      const iconImport = `import ${PascalFeatureName}Icon from '@mui/icons-material/${PascalFeatureName}';\n`;
+      const iconImport = `import ${data.icon}Icon from '@mui/icons-material/${data.icon}';\n`;
       let sidebarContent = fs.readFileSync(sidebarPath, 'utf8');
       let updatedSidebarContent = sidebarContent.replace(
         /import.*?from '@mui\/icons-material';\n/,
@@ -278,11 +278,11 @@ async function generateFeature() {
       // Add new navigation item to Sidebar.js
       const newNavItem = `    {
         text: '${PascalFeatureName}s',
-        icon: <${PascalFeatureName}Icon />,
+        icon: <${data.icon}Icon />,
         path: '/admin/${featureNamePlural}',
         children: [
-          { text: 'All ${PascalFeatureName}s', path: '/admin/${featureNamePlural}', icon: <${PascalFeatureName}Icon /> },
-          { text: 'Create ${PascalFeatureName}', path: '/admin/${featureNamePlural}/create', icon: <${PascalFeatureName}Icon /> },
+          { text: 'All ${PascalFeatureName}s', path: '/admin/${featureNamePlural}', icon: <${data.icon}Icon /> },
+          { text: 'Create ${PascalFeatureName}', path: '/admin/${featureNamePlural}/create', icon: <${data.icon}Icon /> },
         ],
       },
       // You can add more sections here as needed`;
