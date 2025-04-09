@@ -235,11 +235,10 @@ async function generateFeature() {
     const sidebarPath = path.join(process.cwd(), 'src', 'components', 'layout', 'Sidebar.js');
     
     if (fs.existsSync(sidebarPath)) {
-      let sidebarContent = fs.readFileSync(sidebarPath, 'utf8');
-      
       // Add icon import to Sidebar.js
       const iconImport = `import ${PascalFeatureName}Icon from '@mui/icons-material/${PascalFeatureName}';\n`;
-      const updatedSidebarContent = sidebarContent.replace(
+      let sidebarContent = fs.readFileSync(sidebarPath, 'utf8');
+      let updatedSidebarContent = sidebarContent.replace(
         /import.*?from '@mui\/icons-material';\n/,
         `$&${iconImport}`
       );
