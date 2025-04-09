@@ -157,6 +157,18 @@ async function generateFeature() {
         { name: '🔧 Settings', value: 'Settings' }
       ],
       default: 'Folder'
+    },
+    {
+      type: 'list',
+      name: 'theme',
+      message: 'Select a theme for your application:',
+      choices: [
+        { name: '🍃 MongoDB Green - Classic MongoDB styling', value: 'mongodb' },
+        { name: '🌊 Ocean Blue - Modern and professional', value: 'ocean' },
+        { name: '🌲 Forest Green - Eco-friendly and sustainable', value: 'forest' },
+        { name: '🌅 Sunset - Creative and bold', value: 'sunset' }
+      ],
+      default: 'mongodb'
     }
   ]);
   
@@ -325,6 +337,42 @@ async function generateFeature() {
       console.log(`Warning: Sidebar component not found at ${sidebarPath}`);
     }
   }
+  
+  // After collecting answers, copy the selected theme
+  const selectedTheme = themes[answers.theme];
+
+  // Create the theme file
+  const themeFilePath = path.join(process.cwd(), 'src', 'theme.js');
+  fs.writeFileSync(themeFilePath, `
+import { createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: ${JSON.stringify(selectedTheme.palette, null, 2)},
+  typography: ${JSON.stringify(selectedTheme.typography, null, 2)},
+});
+
+export default theme;
+`);
+
+  // Update the landing page with theme-specific content
+  const landingPagePath = path.join(process.cwd(), 'src', 'app', 'page.js');
+  const landingPageContent = fs.readFileSync(landingPagePath, 'utf8');
+
+  const updatedLandingPage = landingPageContent
+    .replace(
+      /(background:\s*)'.*?'/,
+      `$1'${selectedTheme.palette.background.gradient}'`
+    )
+    .replace(
+      /(variant="h1"[^>]*>[^<]*<\/Typography>)/,
+      `variant="h1" sx={{ fontSize: { xs: '2.5rem', md: '3.5rem' }, fontWeight: 700, mb: 2 }}>${selectedTheme.content.hero.title}</Typography>`
+    )
+    .replace(
+      /(variant="h2"[^>]*>[^<]*<\/Typography>)/,
+      `variant="h2" sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' }, fontWeight: 400, mb: 4, opacity: 0.9 }}>${selectedTheme.content.hero.subtitle}</Typography>`
+    );
+
+  fs.writeFileSync(landingPagePath, updatedLandingPage);
   
   console.log(`\n✅ Feature "${data.properFeatureName}" generated successfully!`);
 }

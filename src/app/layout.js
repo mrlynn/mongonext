@@ -1,17 +1,12 @@
 // src/app/layout.js
-import { Geist, Geist_Mono } from "next/font/google";
-import { Providers } from "./providers";
-import "./globals.css";
+'use client';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { Inter } from 'next/font/google';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import theme from '../theme';
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: "MongoNext | Next.js MongoDB Starter Kit",
@@ -20,11 +15,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>
-        <Providers>
+    <html lang="en">
+      <body className={inter.className}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
           {children}
-        </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );
