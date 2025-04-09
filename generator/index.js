@@ -157,18 +157,6 @@ async function generateFeature() {
         { name: '🔧 Settings', value: 'Settings' }
       ],
       default: 'Folder'
-    },
-    {
-      type: 'list',
-      name: 'theme',
-      message: 'Select a theme for your application:',
-      choices: [
-        { name: '🍃 MongoDB Green - Classic MongoDB styling', value: 'mongodb' },
-        { name: '🌊 Ocean Blue - Modern and professional', value: 'ocean' },
-        { name: '🌲 Forest Green - Eco-friendly and sustainable', value: 'forest' },
-        { name: '🌅 Sunset - Creative and bold', value: 'sunset' }
-      ],
-      default: 'mongodb'
     }
   ]);
   
@@ -338,12 +326,37 @@ async function generateFeature() {
     }
   }
   
-  // After collecting answers, copy the selected theme
-  const selectedTheme = themes[answers.theme];
+  console.log(`\n✅ Feature "${data.properFeatureName}" generated successfully!`);
+}
 
-  // Create the theme file
+// Initialize project
+async function initializeProject() {
+  const answers = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'projectName',
+      message: 'Project name:',
+      default: path.basename(process.cwd())
+    },
+    {
+      type: 'list',
+      name: 'theme',
+      message: 'Select a theme for your application:',
+      choices: [
+        { name: '🍃 MongoDB Green - Classic MongoDB styling', value: 'mongodb' },
+        { name: '🌊 Ocean Blue - Modern and professional', value: 'ocean' },
+        { name: '🌲 Forest Green - Eco-friendly and sustainable', value: 'forest' },
+        { name: '🌅 Sunset - Creative and bold', value: 'sunset' }
+      ],
+      default: 'mongodb'
+    }
+  ]);
+
+  // Create theme file
+  const selectedTheme = themes[answers.theme];
   const themeFilePath = path.join(process.cwd(), 'src', 'theme.js');
-  fs.writeFileSync(themeFilePath, `
+  
+  writeFile(themeFilePath, `
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -352,40 +365,51 @@ const theme = createTheme({
 });
 
 export default theme;
-`);
+  `);
 
-  // Update the landing page with theme-specific content
+  // Update landing page with theme content
   const landingPagePath = path.join(process.cwd(), 'src', 'app', 'page.js');
-  const landingPageContent = fs.readFileSync(landingPagePath, 'utf8');
+  if (fs.existsSync(landingPagePath)) {
+    const landingPageContent = fs.readFileSync(landingPagePath, 'utf8');
+    const updatedLandingPage = landingPageContent
+      .replace(
+        /(background:\s*)'.*?'/,
+        `$1'${selectedTheme.palette.background.gradient}'`
+      )
+      .replace(
+        /(variant="h1"[^>]*>[^<]*<\/Typography>)/,
+        `variant="h1" sx={{ fontSize: { xs: '2.5rem', md: '3.5rem' }, fontWeight: 700, mb: 2 }}>${selectedTheme.content.hero.title}</Typography>`
+      )
+      .replace(
+        /(variant="h2"[^>]*>[^<]*<\/Typography>)/,
+        `variant="h2" sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' }, fontWeight: 400, mb: 4, opacity: 0.9 }}>${selectedTheme.content.hero.subtitle}</Typography>`
+      );
+    writeFile(landingPagePath, updatedLandingPage);
+  }
 
-  const updatedLandingPage = landingPageContent
-    .replace(
-      /(background:\s*)'.*?'/,
-      `$1'${selectedTheme.palette.background.gradient}'`
-    )
-    .replace(
-      /(variant="h1"[^>]*>[^<]*<\/Typography>)/,
-      `variant="h1" sx={{ fontSize: { xs: '2.5rem', md: '3.5rem' }, fontWeight: 700, mb: 2 }}>${selectedTheme.content.hero.title}</Typography>`
-    )
-    .replace(
-      /(variant="h2"[^>]*>[^<]*<\/Typography>)/,
-      `variant="h2" sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' }, fontWeight: 400, mb: 4, opacity: 0.9 }}>${selectedTheme.content.hero.subtitle}</Typography>`
-    );
-
-  fs.writeFileSync(landingPagePath, updatedLandingPage);
-  
-  console.log(`\n✅ Feature "${data.properFeatureName}" generated successfully!`);
+  console.log('\n✅ Project initialized successfully with theme:', answers.theme);
 }
 
-// Set up CLI
+// Set up CLI commands
 program
-  .name('mongonext-generator')
-  .description('Code generator for MongoNext Next.js MongoDB starter template')
-  .version('1.0.0');
+  .version('1.0.0')
+  .description('MongoNext - Next.js + MongoDB Project Generator');
+
+program
+  .command('init')
+  .description('Initialize a new MongoNext project')
+  .action(initializeProject);
 
 program
   .command('feature')
-  .description('Create a complete feature with model, page, API route, and components')
+  .description('Generate a new feature')
   .action(generateFeature);
 
-program.parse(); 
+// Remove theme selection from feature generation
+const themeQuestion = answers.find(q => q.name === 'theme');
+const questionIndex = answers.indexOf(themeQuestion);
+if (questionIndex > -1) {
+  answers.splice(questionIndex, 1);
+}
+
+program.parse(process.argv); 
