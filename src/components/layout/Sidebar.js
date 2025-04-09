@@ -30,7 +30,15 @@ const Sidebar = ({ open, onClose }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const pathname = usePathname();
-  const [usersOpen, setUsersOpen] = useState(pathname.startsWith('/admin/users'));
+  
+  // Track open state for each menu item separately
+  const [openMenus, setOpenMenus] = useState(() => {
+    // Initialize open state based on current path
+    const initial = {};
+    if (pathname.startsWith('/admin/users')) initial.users = true;
+    if (pathname.startsWith('/admin/products')) initial.products = true;
+    return initial;
+  });
 
   const drawerWidth = 240;
 
@@ -55,8 +63,11 @@ const Sidebar = ({ open, onClose }) => {
     // You can add more sections here as needed
   ];
 
-  const handleToggleUsers = () => {
-    setUsersOpen(!usersOpen);
+  const handleToggleMenu = (menuKey) => {
+    setOpenMenus(prev => ({
+      ...prev,
+      [menuKey]: !prev[menuKey]
+    }));
   };
 
   const drawerContent = (
@@ -75,7 +86,7 @@ const Sidebar = ({ open, onClose }) => {
             <React.Fragment key={item.text}>
               <ListItem disablePadding>
                 <ListItemButton
-                  onClick={handleToggleUsers}
+                  onClick={() => handleToggleMenu(item.text.toLowerCase().replace(/\s+/g, ''))}
                   selected={isGroupActive(item.path)}
                   sx={{
                     pl: 2,
@@ -89,10 +100,14 @@ const Sidebar = ({ open, onClose }) => {
                 >
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.text} />
-                  {usersOpen ? <ExpandLess /> : <ExpandMore />}
+                  {openMenus[item.text.toLowerCase().replace(/\s+/g, '')] ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
               </ListItem>
-              <Collapse in={usersOpen} timeout="auto" unmountOnExit>
+              <Collapse 
+                in={openMenus[item.text.toLowerCase().replace(/\s+/g, '')]} 
+                timeout="auto" 
+                unmountOnExit
+              >
                 <List component="div" disablePadding>
                   {item.children.map((child) => (
                     <ListItemButton
