@@ -106,9 +106,155 @@ print_step "Testing code generator"
 # Test the generator with a sample feature
 echo "Testing feature generator:"
 
-# Instead of testing the interactive generator, we'll just check if the generator file exists
+# Check if the generator file exists
 if [ -f "generator/index.js" ]; then
   print_success "Generator file exists"
+  
+  # Check for required dependencies
+  print_step "Checking required dependencies"
+  
+  # Check if the MongoDB connection file exists
+  if [ ! -f "src/lib/mongodb.js" ]; then
+    print_warning "MongoDB connection file not found, creating it..."
+    
+    # Create the MongoDB connection file
+    mkdir -p src/lib
+    cat > src/lib/mongodb.js << EOF
+/**
+ * @file MongoDB connection utility
+ * @module lib/mongodb
+ */
+
+import mongoose from 'mongoose';
+
+/**
+ * Cache the database connection
+ * @type {Promise<typeof mongoose>|null}
+ */
+let cached = global.mongoose;
+
+/**
+ * Initialize the cached mongoose connection
+ */
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+/**
+ * Connect to MongoDB
+ * Ensures a single connection is reused across the application
+ * 
+ * @async
+ * @function connectDB
+ * @returns {Promise<typeof mongoose>} Mongoose connection instance
+ * @throws {Error} If connection fails
+ */
+async function connectDB() {
+  // If connection exists, return it
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  // If no connection promise exists, create one
+  if (!cached.promise) {
+    const MONGODB_URI = process.env.MONGODB_URI;
+
+    if (!MONGODB_URI) {
+      throw new Error('MongoDB URI is not defined in environment variables');
+    }
+
+    // MongoDB driver 4.0+ doesn't need these options anymore
+    const options = {};
+
+    cached.promise = mongoose.connect(MONGODB_URI, options)
+      .then((mongoose) => {
+        console.log('Connected to MongoDB');
+        return mongoose;
+      })
+      .catch((error) => {
+        console.error('MongoDB connection error:', error);
+        throw error;
+      });
+  }
+
+  // Wait for connection and cache it
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
+
+export default connectDB;
+EOF
+    print_success "MongoDB connection file created"
+  else
+    print_success "MongoDB connection file exists"
+  fi
+  
+  # Create a non-interactive script to run the generator
+  cat > run_generator.mjs << EOF
+import { spawn } from 'child_process';
+import readline from 'readline';
+import fs from 'fs';
+
+// Create a temporary file with the answers
+const answers = \`product
+A test product feature
+y
+y
+y
+y
+y
+ShoppingCart\`;
+
+fs.writeFileSync('generator_answers.txt', answers);
+
+// Start the generator process with the answers file
+const generator = spawn('node', ['generator/index.js', 'feature'], { 
+  stdio: ['pipe', 'pipe', 'pipe'],
+  env: { ...process.env, FORCE_COLOR: '1' }
+});
+
+// Pipe the answers to the generator
+const answersStream = fs.createReadStream('generator_answers.txt');
+answersStream.pipe(generator.stdin);
+
+// Handle process completion
+generator.on('close', (code) => {
+  // Clean up the answers file
+  fs.unlinkSync('generator_answers.txt');
+  process.exit(code);
+});
+
+// Handle errors
+generator.stderr.on('data', (data) => {
+  console.error(\`Generator error: \${data}\`);
+});
+
+// Handle process errors
+generator.on('error', (err) => {
+  console.error(\`Failed to start generator: \${err}\`);
+  process.exit(1);
+});
+EOF
+
+  # Run the temporary script
+  node run_generator.mjs
+  GENERATOR_RESULT=$?
+  
+  # Clean up the temporary script
+  rm run_generator.mjs
+  
+  if [ $GENERATOR_RESULT -eq 0 ]; then
+    print_success "Generator ran successfully"
+    
+    # Verify that product assets were created
+    if [ -d "app/dashboard/products" ] || [ -d "components/dashboard/products" ] || [ -f "models/Product.js" ]; then
+      print_success "Product assets were created"
+    else
+      print_warning "Generator ran but no product assets were found"
+    fi
+  else
+    print_warning "Generator failed with exit code $GENERATOR_RESULT"
+  fi
 else
   print_error "Generator file not found"
 fi
