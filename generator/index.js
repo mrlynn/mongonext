@@ -121,9 +121,41 @@ async function generateFeature() {
       default: true
     },
     {
-      type: 'input',
+      type: 'list',
       name: 'icon',
-      message: 'MUI Icon for navigation (e.g., "ShoppingCart"):',
+      message: 'Select an icon for the feature:',
+      choices: [
+        { name: '📦 Package (Inventory)', value: 'Inventory' },
+        { name: '🛒 Shopping Cart', value: 'ShoppingCart' },
+        { name: '📝 Document', value: 'Description' },
+        { name: '👥 Users', value: 'People' },
+        { name: '📊 Dashboard', value: 'Dashboard' },
+        { name: '⚙️ Settings', value: 'Settings' },
+        { name: '📅 Calendar', value: 'CalendarToday' },
+        { name: '📧 Email', value: 'Email' },
+        { name: '📱 Device', value: 'Devices' },
+        { name: '💰 Payment', value: 'Payment' },
+        { name: '🏷️ Tag', value: 'LocalOffer' },
+        { name: '📂 Folder', value: 'Folder' },
+        { name: '🔍 Search', value: 'Search' },
+        { name: '📊 Chart', value: 'BarChart' },
+        { name: '🔔 Notification', value: 'Notifications' },
+        { name: '🔒 Security', value: 'Security' },
+        { name: '🌐 Globe', value: 'Language' },
+        { name: '📱 Mobile', value: 'PhoneAndroid' },
+        { name: '💬 Chat', value: 'Chat' },
+        { name: '📸 Image', value: 'Image' },
+        { name: '🎵 Music', value: 'MusicNote' },
+        { name: '🎥 Video', value: 'Videocam' },
+        { name: '📚 Book', value: 'Book' },
+        { name: '🎮 Game', value: 'SportsEsports' },
+        { name: '🏠 Home', value: 'Home' },
+        { name: '🛠️ Tools', value: 'Build' },
+        { name: '📱 App', value: 'Apps' },
+        { name: '🎨 Design', value: 'Palette' },
+        { name: '📊 Analytics', value: 'Analytics' },
+        { name: '🔧 Settings', value: 'Settings' }
+      ],
       default: 'Folder'
     }
   ]);
