@@ -1,0 +1,24 @@
+/**
+ * @file <%= properFeatureName %> model
+ * @module models/<%= featureName %>.model
+ */
+
+import mongoose from 'mongoose';
+
+const <%= featureName %>Schema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Name is required'],
+    trim: true,
+  },
+  description: {
+    type: String,
+    trim: true,
+  },
+  // Add more fields as needed
+}, {
+  timestamps: true,
+});
+
+// Prevent mongoose from creating the model if it already exists
+export default mongoose.models.<%= PascalFeatureName %> || mongoose.model('<%= PascalFeatureName %>', <%= featureName %>Schema); 

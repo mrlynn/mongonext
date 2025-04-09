@@ -2,6 +2,7 @@
   "name": "mongonext",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "keywords": [
     "next.js",
     "mongodb",
@@ -25,7 +26,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "plop": "plop",
+    "generate": "node generator/index.js",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "setup": "node scripts/setup.js",
@@ -54,7 +55,11 @@
     "@storybook/nextjs": "^8.6.12",
     "@storybook/react": "^8.6.12",
     "@storybook/test": "^8.6.12",
+    "commander": "^13.1.0",
     "date-fns": "^4.1.0",
+    "ejs": "^3.1.10",
+    "inquirer": "^12.5.2",
+    "nunjucks": "^3.2.4",
     "playwright": "^1.51.1",
     "storybook": "^8.6.12",
     "whatwg-url": "^14.2.0"

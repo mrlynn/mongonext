@@ -5,10 +5,15 @@
  * Run with: npm run cleanup
  */
 
-const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
-const { execSync } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import readline from 'readline';
+import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -49,9 +54,18 @@ const demoFeatures = {
   },
   adminDashboard: {
     name: 'Admin Dashboard',
-    description: 'Demo admin dashboard with charts and stats',
+    description: 'Demo admin dashboard pages',
     paths: [
-      'src/app/admin/page.js',
+      'src/app/admin/dashboard',
+    ]
+  },
+  plop: {
+    name: 'Plop Code Generator',
+    description: 'Remove Plop.js code generator (replaced with new generator)',
+    paths: [
+      'plopfile.js',
+      'plop-templates',
+      'proof-of-concept'
     ]
   },
   all: {
@@ -174,6 +188,10 @@ async function main() {
     console.log(`${index + 1}. ${demoFeatures[key].name} - ${demoFeatures[key].description}`);
   });
   
+  // Special message for Plop cleanup
+  console.log('\nNote: The Plop code generator has been replaced with a new EJS-based generator.');
+  console.log('      If you select option 6, the old Plop files will be removed.');
+  
   // Get user selection
   const promptSelection = () => {
     return new Promise((resolve) => {
@@ -258,11 +276,9 @@ async function main() {
   });
 }
 
-// Check if this script was executed directly
-if (require.main === module) {
-  // Add the cleanup script to package.json
-  addCleanupScriptToPackageJson();
-  main();
+// Run the script if it's called directly
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main().then(() => process.exit(0));
 }
 
-module.exports = { demoFeatures, safeDelete, updateSidebarNavigation };
+export { demoFeatures, safeDelete, updateSidebarNavigation };

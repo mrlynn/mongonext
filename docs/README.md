@@ -18,7 +18,7 @@ Welcome to the MongoNext documentation! This comprehensive guide will help you g
 ### Development
 - [Workflows](development/workflows.md) - Development processes and best practices
 - [Testing](development/testing.md) - Testing strategies and tools
-- [Code Generation](development/code-generation.md) - Using Plop.js generators
+- [Code Generation](development/code-generation.md) - Using the code generator
 - [Styling Guide](development/styling.md) - Material UI and styling conventions
 
 ### API

@@ -1,25 +1,47 @@
 # Code Generation
 
-🚧 **Coming Soon!** 🚧
-
-This documentation is currently under development. Here's what you can expect to find here soon:
+The MongoNext template includes a powerful code generation system that helps you quickly create new features, models, components, and API routes.
 
 ## Code Generation Tools
-- Plop.js setup
-- Available generators
-- Custom templates
-- Configuration options
+- Custom Node.js generator with EJS templates
+- Interactive CLI with Commander.js and Inquirer.js
+- Available generators for features, models, and components
+- Customizable templates
+
+## Feature Generation
+The most common use case is generating a complete feature with all necessary files:
+
+```bash
+npm run generate feature
+```
+
+This will prompt you for:
+- Feature name (singular form)
+- Feature description
+- Whether to include list view
+- Whether to include create form
+- Whether to include edit form
+- Whether to include delete functionality
+- Whether to add to sidebar navigation
+- Material-UI icon for navigation
+
+The generator will create:
+- MongoDB model
+- API routes (collection and individual items)
+- Pages (list, create, edit)
+- Components (list, form, detail)
+- Update sidebar navigation
 
 ## Component Generation
-- Component templates
-- Story generation
-- Test file generation
-- Documentation generation
+- Component templates with Material UI
+- Form components with validation
+- List components with sorting and filtering
+- Detail components for viewing
 
 ## API Generation
-- Route templates
-- Controller generation
-- Model generation
+- Route templates for RESTful APIs
+- Controller generation with proper error handling
+- Model generation with Mongoose schemas
 - Validation generation
 
 ## Best Practices
@@ -29,7 +51,7 @@ This documentation is currently under development. Here's what you can expect to
 - Code standards
 
 ## Next Steps
-While this section is being completed, you can:
+To learn more about the code generator:
 1. Review the [Development Workflows](/docs/development/workflows)
 2. Check out [Component System](/docs/architecture/components)
 3. Explore [API Overview](/docs/api/overview) 

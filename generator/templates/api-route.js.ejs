@@ -1,0 +1,89 @@
+/**
+ * @file <%= properFeatureNamePlural %> API route
+ * @module app/api/<%= featureNamePlural %>/route
+ */
+
+import { NextResponse } from 'next/server';
+import connectDB from '@/lib/mongodb';
+import <%= PascalFeatureName %> from '@/models/<%= featureName %>.model';
+
+/**
+ * GET handler for <%= featureNamePlural %> collection
+ * Returns all <%= featureNamePlural %> or filtered by query parameters
+ * 
+ * @param {Request} request - The incoming request
+ * @returns {NextResponse} JSON response with <%= featureNamePlural %> data
+ */
+export async function GET(request) {
+  try {
+    await connectDB();
+    
+    // Get query parameters
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page')) || 1;
+    const limit = parseInt(searchParams.get('limit')) || 10;
+    const search = searchParams.get('search') || '';
+    
+    // Build query
+    const query = search
+      ? { name: { $regex: search, $options: 'i' } }
+      : {};
+    
+    // Get total count for pagination
+    const total = await <%= PascalFeatureName %>.countDocuments(query);
+    
+    // Get <%= featureNamePlural %> with pagination
+    const <%= featureNamePlural %> = await <%= PascalFeatureName %>
+      .find(query)
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit);
+    
+    return NextResponse.json({
+      success: true,
+      data: <%= featureNamePlural %>,
+      pagination: {
+        total,
+        page,
+        limit,
+        pages: Math.ceil(total / limit)
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching <%= featureNamePlural %>:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to fetch <%= featureNamePlural %>' },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * POST handler for <%= featureNamePlural %> collection
+ * Creates a new <%= featureName %>
+ * 
+ * @param {Request} request - The incoming request
+ * @returns {NextResponse} JSON response with created <%= featureName %> data
+ */
+export async function POST(request) {
+  try {
+    await connectDB();
+    
+    // Parse request body
+    const body = await request.json();
+    
+    // Create new <%= featureName %>
+    const <%= featureName %> = await <%= PascalFeatureName %>.create(body);
+    
+    return NextResponse.json({
+      success: true,
+      data: <%= featureName %>
+    }, { status: 201 });
+  } catch (error) {
+    console.error('Error creating <%= featureName %>:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to create <%= featureName %>' },
+      { status: 500 }
+    );
+  }
+} 

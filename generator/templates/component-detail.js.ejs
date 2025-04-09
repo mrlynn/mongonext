@@ -1,0 +1,28 @@
+import { Box, Card, CardContent, Typography } from '@mui/material';
+
+export default function <%= PascalFeatureName %>Detail({ <%= featureName %> }) {
+  if (!<%= featureName %>) {
+    return null;
+  }
+
+  return (
+    <Card>
+      <CardContent>
+        <Typography variant="h5" component="h2" gutterBottom>
+          {<%= featureName %>.name}
+        </Typography>
+        
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="body1" color="text.secondary">
+            Description
+          </Typography>
+          <Typography variant="body1">
+            {<%= featureName %>.description}
+          </Typography>
+        </Box>
+
+        {/* Add more fields as needed */}
+      </CardContent>
+    </Card>
+  );
+} 
