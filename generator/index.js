@@ -270,10 +270,19 @@ async function generateFeature() {
       // Add icon import to Sidebar.js
       const iconImport = `import ${data.icon}Icon from '@mui/icons-material/${data.icon}';\n`;
       let sidebarContent = fs.readFileSync(sidebarPath, 'utf8');
-      let updatedSidebarContent = sidebarContent.replace(
-        /import.*?from '@mui\/icons-material';\n/,
-        `$&${iconImport}`
-      );
+      
+      // Check if the icon is already imported
+      const iconImportRegex = new RegExp(`import\\s+${data.icon}Icon\\s+from\\s+['"]@mui/icons-material/${data.icon}['"];`);
+      if (!iconImportRegex.test(sidebarContent)) {
+        // Find the last import statement
+        const lastImportIndex = sidebarContent.lastIndexOf('import');
+        const nextNewlineAfterImport = sidebarContent.indexOf('\n', lastImportIndex);
+        
+        // Insert the new import after the last import
+        sidebarContent = sidebarContent.substring(0, nextNewlineAfterImport + 1) + 
+                         iconImport + 
+                         sidebarContent.substring(nextNewlineAfterImport + 1);
+      }
       
       // Add new navigation item to Sidebar.js
       const newNavItem = `    {
@@ -290,17 +299,17 @@ async function generateFeature() {
       // Find the navigationItems array and add the new item
       // Look for the comment that indicates where to add new sections
       const insertPoint = '// You can add more sections here as needed';
-      if (updatedSidebarContent.includes(insertPoint)) {
-        updatedSidebarContent = updatedSidebarContent.replace(
+      if (sidebarContent.includes(insertPoint)) {
+        sidebarContent = sidebarContent.replace(
           insertPoint,
           `${newNavItem}\n    ${insertPoint}`
         );
       } else {
         // Fallback: find the navigationItems array closing bracket
         const navigationItemsPattern = /(const\s+navigationItems\s*=\s*\[[\s\S]*?)(^\s*\]\s*;)/m;
-        const match = updatedSidebarContent.match(navigationItemsPattern);
+        const match = sidebarContent.match(navigationItemsPattern);
         if (match) {
-          updatedSidebarContent = updatedSidebarContent.replace(
+          sidebarContent = sidebarContent.replace(
             navigationItemsPattern,
             `$1,${newNavItem}\n  $2`
           );
@@ -310,7 +319,7 @@ async function generateFeature() {
       }
       
       // Write the updated sidebar content
-      fs.writeFileSync(sidebarPath, updatedSidebarContent);
+      fs.writeFileSync(sidebarPath, sidebarContent);
       console.log(`Updated: ${sidebarPath}`);
     } else {
       console.log(`Warning: Sidebar component not found at ${sidebarPath}`);
